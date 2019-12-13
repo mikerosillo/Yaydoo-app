@@ -1,0 +1,550 @@
+import React, { Component } from 'react';
+import {
+    StyleSheet,
+    Alert,
+    AsyncStorage,
+    Text,
+    View,
+    ScrollView,
+    RefreshControl,
+    ImageBackground,
+    TouchableOpacity,
+    Image,
+    Button,
+    Dimensions,
+} from 'react-native';
+import * as Progress from 'react-native-progress';
+import { ListItem } from 'native-base';
+import Drawer from 'react-native-drawer';
+import { Actions } from 'react-native-router-flux';
+import Moment from 'moment';
+var numeral = require('numeral');
+
+export default class Profile extends Component {
+    constructor() {
+        super()
+        this.state = {
+            token: '',
+            codes: [],
+            refreshing: true,
+            userName: '',
+            solicitudes:[],
+            pendingPo:[],
+            solicitudesDate:[],
+            poDate:[],
+        }
+        this.getAllSolicitudes()
+        this.getAllPo()
+    };
+    onRefresh() {
+        this.setState({ solicitudes: [], pendingPo: [] })
+        this.getAllSolicitudes()
+        this.getAllPo()
+    };
+    openDrawer() {
+        this.drawer.open();
+    };
+    logout() {
+        // OneSignal.removeExternalUserId()
+        AsyncStorage.clear();
+        Actions.welcome({
+          type: 'reset',
+        });
+    };
+    async getAllSolicitudes() {
+        const token = await AsyncStorage.getItem('ACCESS_TOKEN')
+        const uuid = await AsyncStorage.getItem('UUID');
+        if (token && uuid) { // if user is logged in
+            await fetch(`https://stage.ws.yay.do/v2/enterprise/${uuid}/quotation/request/pending?page=1`, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    "X-Auth-Token": token
+                },
+
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        response.json().then((datos) => {
+                          let allSolicitudes = datos.data
+                          var solicitudes = allSolicitudes.filter((element) => {
+                              return element.type == 4
+                          })
+                          var createdAt = solicitudes.map((element)=>{
+                            return element.created_at
+                          })
+                            this.setState({
+                              refreshing: false,
+                              solicitudes: solicitudes,
+                              solicitudesDate:createdAt
+                            })
+                        })
+                    }
+                })
+                .catch(err => console.warn(err.message));
+        } else {
+            this.setState({refreshing: false})
+        }
+    };
+    // getAddress(data, tipo){
+    //   console.log(tipo)
+    //   if(tipo == 4){
+    //     this.getAddressSolicitudes(data)
+    //   } else {
+    //     this.getAddressPo(data)
+    //   }
+    // }
+    
+    checkStatus(data){
+      if(data == null){
+        return 'Pendiente'
+      } else {
+        return 'Aprobado'
+      }
+    };
+    howManyDaysAfter(date){
+      // let dateStr = JSON.parse(date)
+      var fecha = new Date(JSON.stringify(date));
+     
+      let dayCreated = Moment(date).format('D') // = 9
+      let todaysDate = Moment(new Date()).format('D')
+      var afterCreated = todaysDate - dayCreated
+      if(afterCreated == 1){
+        return <Text>Hace {afterCreated} d</Text>
+      }else {
+        return <Text>Hace {afterCreated} d</Text>
+      }
+    };
+    
+    async getAllPo() {
+        const token = await AsyncStorage.getItem('ACCESS_TOKEN')
+        const uuid = await AsyncStorage.getItem('UUID');
+        if (token && uuid) { // if user is logged in
+            await fetch(`https://stage.ws.yay.do/v2/enterprise/${uuid}/purchaseOrder/?filter=2&type=3&page=1&approver=1`, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    "X-Auth-Token": token
+                },
+
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        response.json().then((datos) => {
+                             // var ultimaFecha = Moment(lastDate[0]).format('D MMM YY')
+                          // console.log(datos.data.account)
+                          // console.log(datos.data.approved)
+                          // console.log(datos.data.internal)
+                            let accountInfo = datos.data
+                            // let solicitudes = datos.data
+                            // let name = codes[0].account.user.first_name
+
+                            var pendingPo = accountInfo.filter((element) => {
+                                return element.type == 3
+                            })
+                            var createdAt = pendingPo.map((element)=>{
+                              return element.created_at
+                            })
+
+                            //console.log('json filter',pendingPo[0])
+                            // var map2 = accountInfo.map((element) => {
+                            //     return element.folio
+                            // })
+                            this.setState({
+                              refreshing: false,
+                              pendingPo:pendingPo,
+                              poDate:createdAt,
+                            })
+                        })
+                    }
+                })
+                .catch(err => console.warn(err.message));
+        } else {
+            this.setState({refreshing: false})
+            // Alert.alert('Favor de iniciar sesión')
+        }
+    };
+    getAddressPo(data){
+      let arr = [data]
+      let provider = arr.map((element)=>{
+        return element.proposal.provider.address
+      })
+      
+      // let address = provider.map((element)=>{
+      //   return element.address
+      // })
+      // let city = provider.map((element)=>{
+      //   return element.city
+      // })
+      // let zipCode = provider.map((element)=>{
+      //   return element.zip_code
+      // })
+      return provider 
+    };
+    pendingPoLength(date){
+      let arr = this.state.poDate
+      var count = 0
+      for(let i = 0; i < arr.length; i++){
+         if(Moment(arr[i]).format('D MMM YY') == Moment(date).format('D MMM YY') ){
+           count ++
+         }
+      }
+      return count
+    };
+   
+    getPoAndSolicitudesPending() {
+      // let both = Array.prototype.push.apply(payments, capital)
+      // console.log('fr',this.state.solicitudes[0])
+      
+      let arr1 = this.state.pendingPo
+      arr1.forEach(function (element) {
+          element.tipo = "Orden";
+      });
+      let arr2 = this.state.solicitudes
+      arr2.forEach(function (element) {
+          element.tipo = "Solicitud";
+      });
+      Array.prototype.push.apply(arr1, arr2)
+      // let both = concat.reduce((acc, val) => acc.concat(val), []);
+      let both = arr1
+      let sort1 = both.sort(function (a, b) { return new Date(b.created_at) - new Date(a.created_at) });
+     
+      // let sort2 = sort1.reverse()
+      var map = sort1.map((data, key) => {
+        function solicitudesAndPoLength(date, tipo, solicitudesDate, poDate){
+          if(tipo == 4){
+          let arr = solicitudesDate
+    
+          var count = 0
+          for(let i = 0; i < arr.length; i++){
+             if(Moment(arr[i]).format('D MMM YY') == Moment(date).format('D MMM YY') ){
+               count ++
+             }
+          }
+          return count
+        } else {
+              let arr = poDate
+          var count = 0
+          for(let i = 0; i < arr.length; i++){
+            if(Moment(arr[i]).format('D MMM YY') == Moment(date).format('D MMM YY') ){
+              count ++
+            }
+          }
+          return count
+        }
+        };
+        function getAddressSolicitudes(data, tipo){
+          var arr = [data]
+          if(tipo == 4){
+            let shipping = arr.map((element)=>{
+              return element.shipping
+            })
+            let address = shipping.map((element)=>{
+              return element.address
+            })
+            //  console.log(address)
+            // let address = provider.map((element)=>{
+            //   return element.address
+            // })
+            let city = address.map((element)=>{
+              return element.city
+            })
+            let street = address.map((element)=>{
+              return element.street
+            })
+            let mapstate = address.map((element)=>{
+              return element.state
+            })
+            let country = mapstate.map((element)=>{
+              return element.country.name
+            })
+              return country+' ' + city +' '+ street
+          } else {
+            let provider = arr.map((element)=>{
+              return element.proposal.provider.address
+            })
+           
+            // let address = provider.map((element)=>{
+            //   return element.address
+            // })
+            // let city = provider.map((element)=>{
+            //   return element.city
+            // })
+            // let zipCode = provider.map((element)=>{
+            //   return element.zip_code
+            // })
+            return provider 
+          }
+          
+        };
+          function ifOrdenType(data, tipo) { 
+            function goToInfoOrdenes(){
+              Actions.infoOrdenes()
+            }
+            if(tipo == 3){
+              return <View style={styles.solicitudesDescription}>
+                      <View style={{flexDirection:'column', width:'30%'}}>
+                        <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginLeft:10 , marginTop:10}}>Dirección</Text>
+                        <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginLeft:10 , marginTop:10}}>Monto</Text>
+                        <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginLeft:10, marginTop:10}}>Presupuesto</Text>
+                      </View>
+                      <View style={{flexDirection:'column', width:'50%'}}>
+                      <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginTop:10}}>{data.proposal.provider.address}</Text>
+                        <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginTop:10   }}>{numeral(data.proposal.total).format('$0,0.00')}</Text>
+                        <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginTop:10  }}>{data.budget.name}</Text>
+                        <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10 }}>de {numeral(data.budget.amount).format('$0,0.00')}</Text>
+                        <Progress.Bar
+                          fillStyle={{}}
+                          progress={data.budget.available}
+                          width={Dimensions.get('window').width - 240}
+                          height={6}
+                          color={'#4bdbcd'}
+                          borderWidth={0}
+                          unfilledColor={'rgb(211,211,211)'}
+                        />
+                      </View>
+                      <View style={{flexDirection:'column', width:'20%', justifyContent:'flex-end'}}>
+                        <TouchableOpacity  onPress={() => goToInfoOrdenes()}>
+                          <Image
+                              source={{uri : 'https://img.icons8.com/material-rounded/2x/chevron-right.png'}}
+                              style={{ width: 20, height: 20, marginLeft: 'auto',marginRight:5, marginTop:20}}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+            } else {
+              return false
+            } 
+          };
+          function ifSolicitudType(data, tipo) { 
+            if(tipo == 4){
+              return <View style={{flexDirection:'row', marginTop:10}}>
+                       <View style={{width:'30%'}}>
+                          <Text style={{ color: '#000000', fontWeigth:'bold', fontSize: 10, marginLeft:10 }}>Dirección </Text>
+                       </View>
+                       <View style={{width:'50%'}}>
+                         <Text style={{color:'#000000',fontWeigth:'100', fontSize: 10}}>{getAddressSolicitudes(data, data.type)}</Text>
+                       </View>
+                       <View style={{width:'20%'}}>
+                       <Image
+                              source={{uri : 'https://img.icons8.com/material-rounded/2x/chevron-right.png'}}
+                              style={{ width: 20, height: 20, marginLeft: 'auto',marginRight:5, marginTop:0}}
+                          />
+                       </View>
+                       
+                       
+                    </View>
+            } else {
+              return false
+            } 
+          };
+          return <View style={{alignItems:'center', display:'flex'}}>
+                    <View style={styles.solicitudesMain}>
+                        <View style={{flexDirection:'row'}}>
+                           <View style={{ alignItems: 'flex-start',width:'50%' }}><Text style={{ color: '#000000', fontSize: 15, marginBottom:10, marginLeft:10 }}>{Moment(data.created_at).format('D MMM YY')}</Text></View>
+                           <View style={{ alignItems: 'flex-end',width:'50%' }}><Text style={{ color: '#000000', fontSize: 15, marginBottom:10, marginRight:10 }}>{solicitudesAndPoLength( data.created_at, data.type,this.state.solicitudesDate, this.state.poDate)} por resolver</Text></View>
+                        </View>
+                        <View style={styles.solicitudes}>
+                              <Image
+                                  source={{uri : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZMD1evACIwv083oh-CbaavyrN-0pXUGdKHMM-Ny_oZMh7lQ928Q&s'}}
+                                  style={{ width: 50, height: 50, marginLeft: 10,marginRight:10, marginTop:20}}
+                              />
+                            <View style={{color:'#000000', flexDirection:'column', marginTop:20}}>
+                                <Text style={{ color: '#000000', fontFamily: 'OpenSans-Bold', fontSize: 20 }}>{data.tipo} {data.folio} </Text>
+                                <Text style={{color:'#000000', fontFamily: 'OpenSans', fontSize: 10}}>{data.account.user.first_name}</Text>
+                            </View>
+                            <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginLeft:'auto', marginRight:10, marginTop:25 }}>{this.howManyDaysAfter(data.created_at.toString())}</Text>
+                        </View>
+                        <View style={styles.solicitudesDescription}>
+                            
+                            {ifSolicitudType(data, data.type)}
+                        </View>
+                        {ifOrdenType(data, data.type)}
+                        <View style={styles.solicitudesDescription2}>
+                          <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:20, marginTop:20}}>
+                            <View style={{width:'40%', marginLeft:10}}>
+                              <TouchableOpacity style={{
+                                height:30,
+                                backgroundColor:'transparent',
+                                borderWidth:1,
+                                borderRadius:3,
+                                alignItems:'center',
+                                justifyContent:'center',
+                                borderColor:'#808080'
+                              }}
+                                onPress={() => Alert.alert('Simple Button pressed')}
+                              >
+                              <Text style={{color:'#808080'}}>RECHAZAR</Text>
+                              </TouchableOpacity>
+
+                            </View>
+                            <View style={{width:'20%'}}></View>
+                            <View style={{width:'40%', marginRight:10}}>
+                              <TouchableOpacity style={{
+                                height:30,
+                                backgroundColor:'transparent',
+                                borderWidth:1,
+                                borderRadius:3,
+                                alignItems:'center',
+                                justifyContent:'center',
+                                borderColor:'#4bdbcd'
+                              }}
+                                onPress={() => Alert.alert('Simple Button pressed')}
+                              >
+                              <Text style={{color:'#4bdbcd'}}>APROBAR</Text>
+                              </TouchableOpacity>
+
+                            </View>
+                          </View>
+                        </View>
+                  </View>
+              </View>
+      });
+      if (this.state.solicitudes.length >= 1 || this.state.pendingPo.length >= 1) {
+          return map
+      } else {
+          return false
+      }
+  };
+    render() {
+        var drawer = (
+            <View style={{ flex: 1, backgroundColor: '#4bdbcd' }}>
+              <Text style={{ color: '#FFF', marginTop: 30, fontSize: 25, }}></Text>
+              <View style={{ flex: 1, justifyContent: 'flex-start', marginTop: 40 }}>
+
+              </View>
+              <View style={{ flex: 1, justifyContent: 'flex-end', marginBottom: 50 }}>
+                <TouchableOpacity onPress={this.logout}>
+                  <Text style={{ color: '#FFF', marginLeft: 20, marginBottom: 10, fontFamily: 'OpenSans-Bold' }}> CERRAR SESIÓN  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          );
+        return (
+            <Drawer renderNavigationView={() => drawer}
+            content={drawer}
+            type="overlay"
+            tapToClose={true}
+            openDrawerOffset={0.4}
+            ref={_drawer => (this.drawer = _drawer)}>
+                <View
+                    style={styles.container}
+                    // resizeMode="cover"
+                    // source={require('../../../assets/FONDO_16.png')}
+                >
+                    <View style={{flexDirection: 'row'}}>
+                        <TouchableOpacity onPress={this.openDrawer.bind(this)} >
+                        <Image
+                            source={{uri : 'https://img.icons8.com/ultraviolet/2x/menu.png'}}
+                            style={{ width: 25, height: 25,marginLeft:20,  padding:20, marginTop:5}}
+                        />
+                        </TouchableOpacity>
+                        <Image
+                          style={styles.yayImage}
+                          resizeMode={'contain'}
+                          source={require('../../../assets/yay.png')}
+                        />
+                    </View>
+                    <ScrollView style={{marginTop:0}}
+                        refreshControl={
+                            <RefreshControl
+                                //refresh control used for the Pull to Refresh
+                                refreshing={this.state.refreshing}
+                                onRefresh={this.onRefresh.bind(this)}
+                            />
+                        }
+                    >
+                      {this.getPoAndSolicitudesPending()}
+                      <View style={{marginTop:40}}></View>
+                    </ScrollView>
+                </View>
+            </Drawer>
+        )
+    }
+};
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: "rgb(211,211,211)",
+
+    },
+    yayImage: {
+      width: Dimensions.get('window').width - 240,
+      resizeMode: "contain",
+      height: 50,
+      marginLeft:70
+    },
+    solicitudesMain:{
+      // borderRadius:4,
+      // shadowColor: "#000000",
+      // shadowOffset: {
+      // 	width: 0,
+      // 	height: 5,
+      // },
+      // shadowOpacity: 0.34,
+      // shadowRadius: 6.27,
+      //
+      // elevation: 10,
+      marginLeft: 5,
+      marginRight: 5,
+      marginTop: 20,
+      width:'90%',
+      flexDirection:'column',
+      backgroundColor:'rgb(211,211,211)',
+      alignContent: 'center',
+    },
+    solicitudes:{
+      borderBottomRightRadius: 0,
+      borderBottomLeftRadius: 0,
+      borderRadius:4,
+      shadowColor: "#000000",
+      shadowOffset: {
+      	width: 0,
+      	height: 5,
+      },
+      shadowOpacity: 0.34,
+      shadowRadius: 6.27,
+      elevation: 10,
+      flexDirection:'row',
+      backgroundColor:'#ffffff',
+      alignContent: 'center'
+    },
+    solicitudesDescription:{
+      borderTopRightRadius: 0,
+      borderTopLeftRadius: 0,
+      borderRadius:0,
+      shadowColor: "#000000",
+      shadowOffset: {
+      	width: 0,
+      	height: 5,
+      },
+      shadowOpacity: 0.34,
+      shadowRadius: 6.27,
+      elevation: 10,
+      flexDirection:'row',
+      backgroundColor:'#ffffff',
+    },
+    solicitudesDescription2:{
+      borderTopRightRadius: 0,
+      borderTopLeftRadius: 0,
+      borderRadius:4,
+      shadowColor: "#000000",
+      shadowOffset: {
+      	width: 0,
+      	height: 5,
+      },
+      shadowOpacity: 0.34,
+      shadowRadius: 6.27,
+      elevation: 10,
+      flexDirection:'row',
+      backgroundColor:'#ffffff',
+      alignContent: 'center',
+    },
+    imgBackground: {
+        width: '100%',
+        height: '100%',
+        flex: 1
+    },
+})
