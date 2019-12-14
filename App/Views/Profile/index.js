@@ -280,8 +280,8 @@ export default class Profile extends Component {
           
         };
           function ifOrdenType(data, tipo) { 
-            function goToInfoOrdenes(){
-              Actions.infoOrdenes()
+            function goToInfoOrdenes(data){
+              Actions.infoOrdenes({data: data})
             }
             if(tipo == 3){
               return <View style={styles.solicitudesDescription}>
@@ -306,7 +306,7 @@ export default class Profile extends Component {
                         />
                       </View>
                       <View style={{flexDirection:'column', width:'20%', justifyContent:'flex-end'}}>
-                        <TouchableOpacity  onPress={() => goToInfoOrdenes()}>
+                        <TouchableOpacity  onPress={() => goToInfoOrdenes(data)}>
                           <Image
                               source={{uri : 'https://img.icons8.com/material-rounded/2x/chevron-right.png'}}
                               style={{ width: 20, height: 20, marginLeft: 'auto',marginRight:5, marginTop:20}}

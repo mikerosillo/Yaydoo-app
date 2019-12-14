@@ -24,22 +24,16 @@ export default class Profile extends Component {
     constructor() {
         super()
         this.state = {
-            token: '',
-            refreshing: true,
-            pendingPo:[],
-            poDate:[],
+            data:[],  
         }
-        this.getAllPo()
-    };
-    onRefresh() {
-        this.setState({ pendingPo: [] })
-        this.getAllPo()
     };
     
     previewsPage(){
       Actions.profile()
     };
-    
+    componentWillMount(){
+        this.state.data = this.props.data
+    }
     // getAddress(data, tipo){
     //   console.log(tipo)
     //   if(tipo == 4){
@@ -64,55 +58,6 @@ export default class Profile extends Component {
     //   }
     // };
     
-    async getAllPo() {
-        const token = await AsyncStorage.getItem('ACCESS_TOKEN')
-        const uuid = await AsyncStorage.getItem('UUID');
-        if (token && uuid) { // if user is logged in
-            await fetch(`https://stage.ws.yay.do/v2/enterprise/${uuid}/purchaseOrder/?filter=2&type=3&page=1&approver=1`, {
-                method: 'GET',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    "X-Auth-Token": token
-                },
-
-            })
-                .then((response) => {
-                    if (response.ok) {
-                        response.json().then((datos) => {
-                             // var ultimaFecha = Moment(lastDate[0]).format('D MMM YY')
-                          // console.log(datos.data.account)
-                          // console.log(datos.data.approved)
-                          // console.log(datos.data.internal)
-                            let accountInfo = datos.data
-                            // let solicitudes = datos.data
-                            // let name = codes[0].account.user.first_name
-
-                            var pendingPo = accountInfo.filter((element) => {
-                                return element.type == 3
-                            })
-                            var createdAt = pendingPo.map((element)=>{
-                              return element.created_at
-                            })
-
-                            //console.log('json filter',pendingPo[0])
-                            // var map2 = accountInfo.map((element) => {
-                            //     return element.folio
-                            // })
-                            this.setState({
-                              refreshing: false,
-                              pendingPo:pendingPo,
-                              poDate:createdAt,
-                            })
-                        })
-                    }
-                })
-                .catch(err => console.warn(err.message));
-        } else {
-            this.setState({refreshing: false})
-            // Alert.alert('Favor de iniciar sesión')
-        }
-    };
     // getAddressPo(data){
     //   let arr = [data]
     //   let provider = arr.map((element)=>{
@@ -143,24 +88,14 @@ export default class Profile extends Component {
    
    
     render() {
-       
+        var data = this.state.data
+        console.log('from',data)
         return (
             <View style={styles.container}>
-               
-                <ScrollView style={{marginTop:0}}
-                    refreshControl={
-                        <RefreshControl
-                            //refresh control used for the Pull to Refresh
-                            refreshing={this.state.refreshing}
-                            onRefresh={this.onRefresh.bind(this)}
-                        />
-                    }
-                >
-                
+                <ScrollView style={{marginTop:0}}>
                     <View style={{marginTop:40}}></View>
                 </ScrollView>
-            </View>
-            
+            </View> 
         )
     }
 };
