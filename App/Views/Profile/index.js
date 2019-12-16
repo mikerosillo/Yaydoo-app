@@ -282,7 +282,7 @@ export default class Profile extends Component {
           function ifOrdenType(data, tipo) { 
             function goToInfoOrdenes(data, folio){
               Actions.infoOrdenes({data: data, folio: folio})
-            }
+            };
             if(tipo == 3){
               return <View style={styles.solicitudesDescription}>
                       <View style={{flexDirection:'column', width:'30%'}}>
@@ -319,6 +319,9 @@ export default class Profile extends Component {
             } 
           };
           function ifSolicitudType(data, tipo) { 
+            function goToInfoSolicitudes(data, folio){
+              Actions.infoSolicitudes({data: data, folio: folio})
+            };
             if(tipo == 4){
               return <View style={{flexDirection:'row', marginTop:10}}>
                        <View style={{width:'30%'}}>
@@ -328,10 +331,12 @@ export default class Profile extends Component {
                          <Text style={{color:'#000000',fontWeigth:'100', fontSize: 10}}>{getAddressSolicitudes(data, data.type)}</Text>
                        </View>
                        <View style={{width:'20%'}}>
-                       <Image
+                       <TouchableOpacity  onPress={() => goToInfoSolicitudes(data, data.folio)}>
+                          <Image
                               source={{uri : 'https://img.icons8.com/material-rounded/2x/chevron-right.png'}}
-                              style={{ width: 20, height: 20, marginLeft: 'auto',marginRight:5, marginTop:0}}
+                              style={{ width: 20, height: 20, marginLeft: 'auto',marginRight:5, marginTop:20}}
                           />
+                        </TouchableOpacity>
                        </View>
                        
                        

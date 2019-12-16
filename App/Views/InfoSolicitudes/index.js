@@ -20,7 +20,7 @@ import { Actions } from 'react-native-router-flux';
 import Moment from 'moment';
 var numeral = require('numeral');
 
-export default class InfoOrdenes extends Component {
+export default class InfoSolicitudes extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -72,17 +72,8 @@ export default class InfoOrdenes extends Component {
     };
     whichToRender(){
         let arr = [this.state.data]
-        let name = arr.map((el , key)=>{
+        let name = arr.map((el)=>{
             return el.account.user.first_name
-        })
-        let address = arr.map((el)=>{
-            return el.proposal.provider.address
-        })
-        let deliveryDate = arr.map((el)=>{
-            return el.delivery_date
-        })
-        let priority = arr.map((el)=>{
-            return el.priority
         })
         if(this.state.productos == true){
             return <View style={{flexDirection:'row'}}>
@@ -109,10 +100,10 @@ export default class InfoOrdenes extends Component {
                         <View style={{width:'50%'}}>
                             <Text style={{color:'#000000', fontSize:15, fontWeight:'bold', marginTop:20, marginBottom:20}}></Text>
                             <Text style={{color:'#000000', marginTop:20, marginBottom:20}}>{name}</Text>
-                            <Text style={{color:'#000000', marginTop:20, marginBottom:20}}>{priority}</Text>
+                            <Text style={{color:'#000000', marginTop:20, marginBottom:20}}></Text>
                             <Text style={{color:'#000000', marginTop:20, marginBottom:20, fontWeight:'bold'}}></Text>
-                            <Text style={{color:'#000000', marginTop:20, marginBottom:20}}>{address}</Text>
-                            <Text style={{color:'#000000', marginTop:20, marginBottom:20}}>{Moment(deliveryDate).format('D MMM YY')}</Text>
+                            <Text style={{color:'#000000', marginTop:20, marginBottom:20}}></Text>
+                            <Text style={{color:'#000000', marginTop:20, marginBottom:20}}>{Moment().format('D MMM YY')}</Text>
                         </View>   
                     </View>
                    
