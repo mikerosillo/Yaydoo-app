@@ -20,7 +20,7 @@ import { Actions } from 'react-native-router-flux';
 import Moment from 'moment';
 var numeral = require('numeral');
 
-export default class InfoOrdenes extends Component {
+export default class InfoSolicitudes extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -37,6 +37,7 @@ export default class InfoOrdenes extends Component {
     UNSAFE_componentWillMount(){
         this.state.data = this.props.data
         this.state.folio = this.props.folio
+        this.getPoInfo()
     }
     informacionTitleStyle(){
         if(this.state.informacion == true){
@@ -70,19 +71,61 @@ export default class InfoOrdenes extends Component {
             }
         }
     };
+   async getPoInfo(){
+        const token = await AsyncStorage.getItem('ACCESS_TOKEN')
+        const uuid = await AsyncStorage.getItem('UUID');
+        if (token && uuid) { // if user is logged in
+            await fetch(`https://stage.ws.yay.do/v2/enterprise/${uuid}/purchaseOrder/74960-2997263`, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    "X-Auth-Token": token
+                },
+
+            })
+                .then((response) => {
+                    console.log(response.json())
+                  
+                    // if (response.ok) {
+                    //     response.json().then((datos) => {
+                    //          // var ultimaFecha = Moment(lastDate[0]).format('D MMM YY')
+                    //       console.log(datos)
+                    //       // console.log(datos.data.approved)
+                    //       // console.log(datos.data.internal)
+                          
+                    //         // let solicitudes = datos.data
+                    //         // let name = codes[0].account.user.first_name
+
+                            
+                    //     })
+                    // }
+                })
+                .catch(err => console.warn(err.message));
+        } 
+    }
     whichToRender(){
         let arr = [this.state.data]
-        let name = arr.map((el , key)=>{
+        let name = arr.map((el)=>{
             return el.account.user.first_name
-        })
-        let address = arr.map((el)=>{
-            return el.proposal.provider.address
-        })
-        let deliveryDate = arr.map((el)=>{
-            return el.delivery_date
-        })
+        });
         let priority = arr.map((el)=>{
-            return el.priority
+            var res=''
+            if(el.priority == '1'){
+                 res = 'Muy alta'
+            } else if(el.priority == '2'){
+                res = 'Alta'
+            } else if(el.priority == '3'){
+                res = 'Media'
+            } else if(el.priority == '4'){
+                res = 'Baja'
+            } else {
+                res = 'Muy baja'
+            }
+            return res
+        });
+        let address = arr.map((el)=>{
+            return el.shipping.address.entity.name
         })
         if(this.state.productos == true){
             return <View style={{flexDirection:'row'}}>
@@ -112,7 +155,7 @@ export default class InfoOrdenes extends Component {
                             <Text style={{color:'#000000', marginTop:20, marginBottom:20}}>{priority}</Text>
                             <Text style={{color:'#000000', marginTop:20, marginBottom:20, fontWeight:'bold'}}></Text>
                             <Text style={{color:'#000000', marginTop:20, marginBottom:20}}>{address}</Text>
-                            <Text style={{color:'#000000', marginTop:20, marginBottom:20}}>{Moment(deliveryDate).format('D MMM YY')}</Text>
+                            <Text style={{color:'#000000', marginTop:20, marginBottom:20}}>{Moment().format('D MMM YY')}</Text>
                         </View>   
                     </View>
                    

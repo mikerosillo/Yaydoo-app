@@ -21,8 +21,8 @@ import Moment from 'moment';
 var numeral = require('numeral');
 
 export default class Profile extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             token: '',
             codes: [],
@@ -280,9 +280,9 @@ export default class Profile extends Component {
           
         };
           function ifOrdenType(data, tipo) { 
-            function goToInfoOrdenes(){
-              Actions.infoOrdenes()
-            }
+            function goToInfoOrdenes(data, folio){
+              Actions.infoOrdenes({data: data, folio: folio})
+            };
             if(tipo == 3){
               return <View style={styles.solicitudesDescription}>
                       <View style={{flexDirection:'column', width:'30%'}}>
@@ -300,13 +300,13 @@ export default class Profile extends Component {
                           progress={data.budget.available}
                           width={Dimensions.get('window').width - 240}
                           height={6}
-                          color={'#4bdbcd'}
+                          color={'#08d06a'}
                           borderWidth={0}
                           unfilledColor={'rgb(211,211,211)'}
                         />
                       </View>
                       <View style={{flexDirection:'column', width:'20%', justifyContent:'flex-end'}}>
-                        <TouchableOpacity  onPress={() => goToInfoOrdenes()}>
+                        <TouchableOpacity  onPress={() => goToInfoOrdenes(data, data.folio)}>
                           <Image
                               source={{uri : 'https://img.icons8.com/material-rounded/2x/chevron-right.png'}}
                               style={{ width: 20, height: 20, marginLeft: 'auto',marginRight:5, marginTop:20}}
@@ -319,6 +319,9 @@ export default class Profile extends Component {
             } 
           };
           function ifSolicitudType(data, tipo) { 
+            function goToInfoSolicitudes(data, folio){
+              Actions.infoSolicitudes({data: data, folio: folio})
+            };
             if(tipo == 4){
               return <View style={{flexDirection:'row', marginTop:10}}>
                        <View style={{width:'30%'}}>
@@ -328,10 +331,12 @@ export default class Profile extends Component {
                          <Text style={{color:'#000000',fontWeigth:'100', fontSize: 10}}>{getAddressSolicitudes(data, data.type)}</Text>
                        </View>
                        <View style={{width:'20%'}}>
-                       <Image
+                       <TouchableOpacity  onPress={() => goToInfoSolicitudes(data, data.folio)}>
+                          <Image
                               source={{uri : 'https://img.icons8.com/material-rounded/2x/chevron-right.png'}}
-                              style={{ width: 20, height: 20, marginLeft: 'auto',marginRight:5, marginTop:0}}
+                              style={{ width: 20, height: 20, marginLeft: 'auto',marginRight:5, marginTop:20}}
                           />
+                        </TouchableOpacity>
                        </View>
                        
                        
@@ -393,7 +398,7 @@ export default class Profile extends Component {
                               }}
                                 onPress={() => Alert.alert('Simple Button pressed')}
                               >
-                              <Text style={{color:'#4bdbcd'}}>APROBAR</Text>
+                              <Text style={{color:'#08d06a'}}>APROBAR</Text>
                               </TouchableOpacity>
 
                             </View>
@@ -410,7 +415,7 @@ export default class Profile extends Component {
   };
     render() {
         var drawer = (
-            <View style={{ flex: 1, backgroundColor: '#4bdbcd' }}>
+            <View style={{ flex: 1, backgroundColor: '#08d06a' }}>
               <Text style={{ color: '#FFF', marginTop: 30, fontSize: 25, }}></Text>
               <View style={{ flex: 1, justifyContent: 'flex-start', marginTop: 40 }}>
 
