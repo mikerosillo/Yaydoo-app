@@ -47,7 +47,7 @@ export default class InfoOrdenes extends Component {
         }
         this.getPoInfo()
     };
-    
+
     previewsPage(){
       Actions.profile()
     };
@@ -74,7 +74,7 @@ export default class InfoOrdenes extends Component {
                         response.json().then((datos) => {
                             let poInfo = datos
                             let city = poInfo.account.billing[0].city
-                            let state = poInfo.account.billing[0].state 
+                            let state = poInfo.account.billing[0].state
                             let street = poInfo.account.billing[0].street
                             let no = poInfo.account.billing[0].num_ext
                             let deliveryDate = poInfo.delivery_date
@@ -124,14 +124,14 @@ export default class InfoOrdenes extends Component {
         if(this.state.informacion == true){
             return {
                 textDecorationLine: 'underline',
-                color:'#FFF', 
-                marginLeft:20, 
+                color:'#FFF',
+                marginLeft:20,
                 fontSize:18
             }
         } else {
             return {
-                color:'#FFF', 
-                marginLeft:20, 
+                color:'#FFF',
+                marginLeft:20,
                 fontSize:18
             }
         }
@@ -140,14 +140,14 @@ export default class InfoOrdenes extends Component {
         if(this.state.productos == true){
             return {
                 textDecorationLine: 'underline',
-                color:'#FFF', 
-                marginLeft:20, 
+                color:'#FFF',
+                marginLeft:20,
                 fontSize:18
             }
         } else {
             return {
-                color:'#FFF', 
-                marginLeft:20, 
+                color:'#FFF',
+                marginLeft:20,
                 fontSize:18
             }
         }
@@ -169,7 +169,7 @@ export default class InfoOrdenes extends Component {
                         <View style={{flexDirection:'row'}}>
                             <View style={{width:'50%'}}>
                                 {ifImageNotNull()}
-                            </View>     
+                            </View>
                             <View style={{width:'50%', marginTop:20}}>
                                 <Text style={{color:'#000000', marginBottom:40, fontSize:16, fontWeight:'bold'}}>{data.item.description}</Text>
                                 <Text style={{color:'#808080', marginBottom:20, fontSize:16}}>{data.units}{' '}piezas ={' '}{numeral(data.item.price * data.units).format('$0,0.00')}{' '}{data.item.vendor.vendor.currency}</Text>
@@ -184,10 +184,10 @@ export default class InfoOrdenes extends Component {
                         </View>
                     </View>
            })
-            
+
             if(this.state.productos == true){
                 return items
-            } else { 
+            } else {
                 function ifProgressBarNotANumber(){
                     if( bar >= 0.1){
                         return <Progress.Bar
@@ -210,7 +210,7 @@ export default class InfoOrdenes extends Component {
                                     unfilledColor={'rgb(211,211,211)'}
                                 />
                     }
-                }     
+                }
             return  <View>
                             <View style={{flexDirection:'row'}}>
                                 <View style={{width:'40%'}}>
@@ -244,7 +244,7 @@ export default class InfoOrdenes extends Component {
                                     <Text style={{color:'#000000', marginTop:0, marginBottom:0}}>de{' '}{numeral(this.state.disponible).format('$0,0.00')}</Text>
                                     {ifProgressBarNotANumber()}
                                     <Text style={{color:'#000000', marginTop:20, marginBottom:0}}></Text>
-                                </View>     
+                                </View>
                             </View>
                             <View
                                 style={{
@@ -253,10 +253,10 @@ export default class InfoOrdenes extends Component {
                                 marginBottom:20
                                 }}
                             />
-                    </View> 
-                    
+                    </View>
+
             }
-        
+
     };
     ifInfoTrue(){
         if(this.state.productos !== true){
@@ -337,7 +337,7 @@ export default class InfoOrdenes extends Component {
             <View style={this.stylesContainer()}>
                 <View style={{backgroundColor:'#4180fd'}}>
                     <TouchableOpacity  onPress={() => this.previewsPage()}>
-                        <View style={{flexDirection:'row', marginTop:20}}>
+                        <View style={{flexDirection:'row', marginTop:40}}>
                             <View style={{width:'50%', flexDirection:'row'}}>
                             <View style={{width:'40%', justifyContent:'center'}}>
                                 <Image
@@ -360,7 +360,7 @@ export default class InfoOrdenes extends Component {
                             </TouchableOpacity>
                         </View>
                         <View style={{width:'50%'}}>
-                            <TouchableOpacity onPress={() => this.setState({informacion: false, productos: true})}> 
+                            <TouchableOpacity onPress={() => this.setState({informacion: false, productos: true})}>
                                 <Text style={this.productosTitleStyle()}>PRODUCTOS</Text>
                             </TouchableOpacity>
                         </View>
@@ -372,7 +372,7 @@ export default class InfoOrdenes extends Component {
                     {this.ifInfoTrue()}
                     </View>
                 </ScrollView>
-            </View> 
+            </View>
         )
     }
 };

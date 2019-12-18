@@ -30,7 +30,7 @@ export default class InfoSolicitudes extends Component {
             productos: false,
         }
     };
-    
+
     previewsPage(){
       Actions.profile()
     };
@@ -43,14 +43,14 @@ export default class InfoSolicitudes extends Component {
         if(this.state.informacion == true){
             return {
                 textDecorationLine: 'underline',
-                color:'#FFF', 
-                marginLeft:20, 
+                color:'#FFF',
+                marginLeft:20,
                 fontSize:18
             }
         } else {
             return {
-                color:'#FFF', 
-                marginLeft:20, 
+                color:'#FFF',
+                marginLeft:20,
                 fontSize:18
             }
         }
@@ -59,14 +59,14 @@ export default class InfoSolicitudes extends Component {
         if(this.state.productos == true){
             return {
                 textDecorationLine: 'underline',
-                color:'#FFF', 
-                marginLeft:20, 
+                color:'#FFF',
+                marginLeft:20,
                 fontSize:18
             }
         } else {
             return {
-                color:'#FFF', 
-                marginLeft:20, 
+                color:'#FFF',
+                marginLeft:20,
                 fontSize:18
             }
         }
@@ -76,7 +76,7 @@ export default class InfoSolicitudes extends Component {
         let name = arr.map((el)=>{
             return el.account.user.first_name
         });
-        
+
         let priority = arr.map((el)=>{
             var res=''
             if(el.priority == '1'){
@@ -97,14 +97,14 @@ export default class InfoSolicitudes extends Component {
         })
         var items = this.state.data.quotation_items.map((data, key)=>{
             return     <View style={styles.solicitudes}>
-                   
+
                             <View style={{flexDirection:'row', maxWidth:'95%', borderTopLeftRadius:4}}>
                                 <View style={{width:'50%', backgroundColor:'#FFF'}}>
                                     <Image
                                         source={{uri :`${data.item.image.full}`}}
                                         style={{ width: 150, height: 150, marginTop:20, marginLeft:0}}
                                     />
-                                </View>     
+                                </View>
                                 <View style={{width:'50%', marginTop:20}}>
                                     <Text style={{color:'#000000', marginBottom:40, fontSize:16, fontWeight:'bold'}}>{data.item.description}</Text>
                                     <Text style={{color:'#808080', marginBottom:20, fontSize:16}}>{data.units}{' '}piezas ={' '}{numeral(data.item.price * data.units).format('$0,0.00')}{' '}{data.item.vendor.vendor.currency}</Text>
@@ -121,7 +121,7 @@ export default class InfoSolicitudes extends Component {
            })
         if(this.state.productos == true){
             return items
-        } else {      
+        } else {
            return   <View>
                         <View style={{flexDirection:'row'}}>
                             <View style={{width:'50%'}}>
@@ -139,10 +139,10 @@ export default class InfoSolicitudes extends Component {
                                 <Text style={{color:'#000000', marginTop:20, marginBottom:20, fontWeight:'bold'}}></Text>
                                 <Text style={{color:'#000000', marginTop:20, marginBottom:20}}>{address}</Text>
                                 <Text style={{color:'#000000', marginTop:20, marginBottom:20}}>{Moment(this.state.data.delivery_date).format('D MMM YY')}</Text>
-                            </View>   
+                            </View>
                         </View>
                     </View>
-                   
+
         }
     };
     stylesContainer(){
@@ -224,12 +224,12 @@ export default class InfoSolicitudes extends Component {
     howManyDaysAfter(){
         if(this.state.productos == true){
             let date = this.state.data.account.created_at
-            
-        
+
+
             let dayCreated = Moment(date).format('D') // = 9
             let todaysDate = Moment(new Date()).format('D')
             var afterCreated = todaysDate - dayCreated
-            
+
             if(afterCreated <= 30 && afterCreated >= 1 ){
             return <Text>Haces {afterCreated} d</Text>
             }else if(afterCreated <= -1) {
@@ -257,7 +257,7 @@ export default class InfoSolicitudes extends Component {
             <View style={this.stylesContainer()}>
                 <View style={{backgroundColor:'#4180fd'}}>
                     <TouchableOpacity  onPress={() => this.previewsPage()}>
-                        <View style={{flexDirection:'row', marginTop:20}}>
+                        <View style={{flexDirection:'row', marginTop:30}}>
                             <View style={{width:'50%', flexDirection:'row'}}>
                             <View style={{width:'40%', justifyContent:'center'}}>
                                     <TouchableOpacity  onPress={() => this.previewsPage()}>
@@ -282,10 +282,10 @@ export default class InfoSolicitudes extends Component {
                             </TouchableOpacity>
                         </View>
                         <View style={{width:'50%'}}>
-                        
-                  
 
-                            <TouchableOpacity onPress={() => this.setState({productos: true, informacion: false})}> 
+
+
+                            <TouchableOpacity onPress={() => this.setState({productos: true, informacion: false})}>
                                 <Text style={this.productosTitleStyle()}>PRODUCTOS</Text>
                             </TouchableOpacity>
                         </View>
@@ -301,7 +301,7 @@ export default class InfoSolicitudes extends Component {
                     </View>
                     </View>
                 </ScrollView>
-            </View> 
+            </View>
         )
     }
 };

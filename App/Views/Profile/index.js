@@ -95,7 +95,7 @@ export default class Profile extends Component {
     //     this.getAddressPo(data)
     //   }
     // }
-    
+
     checkStatus(data){
       if(data == null){
         return 'Pendiente'
@@ -106,11 +106,11 @@ export default class Profile extends Component {
     howManyDaysAfter(date){
       // let dateStr = JSON.parse(date)
       var fecha = new Date(JSON.stringify(date));
-     
+
       let dayCreated = Moment(date).format('D') // = 9
       let todaysDate = Moment(new Date()).format('D')
       var afterCreated = todaysDate - dayCreated
-      
+
       if(afterCreated <= 30 && afterCreated >= 1 ){
         return <Text>Hace {afterCreated} d</Text>
       }else if(afterCreated <= -1) {
@@ -123,7 +123,7 @@ export default class Profile extends Component {
         return <Text>Hace meses</Text>
       }
     };
-    
+
     async getAllPo() {
         const token = await AsyncStorage.getItem('ACCESS_TOKEN')
         const uuid = await AsyncStorage.getItem('UUID');
@@ -141,7 +141,7 @@ export default class Profile extends Component {
                     if (response.ok) {
                         response.json().then((datos) => {
                              // var ultimaFecha = Moment(lastDate[0]).format('D MMM YY')
-                         
+
                           // console.log(datos.data.approved)
                           // console.log(datos.data.internal)
                             let accountInfo = datos.data
@@ -178,7 +178,7 @@ export default class Profile extends Component {
       let provider = arr.map((element)=>{
         return element.proposal.provider.address
       })
-      
+
       // let address = provider.map((element)=>{
       //   return element.address
       // })
@@ -188,7 +188,7 @@ export default class Profile extends Component {
       // let zipCode = provider.map((element)=>{
       //   return element.zip_code
       // })
-      return provider 
+      return provider
     };
     pendingPoLength(date){
       let arr = this.state.poDate
@@ -200,11 +200,11 @@ export default class Profile extends Component {
       }
       return count
     };
-   
+
     getPoAndSolicitudesPending() {
       // let both = Array.prototype.push.apply(payments, capital)
       // console.log('fr',this.state.solicitudes[0])
-      
+
       let arr1 = this.state.pendingPo
       arr1.forEach(function (element) {
           element.tipo = "Orden";
@@ -217,13 +217,13 @@ export default class Profile extends Component {
       // let both = concat.reduce((acc, val) => acc.concat(val), []);
       let both = arr1
       let sort1 = both.sort(function (a, b) { return new Date(b.created_at) - new Date(a.created_at) });
-     
+
       // let sort2 = sort1.reverse()
       var map = sort1.map((data, key) => {
         function solicitudesAndPoLength(date, tipo, solicitudesDate, poDate){
           if(tipo == 4){
           let arr = solicitudesDate
-    
+
           var count = 0
           for(let i = 0; i < arr.length; i++){
              if(Moment(arr[i]).format('D MMM YY') == Moment(date).format('D MMM YY') ){
@@ -272,7 +272,7 @@ export default class Profile extends Component {
             let provider = arr.map((element)=>{
               return element.proposal.provider.address
             })
-           
+
             // let address = provider.map((element)=>{
             //   return element.address
             // })
@@ -282,11 +282,11 @@ export default class Profile extends Component {
             // let zipCode = provider.map((element)=>{
             //   return element.zip_code
             // })
-            return provider 
+            return provider
           }
-          
+
         };
-          function ifOrdenType(data, tipo) { 
+          function ifOrdenType(data, tipo) {
             function goToInfoOrdenes(data, folio){
               Actions.infoOrdenes({data: data, folio: folio})
             };
@@ -294,7 +294,7 @@ export default class Profile extends Component {
               function ifProgressBarNotANumber(){
                 let bar = 0+'.'+ parseFloat(data.budget.available).toFixed(2)*100;
                 if( data.budget.available >= 0.1 && data.budget.name !== 'Bloqueado'){
-                  
+
                     return <Progress.Bar
                                 fillStyle={{}}
                                 progress={bar}
@@ -315,19 +315,19 @@ export default class Profile extends Component {
                                 unfilledColor={'rgb(211,211,211)'}
                             />
                 }
-            } 
+            }
               return <View  style={styles.solicitudesDescription}>
                         <TouchableOpacity style={styles.solicitudesDescription}  onPress={() => goToInfoOrdenes(data, data.folio)}>
                           <View style={{flexDirection:'column', width:'30%'}}>
-                            <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginLeft:10 , marginTop:10}}>Dirección</Text>
-                            <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginLeft:10 , marginTop:10}}>Monto</Text>
-                            <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginLeft:10, marginTop:10}}>Presupuesto</Text>
+                            <Text style={{ color: '#000000', fontWeigth:'100',  fontSize: 10, marginLeft:10 , marginTop:10}}>Dirección</Text>
+                            <Text style={{ color: '#000000', fontWeigth:'100',  fontSize: 10, marginLeft:10 , marginTop:10}}>Monto</Text>
+                            <Text style={{ color: '#000000', fontWeigth:'100',  fontSize: 10, marginLeft:10, marginTop:10}}>Presupuesto</Text>
                           </View>
                           <View style={{flexDirection:'column', width:'50%'}}>
-                          <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginTop:10}}>{data.proposal.provider.address}</Text>
-                            <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginTop:10   }}>{numeral(data.proposal.total).format('$0,0.00')}</Text>
-                            <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginTop:10  }}>{data.budget.name}</Text>
-                            <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10 }}>de {numeral(data.budget.amount).format('$0,0.00')}</Text>
+                          <Text style={{ color: '#000000', fontWeigth:'100',  fontSize: 10, marginTop:10}}>{data.proposal.provider.address}</Text>
+                            <Text style={{ color: '#000000', fontWeigth:'100',  fontSize: 10, marginTop:10   }}>{numeral(data.proposal.total).format('$0,0.00')}</Text>
+                            <Text style={{ color: '#000000', fontWeigth:'100',  fontSize: 10, marginTop:10  }}>{data.budget.name}</Text>
+                            <Text style={{ color: '#000000', fontWeigth:'100',  fontSize: 10 }}>de {numeral(data.budget.amount).format('$0,0.00')}</Text>
                             {ifProgressBarNotANumber()}
                           </View>
                           <View style={{flexDirection:'column', width:'20%', justifyContent:'flex-end'}}>
@@ -342,9 +342,9 @@ export default class Profile extends Component {
                     </View>
             } else {
               return false
-            } 
+            }
           };
-          function ifSolicitudType(data, tipo) { 
+          function ifSolicitudType(data, tipo) {
             function goToInfoSolicitudes(data, folio){
               Actions.infoSolicitudes({data: data, folio: folio})
             };
@@ -365,11 +365,11 @@ export default class Profile extends Component {
                               />
                             </TouchableOpacity>
                           </View>
-                       </TouchableOpacity>  
+                       </TouchableOpacity>
                     </View>
             } else {
               return false
-            } 
+            }
           };
           return <View style={{alignItems:'center', display:'flex'}}>
                     <View style={styles.solicitudesMain}>
@@ -383,13 +383,13 @@ export default class Profile extends Component {
                                   style={{ width: 50, height: 50, marginLeft: 10,marginRight:10, marginTop:20}}
                               />
                             <View style={{color:'#000000', flexDirection:'column', marginTop:20}}>
-                                <Text style={{ color: '#000000', fontFamily: 'OpenSans-Bold', fontSize: 20 }}>{data.tipo} {data.folio} </Text>
-                                <Text style={{color:'#000000', fontFamily: 'OpenSans', fontSize: 10}}>{data.account.user.first_name}</Text>
+                                <Text style={{ color: '#000000', fontWeigth:'bold', fontSize: 20 }}>{data.tipo} {data.folio} </Text>
+                                <Text style={{color:'#000000', fontWeigth:'100', fontSize: 10}}>{data.account.user.first_name}</Text>
                             </View>
-                            <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginLeft:'auto', marginRight:10, marginTop:25 }}>{this.howManyDaysAfter(data.created_at.toString())}</Text>
+                            <Text style={{ color: '#000000', fontWeigth:'100',  fontSize: 10, marginLeft:'auto', marginRight:10, marginTop:25 }}>{this.howManyDaysAfter(data.created_at.toString())}</Text>
                         </View>
                         <View style={styles.solicitudesDescription}>
-                            
+
                             {ifSolicitudType(data, data.type)}
                         </View>
                         {ifOrdenType(data, data.type)}
@@ -448,7 +448,7 @@ export default class Profile extends Component {
               </View>
               <View style={{ flex: 1, justifyContent: 'flex-end', marginBottom: 50 }}>
                 <TouchableOpacity onPress={this.logout}>
-                  <Text style={{ color: '#FFF', marginLeft: 20, marginBottom: 10, fontFamily: 'OpenSans-Bold' }}> CERRAR SESIÓN  </Text>
+                  <Text style={{ color: '#FFF', marginLeft: 20, marginBottom: 10, fontWeigth:'bold'}}> CERRAR SESIÓN  </Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -469,7 +469,7 @@ export default class Profile extends Component {
                         <TouchableOpacity style={{marginLeft:'auto', marginRight:20}} onPress={this.openDrawer.bind(this)} >
                         <Image
                             source={{uri : 'https://img.icons8.com/ultraviolet/2x/menu.png'}}
-                            style={{ width: 25, height: 25,  padding:20, marginTop:5}}
+                            style={{ width: 25, height: 25,  padding:20, marginTop:30}}
                         />
                         </TouchableOpacity>
                         {/* <Image
@@ -546,14 +546,14 @@ const styles = StyleSheet.create({
       borderTopRightRadius: 0,
       borderTopLeftRadius: 0,
       borderRadius:0,
-      shadowColor: "#000000",
-      shadowOffset: {
-      	width: 0,
-      	height: 5,
-      },
-      shadowOpacity: 0.34,
-      shadowRadius: 6.27,
-      elevation: 10,
+      // shadowColor: "#000000",
+      // shadowOffset: {
+      // 	width: 0,
+      // 	height: 5,
+      // },
+      // shadowOpacity: 0.34,
+      // shadowRadius: 6.27,
+      // elevation: 10,
       flexDirection:'row',
       backgroundColor:'#ffffff',
     },

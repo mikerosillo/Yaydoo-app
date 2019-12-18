@@ -5,35 +5,40 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* yaydooTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* yaydooTests.m */; };
+		0290189D21AC40C38546BC12 /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19575C564E9443A1BCDED9F0 /* Roboto_medium.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		21E16D4A343C437ABEE654B0 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0436FD6EC68A4EAD824C9EA5 /* Fontisto.ttf */; };
+		2C6C39AF573B4BD4A8FD12A3 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 40EE4E4F6F9A4A6D803168F5 /* FontAwesome5_Brands.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* yaydooTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* yaydooTests.m */; };
-		F7A987DE3A0F4567956F90CE /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 939A61ACB9FA4C948A4B73CF /* AntDesign.ttf */; };
-		EE5421BDE6824E86B4AC41F8 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 50FDDD0362FA45AC96154A4D /* Entypo.ttf */; };
-		E4F899CC3E5D4CF99014D6D9 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE0E51BCB83546E59C351796 /* EvilIcons.ttf */; };
-		7C4D06408A3C4F4984F2C0A7 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6F6650338D5F48B18362075E /* Feather.ttf */; };
-		8A7B27F600FC4E868934F957 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4B1BD433BC04C0493C111D0 /* FontAwesome.ttf */; };
-		2C6C39AF573B4BD4A8FD12A3 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 40EE4E4F6F9A4A6D803168F5 /* FontAwesome5_Brands.ttf */; };
-		AA8F5ED6AAFF41989CD6FC35 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E6FC693CAA2E41089213BA58 /* FontAwesome5_Regular.ttf */; };
-		FD510058DD38406484FCF4C3 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC8ECA4F57DF4E88ADE5413E /* FontAwesome5_Solid.ttf */; };
-		21E16D4A343C437ABEE654B0 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0436FD6EC68A4EAD824C9EA5 /* Fontisto.ttf */; };
-		71C07A8A582646A68720BEF4 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7DCD0F13D9CF455DA3D9E9F7 /* Foundation.ttf */; };
-		A173D758CE0B49BDB2764AC2 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2FEFAFAF2708439CA6D2F947 /* Ionicons.ttf */; };
-		B48D702BA5FD479999854903 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4A9BA030C040467B9BB03B6B /* MaterialCommunityIcons.ttf */; };
 		2F6FE366C78D4D54B4A39AEE /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 852E1EE1AA5449C2974B0578 /* MaterialIcons.ttf */; };
-		84904318F8CB4E36A4F84BAC /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BF758E4BF20340B2ACD7B81C /* Octicons.ttf */; };
-		0290189D21AC40C38546BC12 /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19575C564E9443A1BCDED9F0 /* Roboto_medium.ttf */; };
 		5305122CC4874139943F272D /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 38B4B3E932654EF6ABF34B42 /* Roboto.ttf */; };
-		EDCD450858EC4B84838ED33E /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C232720A059D46CDB0E68B39 /* rubicon-icon-font.ttf */; };
-		D23F20AA887D489E9F953DEB /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8759E0EFD5D44D13AF6761A9 /* SimpleLineIcons.ttf */; };
+		6791E5A4C1806A49054C7F0C /* libPods-yaydoo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D0EA019A374C9ADEA731736 /* libPods-yaydoo.a */; };
+		71C07A8A582646A68720BEF4 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7DCD0F13D9CF455DA3D9E9F7 /* Foundation.ttf */; };
+		7C4D06408A3C4F4984F2C0A7 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6F6650338D5F48B18362075E /* Feather.ttf */; };
+		7C4F2340A436CE2D981BCDEC /* libPods-yaydooTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DED944E63CF31DF9268ED71D /* libPods-yaydooTests.a */; };
+		84904318F8CB4E36A4F84BAC /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BF758E4BF20340B2ACD7B81C /* Octicons.ttf */; };
+		8A7B27F600FC4E868934F957 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4B1BD433BC04C0493C111D0 /* FontAwesome.ttf */; };
 		8A93CEDC098647ADAB1DE8C3 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2FDD4E0F4964FFF9AC58D8E /* Zocial.ttf */; };
+		A173D758CE0B49BDB2764AC2 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2FEFAFAF2708439CA6D2F947 /* Ionicons.ttf */; };
+		AA8F5ED6AAFF41989CD6FC35 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E6FC693CAA2E41089213BA58 /* FontAwesome5_Regular.ttf */; };
+		B48D702BA5FD479999854903 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4A9BA030C040467B9BB03B6B /* MaterialCommunityIcons.ttf */; };
+		D23F20AA887D489E9F953DEB /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8759E0EFD5D44D13AF6761A9 /* SimpleLineIcons.ttf */; };
+		E038E4D661EBC4C2CA54739C /* libPods-yaydoo-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC47832322E5C45FD86D4E44 /* libPods-yaydoo-tvOSTests.a */; };
+		E4F899CC3E5D4CF99014D6D9 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE0E51BCB83546E59C351796 /* EvilIcons.ttf */; };
+		EDCD450858EC4B84838ED33E /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C232720A059D46CDB0E68B39 /* rubicon-icon-font.ttf */; };
+		EE5421BDE6824E86B4AC41F8 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 50FDDD0362FA45AC96154A4D /* Entypo.ttf */; };
+		F7A987DE3A0F4567956F90CE /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 939A61ACB9FA4C948A4B73CF /* AntDesign.ttf */; };
+		FD44342B742DD312BF88ADA2 /* libPods-yaydoo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 659101546259128F7D92CE09 /* libPods-yaydoo-tvOS.a */; };
+		FD510058DD38406484FCF4C3 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC8ECA4F57DF4E88ADE5413E /* FontAwesome5_Solid.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +63,7 @@
 		00E356EE1AD99517003FC87E /* yaydooTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = yaydooTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* yaydooTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = yaydooTests.m; sourceTree = "<group>"; };
+		0436FD6EC68A4EAD824C9EA5 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/native-base/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* yaydoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yaydoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = yaydoo/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = yaydoo/AppDelegate.m; sourceTree = "<group>"; };
@@ -65,29 +71,40 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = yaydoo/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = yaydoo/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = yaydoo/main.m; sourceTree = "<group>"; };
+		19575C564E9443A1BCDED9F0 /* Roboto_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto_medium.ttf; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* yaydoo-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "yaydoo-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* yaydoo-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "yaydoo-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D0EA019A374C9ADEA731736 /* libPods-yaydoo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-yaydoo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FEFAFAF2708439CA6D2F947 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/native-base/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		38B4B3E932654EF6ABF34B42 /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
+		3EE179F660A35FB3E12AEDF4 /* Pods-yaydoo-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yaydoo-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-yaydoo-tvOS/Pods-yaydoo-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		40EE4E4F6F9A4A6D803168F5 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		4A9BA030C040467B9BB03B6B /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		50FDDD0362FA45AC96154A4D /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		659101546259128F7D92CE09 /* libPods-yaydoo-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-yaydoo-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F6650338D5F48B18362075E /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/native-base/Fonts/Feather.ttf"; sourceTree = "<group>"; };
+		7DCD0F13D9CF455DA3D9E9F7 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/native-base/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
+		852E1EE1AA5449C2974B0578 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		8759E0EFD5D44D13AF6761A9 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		90C1B5E1CDBEDAD25B7BEFFF /* Pods-yaydooTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yaydooTests.debug.xcconfig"; path = "Target Support Files/Pods-yaydooTests/Pods-yaydooTests.debug.xcconfig"; sourceTree = "<group>"; };
+		939A61ACB9FA4C948A4B73CF /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/native-base/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
+		A2FDD4E0F4964FFF9AC58D8E /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		A34D96C22454A0CEB24B41EF /* Pods-yaydoo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yaydoo.debug.xcconfig"; path = "Target Support Files/Pods-yaydoo/Pods-yaydoo.debug.xcconfig"; sourceTree = "<group>"; };
+		AA2347AEF4A91EB81F897BD1 /* Pods-yaydoo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yaydoo.release.xcconfig"; path = "Target Support Files/Pods-yaydoo/Pods-yaydoo.release.xcconfig"; sourceTree = "<group>"; };
+		BC47832322E5C45FD86D4E44 /* libPods-yaydoo-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-yaydoo-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF758E4BF20340B2ACD7B81C /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/native-base/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		C232720A059D46CDB0E68B39 /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
+		CC8ECA4F57DF4E88ADE5413E /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
+		DE0E51BCB83546E59C351796 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/native-base/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		DED944E63CF31DF9268ED71D /* libPods-yaydooTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-yaydooTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4B1BD433BC04C0493C111D0 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		E6FC693CAA2E41089213BA58 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		939A61ACB9FA4C948A4B73CF /* AntDesign.ttf */ = {isa = PBXFileReference; name = "AntDesign.ttf"; path = "../node_modules/native-base/Fonts/AntDesign.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		50FDDD0362FA45AC96154A4D /* Entypo.ttf */ = {isa = PBXFileReference; name = "Entypo.ttf"; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		DE0E51BCB83546E59C351796 /* EvilIcons.ttf */ = {isa = PBXFileReference; name = "EvilIcons.ttf"; path = "../node_modules/native-base/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		6F6650338D5F48B18362075E /* Feather.ttf */ = {isa = PBXFileReference; name = "Feather.ttf"; path = "../node_modules/native-base/Fonts/Feather.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		E4B1BD433BC04C0493C111D0 /* FontAwesome.ttf */ = {isa = PBXFileReference; name = "FontAwesome.ttf"; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		40EE4E4F6F9A4A6D803168F5 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; name = "FontAwesome5_Brands.ttf"; path = "../node_modules/native-base/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		E6FC693CAA2E41089213BA58 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; name = "FontAwesome5_Regular.ttf"; path = "../node_modules/native-base/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		CC8ECA4F57DF4E88ADE5413E /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; name = "FontAwesome5_Solid.ttf"; path = "../node_modules/native-base/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		0436FD6EC68A4EAD824C9EA5 /* Fontisto.ttf */ = {isa = PBXFileReference; name = "Fontisto.ttf"; path = "../node_modules/native-base/Fonts/Fontisto.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		7DCD0F13D9CF455DA3D9E9F7 /* Foundation.ttf */ = {isa = PBXFileReference; name = "Foundation.ttf"; path = "../node_modules/native-base/Fonts/Foundation.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		2FEFAFAF2708439CA6D2F947 /* Ionicons.ttf */ = {isa = PBXFileReference; name = "Ionicons.ttf"; path = "../node_modules/native-base/Fonts/Ionicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		4A9BA030C040467B9BB03B6B /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; name = "MaterialCommunityIcons.ttf"; path = "../node_modules/native-base/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		852E1EE1AA5449C2974B0578 /* MaterialIcons.ttf */ = {isa = PBXFileReference; name = "MaterialIcons.ttf"; path = "../node_modules/native-base/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		BF758E4BF20340B2ACD7B81C /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/native-base/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		19575C564E9443A1BCDED9F0 /* Roboto_medium.ttf */ = {isa = PBXFileReference; name = "Roboto_medium.ttf"; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		38B4B3E932654EF6ABF34B42 /* Roboto.ttf */ = {isa = PBXFileReference; name = "Roboto.ttf"; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		C232720A059D46CDB0E68B39 /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		8759E0EFD5D44D13AF6761A9 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		A2FDD4E0F4964FFF9AC58D8E /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F59C8EBF4926C7DBC423A378 /* Pods-yaydoo-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yaydoo-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-yaydoo-tvOSTests/Pods-yaydoo-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		FA835432A0585508658F168C /* Pods-yaydooTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yaydooTests.release.xcconfig"; path = "Target Support Files/Pods-yaydooTests/Pods-yaydooTests.release.xcconfig"; sourceTree = "<group>"; };
+		FB0348278808EF9DB0103D0F /* Pods-yaydoo-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yaydoo-tvOS.release.xcconfig"; path = "Target Support Files/Pods-yaydoo-tvOS/Pods-yaydoo-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		FD57120D3A7740098888BC2D /* Pods-yaydoo-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yaydoo-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-yaydoo-tvOSTests/Pods-yaydoo-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C4F2340A436CE2D981BCDEC /* libPods-yaydooTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,6 +120,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6791E5A4C1806A49054C7F0C /* libPods-yaydoo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,6 +128,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD44342B742DD312BF88ADA2 /* libPods-yaydoo-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,6 +136,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E038E4D661EBC4C2CA54739C /* libPods-yaydoo-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,50 +174,8 @@
 			name = yaydoo;
 			sourceTree = "<group>";
 		};
-		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Libraries;
-			sourceTree = "<group>";
-		};
-		83CBB9F61A601CBA00E9B192 = {
-			isa = PBXGroup;
-			children = (
-				13B07FAE1A68108700A75B9A /* yaydoo */,
-				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* yaydooTests */,
-				83CBBA001A601CBA00E9B192 /* Products */,
-				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				20400B1B8AD042989E34E86F /* Resources */,
-			);
-			indentWidth = 2;
-			sourceTree = "<group>";
-			tabWidth = 2;
-			usesTabs = 0;
-		};
-		83CBBA001A601CBA00E9B192 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				13B07F961A680F5B00A75B9A /* yaydoo.app */,
-				00E356EE1AD99517003FC87E /* yaydooTests.xctest */,
-				2D02E47B1E0B4A5D006451C7 /* yaydoo-tvOS.app */,
-				2D02E4901E0B4A5D006451C7 /* yaydoo-tvOSTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		20400B1B8AD042989E34E86F /* Resources */ = {
-			isa = "PBXGroup";
+			isa = PBXGroup;
 			children = (
 				939A61ACB9FA4C948A4B73CF /* AntDesign.ttf */,
 				50FDDD0362FA45AC96154A4D /* Entypo.ttf */,
@@ -219,8 +198,71 @@
 				A2FDD4E0F4964FFF9AC58D8E /* Zocial.ttf */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
 			path = "";
+			sourceTree = "<group>";
+		};
+		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
+				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
+				2D0EA019A374C9ADEA731736 /* libPods-yaydoo.a */,
+				659101546259128F7D92CE09 /* libPods-yaydoo-tvOS.a */,
+				BC47832322E5C45FD86D4E44 /* libPods-yaydoo-tvOSTests.a */,
+				DED944E63CF31DF9268ED71D /* libPods-yaydooTests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		83CBB9F61A601CBA00E9B192 = {
+			isa = PBXGroup;
+			children = (
+				13B07FAE1A68108700A75B9A /* yaydoo */,
+				832341AE1AAA6A7D00B99B32 /* Libraries */,
+				00E356EF1AD99517003FC87E /* yaydooTests */,
+				83CBBA001A601CBA00E9B192 /* Products */,
+				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+				20400B1B8AD042989E34E86F /* Resources */,
+				F2FDADCACED0E381286881F1 /* Pods */,
+			);
+			indentWidth = 2;
+			sourceTree = "<group>";
+			tabWidth = 2;
+			usesTabs = 0;
+		};
+		83CBBA001A601CBA00E9B192 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				13B07F961A680F5B00A75B9A /* yaydoo.app */,
+				00E356EE1AD99517003FC87E /* yaydooTests.xctest */,
+				2D02E47B1E0B4A5D006451C7 /* yaydoo-tvOS.app */,
+				2D02E4901E0B4A5D006451C7 /* yaydoo-tvOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F2FDADCACED0E381286881F1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A34D96C22454A0CEB24B41EF /* Pods-yaydoo.debug.xcconfig */,
+				AA2347AEF4A91EB81F897BD1 /* Pods-yaydoo.release.xcconfig */,
+				3EE179F660A35FB3E12AEDF4 /* Pods-yaydoo-tvOS.debug.xcconfig */,
+				FB0348278808EF9DB0103D0F /* Pods-yaydoo-tvOS.release.xcconfig */,
+				FD57120D3A7740098888BC2D /* Pods-yaydoo-tvOSTests.debug.xcconfig */,
+				F59C8EBF4926C7DBC423A378 /* Pods-yaydoo-tvOSTests.release.xcconfig */,
+				90C1B5E1CDBEDAD25B7BEFFF /* Pods-yaydooTests.debug.xcconfig */,
+				FA835432A0585508658F168C /* Pods-yaydooTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -229,6 +271,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "yaydooTests" */;
 			buildPhases = (
+				D4001F4148F105F6EA546068 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
@@ -247,6 +290,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "yaydoo" */;
 			buildPhases = (
+				9715AE9113C483A42A9BC522 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
@@ -258,7 +302,7 @@
 			dependencies = (
 			);
 			name = yaydoo;
-			productName = "yaydoo";
+			productName = yaydoo;
 			productReference = 13B07F961A680F5B00A75B9A /* yaydoo.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -266,6 +310,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "yaydoo-tvOS" */;
 			buildPhases = (
+				4B9350F0B2722F9317E0A4B1 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
 				2D02E4771E0B4A5D006451C7 /* Sources */,
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
@@ -285,6 +330,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "yaydoo-tvOSTests" */;
 			buildPhases = (
+				E14B32BF40105935E63999ED /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
 				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
 				2D02E48E1E0B4A5D006451C7 /* Resources */,
@@ -426,6 +472,94 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
+		4B9350F0B2722F9317E0A4B1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-yaydoo-tvOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9715AE9113C483A42A9BC522 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-yaydoo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D4001F4148F105F6EA546068 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-yaydooTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E14B32BF40105935E63999ED /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-yaydoo-tvOSTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -531,6 +665,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 90C1B5E1CDBEDAD25B7BEFFF /* Pods-yaydooTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -553,6 +688,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA835432A0585508658F168C /* Pods-yaydooTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -572,6 +708,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A34D96C22454A0CEB24B41EF /* Pods-yaydoo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
@@ -591,6 +728,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA2347AEF4A91EB81F897BD1 /* Pods-yaydoo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
@@ -609,6 +747,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3EE179F660A35FB3E12AEDF4 /* Pods-yaydoo-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -636,6 +775,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FB0348278808EF9DB0103D0F /* Pods-yaydoo-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -663,6 +803,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FD57120D3A7740098888BC2D /* Pods-yaydoo-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -689,6 +830,7 @@
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F59C8EBF4926C7DBC423A378 /* Pods-yaydoo-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
