@@ -110,10 +110,17 @@ export default class Profile extends Component {
       let dayCreated = Moment(date).format('D') // = 9
       let todaysDate = Moment(new Date()).format('D')
       var afterCreated = todaysDate - dayCreated
-      if(afterCreated == 1){
+      
+      if(afterCreated <= 30 && afterCreated >= 1 ){
         return <Text>Hace {afterCreated} d</Text>
-      }else {
-        return <Text>Hace {afterCreated} d</Text>
+      }else if(afterCreated <= -1) {
+        return <Text>Hace 1 mes</Text>
+      } else if(afterCreated <= -30){
+        return <Text>Hace 2 meses</Text>
+      } else if(afterCreated <= -60){
+        return <Text>Hace 3 meses</Text>
+      } else {
+        return <Text>Hace meses</Text>
       }
     };
     
@@ -284,35 +291,37 @@ export default class Profile extends Component {
               Actions.infoOrdenes({data: data, folio: folio})
             };
             if(tipo == 3){
-              return <View style={styles.solicitudesDescription}>
-                      <View style={{flexDirection:'column', width:'30%'}}>
-                        <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginLeft:10 , marginTop:10}}>Dirección</Text>
-                        <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginLeft:10 , marginTop:10}}>Monto</Text>
-                        <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginLeft:10, marginTop:10}}>Presupuesto</Text>
-                      </View>
-                      <View style={{flexDirection:'column', width:'50%'}}>
-                      <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginTop:10}}>{data.proposal.provider.address}</Text>
-                        <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginTop:10   }}>{numeral(data.proposal.total).format('$0,0.00')}</Text>
-                        <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginTop:10  }}>{data.budget.name}</Text>
-                        <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10 }}>de {numeral(data.budget.amount).format('$0,0.00')}</Text>
-                        <Progress.Bar
-                          fillStyle={{}}
-                          progress={data.budget.available}
-                          width={Dimensions.get('window').width - 240}
-                          height={6}
-                          color={'#08d06a'}
-                          borderWidth={0}
-                          unfilledColor={'rgb(211,211,211)'}
-                        />
-                      </View>
-                      <View style={{flexDirection:'column', width:'20%', justifyContent:'flex-end'}}>
-                        <TouchableOpacity  onPress={() => goToInfoOrdenes(data, data.folio)}>
-                          <Image
-                              source={{uri : 'https://img.icons8.com/material-rounded/2x/chevron-right.png'}}
-                              style={{ width: 20, height: 20, marginLeft: 'auto',marginRight:5, marginTop:20}}
-                          />
+              return <View  style={styles.solicitudesDescription}>
+                        <TouchableOpacity style={styles.solicitudesDescription}  onPress={() => goToInfoOrdenes(data, data.folio)}>
+                          <View style={{flexDirection:'column', width:'30%'}}>
+                            <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginLeft:10 , marginTop:10}}>Dirección</Text>
+                            <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginLeft:10 , marginTop:10}}>Monto</Text>
+                            <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginLeft:10, marginTop:10}}>Presupuesto</Text>
+                          </View>
+                          <View style={{flexDirection:'column', width:'50%'}}>
+                          <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginTop:10}}>{data.proposal.provider.address}</Text>
+                            <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginTop:10   }}>{numeral(data.proposal.total).format('$0,0.00')}</Text>
+                            <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginTop:10  }}>{data.budget.name}</Text>
+                            <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10 }}>de {numeral(data.budget.amount).format('$0,0.00')}</Text>
+                            <Progress.Bar
+                              fillStyle={{}}
+                              progress={data.budget.available}
+                              width={Dimensions.get('window').width - 240}
+                              height={6}
+                              color={'#08d06a'}
+                              borderWidth={0}
+                              unfilledColor={'rgb(211,211,211)'}
+                            />
+                          </View>
+                          <View style={{flexDirection:'column', width:'20%', justifyContent:'flex-end'}}>
+                            <TouchableOpacity  onPress={() => goToInfoOrdenes(data, data.folio)}>
+                              <Image
+                                  source={{uri : 'https://img.icons8.com/material-rounded/2x/chevron-right.png'}}
+                                  style={{ width: 20, height: 20, marginLeft: 'auto',marginRight:5, marginTop:20}}
+                              />
+                            </TouchableOpacity>
+                          </View>
                         </TouchableOpacity>
-                      </View>
                     </View>
             } else {
               return false
@@ -324,22 +333,22 @@ export default class Profile extends Component {
             };
             if(tipo == 4){
               return <View style={{flexDirection:'row', marginTop:10}}>
-                       <View style={{width:'30%'}}>
-                          <Text style={{ color: '#000000', fontWeigth:'bold', fontSize: 10, marginLeft:10 }}>Dirección </Text>
-                       </View>
-                       <View style={{width:'50%'}}>
-                         <Text style={{color:'#000000',fontWeigth:'100', fontSize: 10}}>{getAddressSolicitudes(data, data.type)}</Text>
-                       </View>
-                       <View style={{width:'20%'}}>
-                       <TouchableOpacity  onPress={() => goToInfoSolicitudes(data, data.folio)}>
-                          <Image
-                              source={{uri : 'https://img.icons8.com/material-rounded/2x/chevron-right.png'}}
-                              style={{ width: 20, height: 20, marginLeft: 'auto',marginRight:5, marginTop:20}}
-                          />
-                        </TouchableOpacity>
-                       </View>
-                       
-                       
+                       <TouchableOpacity style={{flexDirection:'row'}} onPress={() => goToInfoSolicitudes(data, data.folio)}>
+                          <View style={{width:'30%'}}>
+                              <Text style={{ color: '#000000', fontWeigth:'bold', fontSize: 10, marginLeft:10 }}>Dirección </Text>
+                          </View>
+                          <View style={{width:'50%'}}>
+                            <Text style={{color:'#000000',fontWeigth:'100', fontSize: 10}}>{getAddressSolicitudes(data, data.type)}</Text>
+                          </View>
+                          <View style={{width:'20%'}}>
+                          <TouchableOpacity  onPress={() => goToInfoSolicitudes(data, data.folio)}>
+                              <Image
+                                  source={{uri : 'https://img.icons8.com/material-rounded/2x/chevron-right.png'}}
+                                  style={{ width: 20, height: 20, marginLeft: 'auto',marginRight:5, marginTop:20}}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                       </TouchableOpacity>  
                     </View>
             } else {
               return false
@@ -440,17 +449,17 @@ export default class Profile extends Component {
                     // source={require('../../../assets/FONDO_16.png')}
                 >
                     <View style={{flexDirection: 'row'}}>
-                        <TouchableOpacity onPress={this.openDrawer.bind(this)} >
+                        <TouchableOpacity style={{marginLeft:'auto', marginRight:20}} onPress={this.openDrawer.bind(this)} >
                         <Image
                             source={{uri : 'https://img.icons8.com/ultraviolet/2x/menu.png'}}
-                            style={{ width: 25, height: 25,marginLeft:20,  padding:20, marginTop:5}}
+                            style={{ width: 25, height: 25,  padding:20, marginTop:5}}
                         />
                         </TouchableOpacity>
-                        <Image
+                        {/* <Image
                           style={styles.yayImage}
                           resizeMode={'contain'}
                           source={require('../../../assets/yay.png')}
-                        />
+                        /> */}
                     </View>
                     <ScrollView style={{marginTop:0}}
                         refreshControl={
