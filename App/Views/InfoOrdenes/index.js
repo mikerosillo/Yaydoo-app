@@ -51,9 +51,6 @@ export default class InfoOrdenes extends Component {
     previewsPage(){
       Actions.profile()
     };
-    productosPage(){
-        Actions.products({data: this.state.data, folio: this.state.folio})
-      };
     UNSAFE_componentWillMount(){
         this.state.data = this.props.data
         this.state.folio = this.props.folio
@@ -94,7 +91,7 @@ export default class InfoOrdenes extends Component {
                             let currency = poInfo.proposal.provider.currency
                             let items = poInfo.quotation_items
                            console.log(items[0].item.price)
-                           console.log(items[0])
+                           console.log(poInfo.budget.name)
 
                             this.setState({
                                 refreshing: false,
@@ -156,14 +153,22 @@ export default class InfoOrdenes extends Component {
         }
     };
     whichToRender(){
+        var bar = this.state.barGraph
            var items = this.state.items.map((data, key)=>{
-            return  <View style={styles.solicitudes}>
-                        <View style={{flexDirection:'row'}}>
-                            <View style={{width:'50%'}}>
-                                <Image
+               function ifImageNotNull(){
+                   if(data.item.image !== null){
+                       return <Image
                                     source={{uri :`${data.item.image.full}`}}
                                     style={{ width: 150, height: 150, marginTop:20, marginLeft:0}}
                                 />
+                   } else {
+                       return false
+                   }
+               }
+            return  <View style={styles.solicitudes}>
+                        <View style={{flexDirection:'row'}}>
+                            <View style={{width:'50%'}}>
+                                {ifImageNotNull()}
                             </View>     
                             <View style={{width:'50%', marginTop:20}}>
                                 <Text style={{color:'#000000', marginBottom:40, fontSize:16, fontWeight:'bold'}}>{data.item.description}</Text>
@@ -182,7 +187,30 @@ export default class InfoOrdenes extends Component {
             
             if(this.state.productos == true){
                 return items
-            } else {      
+            } else { 
+                function ifProgressBarNotANumber(){
+                    if( bar >= 0.1){
+                        return <Progress.Bar
+                                    fillStyle={{}}
+                                    progress={bar}
+                                    width={Dimensions.get('window').width - 240}
+                                    height={6}
+                                    color={'#08d06a'}
+                                    borderWidth={0}
+                                    unfilledColor={'rgb(211,211,211)'}
+                                />
+                    } else {
+                        return <Progress.Bar
+                                    fillStyle={{}}
+                                    progress={0}
+                                    width={Dimensions.get('window').width - 240}
+                                    height={6}
+                                    color={'#08d06a'}
+                                    borderWidth={0}
+                                    unfilledColor={'rgb(211,211,211)'}
+                                />
+                    }
+                }     
             return  <View>
                             <View style={{flexDirection:'row'}}>
                                 <View style={{width:'40%'}}>
@@ -214,15 +242,7 @@ export default class InfoOrdenes extends Component {
                                     <Text style={{color:'#000000', marginTop:20, marginBottom:20}}>{numeral(this.state.disponible).format('$0,0.00')}</Text>
                                     <Text style={{color:'#000000', marginTop:20, marginBottom:0}}>{numeral(this.state.gastado).format('$0,0.00')}</Text>
                                     <Text style={{color:'#000000', marginTop:0, marginBottom:0}}>de{' '}{numeral(this.state.disponible).format('$0,0.00')}</Text>
-                                    <Progress.Bar
-                                        fillStyle={{}}
-                                        progress={this.state.barGraph}
-                                        width={Dimensions.get('window').width - 240}
-                                        height={6}
-                                        color={'#08d06a'}
-                                        borderWidth={0}
-                                        unfilledColor={'rgb(211,211,211)'}
-                                    />
+                                    {ifProgressBarNotANumber()}
                                     <Text style={{color:'#000000', marginTop:20, marginBottom:0}}></Text>
                                 </View>     
                             </View>
