@@ -141,7 +141,7 @@ export default class Profile extends Component {
                     if (response.ok) {
                         response.json().then((datos) => {
                              // var ultimaFecha = Moment(lastDate[0]).format('D MMM YY')
-                          // console.log(datos.data.account)
+                         
                           // console.log(datos.data.approved)
                           // console.log(datos.data.internal)
                             let accountInfo = datos.data
@@ -154,7 +154,7 @@ export default class Profile extends Component {
                             var createdAt = pendingPo.map((element)=>{
                               return element.created_at
                             })
-
+                            console.log(datos.data[0].budget.available)
                             //console.log('json filter',pendingPo[0])
                             // var map2 = accountInfo.map((element) => {
                             //     return element.folio
@@ -291,6 +291,31 @@ export default class Profile extends Component {
               Actions.infoOrdenes({data: data, folio: folio})
             };
             if(tipo == 3){
+              function ifProgressBarNotANumber(){
+                let bar = 0+'.'+ parseFloat(data.budget.available).toFixed(2)*100;
+                if( data.budget.available >= 0.1 && data.budget.name !== 'Bloqueado'){
+                  
+                    return <Progress.Bar
+                                fillStyle={{}}
+                                progress={bar}
+                                width={Dimensions.get('window').width - 240}
+                                height={6}
+                                color={'#08d06a'}
+                                borderWidth={0}
+                                unfilledColor={'rgb(211,211,211)'}
+                            />
+                } else {
+                    return <Progress.Bar
+                                fillStyle={{}}
+                                progress={0}
+                                width={Dimensions.get('window').width - 240}
+                                height={6}
+                                color={'#08d06a'}
+                                borderWidth={0}
+                                unfilledColor={'rgb(211,211,211)'}
+                            />
+                }
+            } 
               return <View  style={styles.solicitudesDescription}>
                         <TouchableOpacity style={styles.solicitudesDescription}  onPress={() => goToInfoOrdenes(data, data.folio)}>
                           <View style={{flexDirection:'column', width:'30%'}}>
@@ -303,15 +328,7 @@ export default class Profile extends Component {
                             <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginTop:10   }}>{numeral(data.proposal.total).format('$0,0.00')}</Text>
                             <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginTop:10  }}>{data.budget.name}</Text>
                             <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10 }}>de {numeral(data.budget.amount).format('$0,0.00')}</Text>
-                            <Progress.Bar
-                              fillStyle={{}}
-                              progress={data.budget.available}
-                              width={Dimensions.get('window').width - 240}
-                              height={6}
-                              color={'#08d06a'}
-                              borderWidth={0}
-                              unfilledColor={'rgb(211,211,211)'}
-                            />
+                            {ifProgressBarNotANumber()}
                           </View>
                           <View style={{flexDirection:'column', width:'20%', justifyContent:'flex-end'}}>
                             <TouchableOpacity  onPress={() => goToInfoOrdenes(data, data.folio)}>
