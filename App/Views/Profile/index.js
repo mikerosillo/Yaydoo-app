@@ -366,6 +366,25 @@ export default class Profile extends Component {
             }).catch((err)=>{
               console.log(err.message)
             })
+            };
+            async function rejectSolicitudes(request_id){
+              const token = await AsyncStorage.getItem('ACCESS_TOKEN')
+              const enterpriseUuid = await AsyncStorage.getItem('UUID');
+              await fetch(`https://stage.ws.yay.do/v2/enterprise/${enterpriseUuid}/quotation/request/${request_id}/approve`, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    "X-Auth-Token": token
+                },
+                body: JSON.stringify({
+                  status:0
+                }),
+            }).then((response)=>{
+              console.log(response)
+            }).catch((err)=>{
+              console.log(err.message)
+            })
             }
             if(tipo == 4){
               return <View>
@@ -398,7 +417,7 @@ export default class Profile extends Component {
                               justifyContent:'center',
                               borderColor:'#808080'
                             }}
-                              onPress={() => Alert.alert('Simple Button pressed')}
+                              onPress={() => rejectSolicitudes(data.uuid)}
                             >
                             <Text style={{color:'#808080'}}>RECHAZAR</Text>
                             </TouchableOpacity>
@@ -415,7 +434,7 @@ export default class Profile extends Component {
                               justifyContent:'center',
                               borderColor:'#4bdbcd'
                             }}
-                              onPress={() => approveSolicitudes(data.code)}
+                              onPress={() => approveSolicitudes(data.uuid)}
                             >
                             <Text style={{color:'#08d06a'}}>APROBAR</Text>
                             </TouchableOpacity>
