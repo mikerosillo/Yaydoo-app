@@ -37,7 +37,7 @@ export default class InfoSolicitudes extends Component {
     UNSAFE_componentWillMount(){
         this.state.data = this.props.data
         this.state.folio = this.props.folio
-        console.log(this.state.data)
+        console.log(this.state.data.account.uuid)
     }
     informacionTitleStyle(){
         if(this.state.informacion == true){
