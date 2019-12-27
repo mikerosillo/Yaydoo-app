@@ -127,7 +127,7 @@ export default class Profile extends Component {
     async getAllPo() {
         const token = await AsyncStorage.getItem('ACCESS_TOKEN')
         const enterpriseUuid = await AsyncStorage.getItem('UUID');
-        if (token && uuid) { // if user is logged in
+        if (token && enterpriseUuid) { // if user is logged in
             await fetch(`https://stage.ws.yay.do/v2/enterprise/${enterpriseUuid}/purchaseOrder/?filter=2&type=3&page=1&approver=1`, {
                 method: 'GET',
                 headers: {
@@ -316,30 +316,67 @@ export default class Profile extends Component {
                             />
                 }
             } 
-              return <View  style={styles.solicitudesDescription}>
-                        <TouchableOpacity style={styles.solicitudesDescription}  onPress={() => goToInfoOrdenes(data, data.folio)}>
-                          <View style={{flexDirection:'column', width:'30%'}}>
-                            <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginLeft:10 , marginTop:10}}>Dirección</Text>
-                            <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginLeft:10 , marginTop:10}}>Monto</Text>
-                            <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginLeft:10, marginTop:10}}>Presupuesto</Text>
-                          </View>
-                          <View style={{flexDirection:'column', width:'50%'}}>
-                          <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginTop:10}}>{data.proposal.provider.address}</Text>
-                            <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginTop:10   }}>{numeral(data.proposal.total).format('$0,0.00')}</Text>
-                            <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginTop:10  }}>{data.budget.name}</Text>
-                            <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10 }}>de {numeral(data.budget.amount).format('$0,0.00')}</Text>
-                            {ifProgressBarNotANumber()}
-                          </View>
-                          <View style={{flexDirection:'column', width:'20%', justifyContent:'flex-end'}}>
-                            <TouchableOpacity  onPress={() => goToInfoOrdenes(data, data.folio)}>
-                              <Image
-                                  source={{uri : 'https://img.icons8.com/material-rounded/2x/chevron-right.png'}}
-                                  style={{ width: 20, height: 20, marginLeft: 'auto',marginRight:5, marginTop:20}}
-                              />
-                            </TouchableOpacity>
-                          </View>
+              return <View>
+                        <View  style={{flexDirection:'row'}}>
+                          <TouchableOpacity style={{flexDirection:'row'}}  onPress={() => goToInfoOrdenes(data, data.folio)}>
+                            <View style={{flexDirection:'column', width:'30%'}}>
+                              <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginLeft:10 , marginTop:10}}>Dirección</Text>
+                              <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginLeft:10 , marginTop:10}}>Monto</Text>
+                              <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginLeft:10, marginTop:10}}>Presupuesto</Text>
+                            </View>
+                            <View style={{flexDirection:'column', width:'50%'}}>
+                            <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginTop:10}}>{data.proposal.provider.address}</Text>
+                              <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginTop:10   }}>{numeral(data.proposal.total).format('$0,0.00')}</Text>
+                              <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginTop:10  }}>{data.budget.name}</Text>
+                              <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10 }}>de {numeral(data.budget.amount).format('$0,0.00')}</Text>
+                              {ifProgressBarNotANumber()}
+                            </View>
+                            <View style={{flexDirection:'column', width:'20%', justifyContent:'flex-end'}}>
+                              <TouchableOpacity  onPress={() => goToInfoOrdenes(data, data.folio)}>
+                                <Image
+                                    source={{uri : 'https://img.icons8.com/material-rounded/2x/chevron-right.png'}}
+                                    style={{ width: 20, height: 20, marginLeft: 'auto',marginRight:5, marginTop:20}}
+                                />
+                              </TouchableOpacity>
+                            </View>
+                          </TouchableOpacity>
+                        </View>
+                     <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:20, marginTop:20}}>
+                      <View style={{width:'40%', marginLeft:10}}>
+                        <TouchableOpacity style={{
+                          height:30,
+                          backgroundColor:'transparent',
+                          borderWidth:1,
+                          borderRadius:3,
+                          alignItems:'center',
+                          justifyContent:'center',
+                          borderColor:'#808080'
+                        }}
+                          onPress={() => Alert.alert('Simple Button pressed')}
+                        >
+                        <Text style={{color:'#808080'}}>RECHAZAR</Text>
                         </TouchableOpacity>
+
+                      </View>
+                      <View style={{width:'20%'}}></View>
+                      <View style={{width:'40%', marginRight:10}}>
+                        <TouchableOpacity style={{
+                          height:30,
+                          backgroundColor:'transparent',
+                          borderWidth:1,
+                          borderRadius:3,
+                          alignItems:'center',
+                          justifyContent:'center',
+                          borderColor:'#4bdbcd'
+                        }}
+                          onPress={() => Alert.alert(' pressed')}
+                        >
+                        <Text style={{color:'#08d06a'}}>APROBAR</Text>
+                        </TouchableOpacity>
+
+                      </View>
                     </View>
+                   </View>
             } else {
               return false
             } 
@@ -385,7 +422,7 @@ export default class Profile extends Component {
             }).catch((err)=>{
               console.log(err.message)
             })
-            }
+            };
             if(tipo == 4){
               return <View>
                         <View style={{flexDirection:'row', marginTop:10}}>
@@ -417,7 +454,7 @@ export default class Profile extends Component {
                               justifyContent:'center',
                               borderColor:'#808080'
                             }}
-                              onPress={() => rejectSolicitudes(data.uuid)}
+                              onPress={() => rejectSolicitudes(data.folio)}
                             >
                             <Text style={{color:'#808080'}}>RECHAZAR</Text>
                             </TouchableOpacity>
@@ -434,7 +471,7 @@ export default class Profile extends Component {
                               justifyContent:'center',
                               borderColor:'#4bdbcd'
                             }}
-                              onPress={() => approveSolicitudes(data.uuid)}
+                              onPress={() => approveSolicitudes(data.folio)}
                             >
                             <Text style={{color:'#08d06a'}}>APROBAR</Text>
                             </TouchableOpacity>
@@ -453,59 +490,23 @@ export default class Profile extends Component {
                            <View style={{ alignItems: 'flex-start',width:'50%' }}><Text style={{ color: '#000000', fontSize: 15, marginBottom:10, marginLeft:10 }}>{Moment(data.created_at).format('D MMM YY')}</Text></View>
                            <View style={{ alignItems: 'flex-end',width:'50%' }}><Text style={{ color: '#000000', fontSize: 15, marginBottom:10, marginRight:10 }}>{solicitudesAndPoLength( data.created_at, data.type,this.state.solicitudesDate, this.state.poDate)} por resolver</Text></View>
                         </View>
-                        <View style={styles.solicitudesDescription3}>
-                              <Image
-                                  source={{uri : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZMD1evACIwv083oh-CbaavyrN-0pXUGdKHMM-Ny_oZMh7lQ928Q&s'}}
-                                  style={{ width: 50, height: 50, marginLeft: 10,marginRight:10, marginTop:20}}
-                              />
-                            <View style={{color:'#000000', flexDirection:'column', marginTop:20}}>
-                                <Text style={{ color: '#000000', fontFamily: 'OpenSans-Bold', fontSize: 20 }}>{data.tipo} {data.folio} </Text>
-                                <Text style={{color:'#000000', fontFamily: 'OpenSans', fontSize: 10}}>{data.account.user.first_name}</Text>
-                            </View>
-                            <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginLeft:'auto', marginRight:10, marginTop:25 }}>{this.howManyDaysAfter(data.created_at.toString())}</Text>
-                        </View>
-                        <View style={styles.solicitudesDescription3}>
-                            
-                            {ifSolicitudType(data, data.type)}
-                        {ifOrdenType(data, data.type)}
-                        </View>
-                        {/* <View style={styles.solicitudesDescription2}>
-                          <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:20, marginTop:20}}>
-                            <View style={{width:'40%', marginLeft:10}}>
-                              <TouchableOpacity style={{
-                                height:30,
-                                backgroundColor:'transparent',
-                                borderWidth:1,
-                                borderRadius:3,
-                                alignItems:'center',
-                                justifyContent:'center',
-                                borderColor:'#808080'
-                              }}
-                                onPress={() => Alert.alert('Simple Button pressed')}
-                              >
-                              <Text style={{color:'#808080'}}>RECHAZAR</Text>
-                              </TouchableOpacity>
-
-                            </View>
-                            <View style={{width:'20%'}}></View>
-                            <View style={{width:'40%', marginRight:10}}>
-                              <TouchableOpacity style={{
-                                height:30,
-                                backgroundColor:'transparent',
-                                borderWidth:1,
-                                borderRadius:3,
-                                alignItems:'center',
-                                justifyContent:'center',
-                                borderColor:'#4bdbcd'
-                              }}
-                                onPress={() => Alert.alert(' pressed')}
-                              >
-                              <Text style={{color:'#08d06a'}}>APROBAR</Text>
-                              </TouchableOpacity>
-
-                            </View>
+                        <View style={styles.solicitudes}>
+                          <View style={styles.solicitudesDescription3}>
+                                <Image
+                                    source={{uri : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZMD1evACIwv083oh-CbaavyrN-0pXUGdKHMM-Ny_oZMh7lQ928Q&s'}}
+                                    style={{ width: 50, height: 50, marginLeft: 10,marginRight:10, marginTop:20}}
+                                />
+                              <View style={{color:'#000000', flexDirection:'column', marginTop:20}}>
+                                  <Text style={{ color: '#000000', fontFamily: 'OpenSans-Bold', fontSize: 20 }}>{data.tipo} {data.folio} </Text>
+                                  <Text style={{color:'#000000', fontFamily: 'OpenSans', fontSize: 10}}>{data.account.user.first_name}</Text>
+                              </View>
+                              <Text style={{ color: '#000000', fontFamily: 'OpenSans',  fontSize: 10, marginLeft:'auto', marginRight:10, marginTop:25 }}>{this.howManyDaysAfter(data.created_at.toString())}</Text>
                           </View>
-                        </View> */}
+                          <View style={styles.solicitudesDescription3}> 
+                            {ifSolicitudType(data, data.type)}
+                            {ifOrdenType(data, data.type)}
+                          </View>
+                        </View>
                   </View>
               </View>
       });
@@ -584,16 +585,6 @@ const styles = StyleSheet.create({
       marginLeft:70
     },
     solicitudesMain:{
-      // borderRadius:4,
-      // shadowColor: "#000000",
-      // shadowOffset: {
-      // 	width: 0,
-      // 	height: 5,
-      // },
-      // shadowOpacity: 0.34,
-      // shadowRadius: 6.27,
-      //
-      // elevation: 10,
       marginLeft: 5,
       marginRight: 5,
       marginTop: 20,
@@ -614,7 +605,6 @@ const styles = StyleSheet.create({
       shadowOpacity: 0.34,
       shadowRadius: 6.27,
       elevation: 10,
-      flexDirection:'row',
       backgroundColor:'#ffffff',
       alignContent: 'center'
     },
