@@ -246,13 +246,13 @@ export default class InfoOrdenes extends Component {
                                     <Text style={{color:'#000000', marginTop:20, marginBottom:0}}></Text>
                                 </View>
                             </View>
-                            <View
+                            {/* <View
                                 style={{
                                 borderBottomColor: 'black',
                                 borderBottomWidth: 1,
                                 marginBottom:20
                                 }}
-                            />
+                            /> */}
                     </View>
 
             }
@@ -369,9 +369,20 @@ export default class InfoOrdenes extends Component {
                 <ScrollView style={{marginTop:0}}>
                     <View style={{justifyContent:'center', alignItems:'center'}}>
                     {this.whichToRender()}
-                    {this.ifInfoTrue()}
+                    {/* {this.ifInfoTrue()} */}
                     </View>
                 </ScrollView>
+                <View
+                    style={{
+                    borderBottomColor: 'black',
+                    borderBottomWidth: 1,
+                    marginBottom:20
+                    }}
+                />
+                <View style={{justifyContent:'center', alignItems:'center'}}>
+                    {/* {this.whichToRender()} */}
+                    {this.ifInfoTrue()}
+                </View>
             </View>
         )
     }

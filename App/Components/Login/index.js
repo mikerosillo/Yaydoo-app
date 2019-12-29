@@ -87,13 +87,14 @@ class Login extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={{ flex: 1 }}></View>
-        <View style={{ flex: 1 }}>
+        {/* <View style={{ flex: 1 }}></View> */}
+        <View style={{ marginTop:50, marginBottom:40 , justifyContent:'center', alignItems:'center'}}>
           <Image
             style={styles.yayImage}
             resizeMode={'contain'}
             source={require('../../../assets/yay.png')}
           />
+          <Text style={{color:'#000000'}}>Simplifica y controla tus compras</Text>
         </View>
         <View style={{ flex: 1, width: '80%' }}>
           <TextField

@@ -388,7 +388,7 @@ export default class Profile extends Component {
             async function approveSolicitudes(request_id){
               const token = await AsyncStorage.getItem('ACCESS_TOKEN')
               const enterpriseUuid = await AsyncStorage.getItem('UUID');
-              await fetch(`https://stage.ws.yay.do/v2/enterprise/${enterpriseUuid}/quotation/request/${request_id}/approve`, {
+              await fetch(`https://stage.ws.yay.do/v2/enterprise/${enterpriseUuid}/quotation/request/:${request_id}/approve`, {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -454,7 +454,7 @@ export default class Profile extends Component {
                               justifyContent:'center',
                               borderColor:'#808080'
                             }}
-                              onPress={() => rejectSolicitudes(data.folio)}
+                              onPress={() => rejectSolicitudes(data.uuid)}
                             >
                             <Text style={{color:'#808080'}}>RECHAZAR</Text>
                             </TouchableOpacity>
@@ -471,7 +471,7 @@ export default class Profile extends Component {
                               justifyContent:'center',
                               borderColor:'#4bdbcd'
                             }}
-                              onPress={() => approveSolicitudes(data.folio)}
+                              onPress={() => approveSolicitudes(data.uuid)}
                             >
                             <Text style={{color:'#08d06a'}}>APROBAR</Text>
                             </TouchableOpacity>
