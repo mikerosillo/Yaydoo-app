@@ -399,7 +399,7 @@ export default class Profile extends Component {
                   status:1
                 }),
             }).then((response)=>{
-              console.log(response)
+              Alert.alert(`respuesta, ${JSON.stringify(response)}`)
             }).catch((err)=>{
               console.log(err.message)
             })
@@ -418,7 +418,7 @@ export default class Profile extends Component {
                   status:0
                 }),
             }).then((response)=>{
-              console.log(response)
+              Alert.alert(`respuesta, ${JSON.stringify(response)}`)
             }).catch((err)=>{
               console.log(err.message)
             })
