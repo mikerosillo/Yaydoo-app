@@ -10,7 +10,7 @@ export default class PushController extends Component{
             onRegister: async function(token) {
               const access_token = await AsyncStorage.getItem('ACCESS_TOKEN')
               console.log("TOKEN:", token.token);
-              await fetch(`https://stage.ws.yay.do/v2/me/app/account`, {
+              await fetch(`https://stage.ws.yay.do/me/app/account`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -18,7 +18,7 @@ export default class PushController extends Component{
                 },
                 body: JSON.stringify({
                   token: token.token,
-                  device:'Android'
+                  device:'android, ios'
                 }),
               }).then((response)=>{
                 console.log('from response',response)
