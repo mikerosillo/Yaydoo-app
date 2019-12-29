@@ -2,8 +2,14 @@
 #
 .DS_Store
 
+*.swp
+*.swo
+
+
 # Xcode
 #
+ios/Podfile.lock
+
 build/
 *.pbxuser
 !default.pbxuser
