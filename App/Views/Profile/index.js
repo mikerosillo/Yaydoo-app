@@ -51,6 +51,9 @@ export default class Profile extends Component {
           type: 'reset',
         });
     };
+    refresh(){
+      Actions.profile()
+    };
     async getAllSolicitudes() {
         const token = await AsyncStorage.getItem('ACCESS_TOKEN')
         const uuid = await AsyncStorage.getItem('UUID');
@@ -287,9 +290,34 @@ export default class Profile extends Component {
           
         };
           function ifOrdenType(data, tipo) { 
-            function goToInfoOrdenes(data, folio){
-              Actions.infoOrdenes({data: data, folio: folio})
+            function goToInfoOrdenes(data, folio, tipo){
+              Actions.infoOrdenes({data: data, folio: folio, tipo:tipo})
             };
+            function rejectOrdenes(data, folio, tipo){
+              Actions.rechazar({data: data, folio: folio, tipo:tipo})
+            };
+            async function approveOrdenes(data){
+              const token = await AsyncStorage.getItem('ACCESS_TOKEN')
+              await fetch(`https://stage.ws.yay.do/me/account/quotation/${data.proposal.uuid}/approve`, {
+                method: 'PUT',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    "X-Auth-Token": token
+                },
+                body: JSON.stringify({
+                  status:1
+                }),
+            }).then((response)=>{
+                if(response.ok){
+                    Actions.profile()
+                } else {
+                  Alert.alert(`respuesta, ${JSON.stringify(response)}`)
+                }
+            }).catch((err)=>{
+              console.log(err.message)
+            })
+          };
             if(tipo == 3){
               function ifProgressBarNotANumber(){
                 let bar = 0+'.'+ parseFloat(data.budget.available).toFixed(2)*100;
@@ -352,7 +380,7 @@ export default class Profile extends Component {
                           justifyContent:'center',
                           borderColor:'#808080'
                         }}
-                          onPress={() => Alert.alert('Simple Button pressed')}
+                          onPress={() => rejectOrdenes(data, data.folio, tipo)}
                         >
                         <Text style={{color:'#808080'}}>RECHAZAR</Text>
                         </TouchableOpacity>
@@ -369,7 +397,7 @@ export default class Profile extends Component {
                           justifyContent:'center',
                           borderColor:'#4bdbcd'
                         }}
-                          onPress={() => Alert.alert(' pressed')}
+                          onPress={() => approveOrdenes(data)}
                         >
                         <Text style={{color:'#08d06a'}}>APROBAR</Text>
                         </TouchableOpacity>
@@ -382,13 +410,13 @@ export default class Profile extends Component {
             } 
           };
           function ifSolicitudType(data, tipo) { 
-            function goToInfoSolicitudes(data, folio){
-              Actions.infoSolicitudes({data: data, folio: folio})
+            function goToInfoSolicitudes(data, folio, tipo){
+              Actions.infoSolicitudes({data: data, folio: folio, tipo: tipo})
             };
             async function approveSolicitudes(request_id){
               const token = await AsyncStorage.getItem('ACCESS_TOKEN')
               const enterpriseUuid = await AsyncStorage.getItem('UUID');
-              await fetch(`https://stage.ws.yay.do/v2/enterprise/${enterpriseUuid}/quotation/request/:${request_id}/approve`, {
+              await fetch(`https://stage.ws.yay.do/enterprise/${enterpriseUuid}/quotation/request/:${request_id}/approve`, {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -399,30 +427,18 @@ export default class Profile extends Component {
                   status:1
                 }),
             }).then((response)=>{
-              Alert.alert(`respuesta, ${JSON.stringify(response)}`)
+              if(response.ok){
+                Actions.profile()
+              } else {
+                Alert.alert(`respuesta, ${JSON.stringify(response)}`)
+              }
             }).catch((err)=>{
               console.log(err.message)
             })
             };
-            async function rejectSolicitudes(request_id){
-              const token = await AsyncStorage.getItem('ACCESS_TOKEN')
-              const enterpriseUuid = await AsyncStorage.getItem('UUID');
-              await fetch(`https://stage.ws.yay.do/v2/enterprise/${enterpriseUuid}/quotation/request/${request_id}/approve`, {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    "X-Auth-Token": token
-                },
-                body: JSON.stringify({
-                  status:0
-                }),
-            }).then((response)=>{
-              Alert.alert(`respuesta, ${JSON.stringify(response)}`)
-            }).catch((err)=>{
-              console.log(err.message)
-            })
-            };
+            function rejectSolicitudes(data, request_id, tipo){
+              Actions.rechazar({request_id: request_id, data:data, tipo:tipo})
+            }
             if(tipo == 4){
               return <View>
                         <View style={{flexDirection:'row', marginTop:10}}>
@@ -454,7 +470,7 @@ export default class Profile extends Component {
                               justifyContent:'center',
                               borderColor:'#808080'
                             }}
-                              onPress={() => rejectSolicitudes(data.uuid)}
+                              onPress={() => rejectSolicitudes(data, data.uuid)}
                             >
                             <Text style={{color:'#808080'}}>RECHAZAR</Text>
                             </TouchableOpacity>

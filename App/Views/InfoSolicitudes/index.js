@@ -71,6 +71,32 @@ export default class InfoSolicitudes extends Component {
             }
         }
     };
+    async  approveSolicitudes(){
+        const token = await AsyncStorage.getItem('ACCESS_TOKEN')
+        const enterpriseUuid = await AsyncStorage.getItem('UUID');
+        await fetch(`https://stage.ws.yay.do/enterprise/${enterpriseUuid}/quotation/request/:${this.state.data.uuid}/approve`, {
+          method: 'POST',
+          headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              "X-Auth-Token": token
+          },
+          body: JSON.stringify({
+            status:1
+          }),
+      }).then((response)=>{
+        if(response.ok){
+          Actions.profile()
+        } else {
+          Alert.alert(`respuesta, ${JSON.stringify(response)}`)
+        }
+      }).catch((err)=>{
+        console.log(err.message)
+      })
+    };
+    rejectSolicitudes(){
+        Actions.rechazar({data: this.state.data, folio: this.state.folio, tipo:this.state.data.type})
+      };
     whichToRender(){
         let arr = [this.state.data]
         let name = arr.map((el)=>{
@@ -180,7 +206,7 @@ export default class InfoSolicitudes extends Component {
                                 borderColor:'#808080',
                                 flexDirection:'row'
                                 }}
-                                onPress={() => Alert.alert('Simple Button pressed')}
+                                onPress={() => this.rejectSolicitudes()}
                                 >
                                 <Text style={{color:'#808080'}}>
                                     <Image
@@ -204,7 +230,7 @@ export default class InfoSolicitudes extends Component {
                                 borderColor:'#08d06a',
                                 flexDirection:'row'
                                 }}
-                                onPress={() => Alert.alert('Simple Button pressed')}
+                                onPress={() => this.approveSolicitudes()}
                                 >
                                 <Text style={{color:'#808080'}}>
                                     <Image
