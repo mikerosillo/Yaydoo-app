@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import PushNotification from "react-native-push-notification";
-import {Platform, AsyncStorage,} from 'react-native';
+import {Platform, AsyncStorage,Alert} from 'react-native';
 
 // var PushNotification = require("react-native-push-notification");
 export default class PushController extends Component{
@@ -18,7 +18,7 @@ export default class PushController extends Component{
                 },
                 body: JSON.stringify({
                   token: token.token,
-                  device:'android, ios'
+                  device: Platform.OS
                 }),
               }).then((response)=>{
                 console.log('from response',response)
@@ -29,7 +29,7 @@ export default class PushController extends Component{
           
             // (required) Called when a remote or local notification is opened or received
             onNotification: function(notification) {
-              console.log("NOTIFICATION:", notification, );
+              Alert.alert("NOTIFICATION:", notification, );
            
               // const Component = Platform.select({
               //   ios: () => require('ComponentIOS'),
@@ -45,7 +45,7 @@ export default class PushController extends Component{
             //   notification.finish(PushNotificationIOS.FetchResult.NoData);
             },
             // Android only
-            senderID: "200303079766",
+            senderID: "945003642435",
             // iOS only
             permissions: {
               alert: true,
