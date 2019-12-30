@@ -74,8 +74,8 @@ export default class InfoSolicitudes extends Component {
     async  approveSolicitudes(){
         const token = await AsyncStorage.getItem('ACCESS_TOKEN')
         const enterpriseUuid = await AsyncStorage.getItem('UUID');
-        await fetch(`https://stage.ws.yay.do/enterprise/${enterpriseUuid}/quotation/request/:${this.state.data.uuid}/approve`, {
-          method: 'POST',
+        await fetch(`https://stage.ws.yay.do/enterprise/${enterpriseUuid}/quotation/request/${this.state.data.uuid}/approve`, {
+          method: 'PUT',
           headers: {
               Accept: 'application/json',
               'Content-Type': 'application/json',

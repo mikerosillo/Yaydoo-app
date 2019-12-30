@@ -58,7 +58,7 @@ export default class Rechazar extends Component{
         const token = await AsyncStorage.getItem('ACCESS_TOKEN')
         const enterpriseUuid = await AsyncStorage.getItem('UUID');
         await fetch(`https://stage.ws.yay.do/enterprise/${enterpriseUuid}/quotation/request/${this.state.request_id}/approve`, {
-          method: 'POST',
+          method: 'PUT',
           headers: {
               Accept: 'application/json',
               'Content-Type': 'application/json',

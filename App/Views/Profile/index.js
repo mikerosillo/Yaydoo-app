@@ -82,6 +82,7 @@ export default class Profile extends Component {
                               solicitudes: solicitudes,
                               solicitudesDate:createdAt
                             })
+                            console.log('from solicitudes',this.state.solicitudes[0].uuid)
                         })
                     }
                 })
@@ -413,11 +414,13 @@ export default class Profile extends Component {
             function goToInfoSolicitudes(data, folio, tipo){
               Actions.infoSolicitudes({data: data, folio: folio, tipo: tipo})
             };
-            async function approveSolicitudes(request_id){
+            async function approveSolicitudes(request_id, data){
+              console.log('th',data)
               const token = await AsyncStorage.getItem('ACCESS_TOKEN')
               const enterpriseUuid = await AsyncStorage.getItem('UUID');
-              await fetch(`https://stage.ws.yay.do/enterprise/${enterpriseUuid}/quotation/request/:${request_id}/approve`, {
-                method: 'POST',
+              console.log(enterpriseUuid)
+              await fetch(`https://stage.ws.yay.do/enterprise/${enterpriseUuid}/quotation/request/${request_id}/approve`, {
+                method: 'PUT',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
@@ -487,7 +490,7 @@ export default class Profile extends Component {
                               justifyContent:'center',
                               borderColor:'#4bdbcd'
                             }}
-                              onPress={() => approveSolicitudes(data.uuid)}
+                              onPress={() => approveSolicitudes(data.uuid, data)}
                             >
                             <Text style={{color:'#08d06a'}}>APROBAR</Text>
                             </TouchableOpacity>
