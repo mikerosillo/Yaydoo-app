@@ -1,4 +1,4 @@
-package com.yaydoo;
+package com.yaydoo.app;
 
 import android.app.Application;
 import android.content.Context;
