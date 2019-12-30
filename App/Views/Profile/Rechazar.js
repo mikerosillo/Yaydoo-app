@@ -27,11 +27,17 @@ export default class Rechazar extends Component{
         if(this.state.data.type == '3'){
             this.rejectOrdenes()
         } else {
-            this.rejectSolicitudes()
+            this.ifNotasNotNull()
         }
     };
+    ifNotasNotNull(){
+        if(this.state.notas !== ''){
+            this.rejectSolicitudes()
+        } else {
+            Alert.alert('Favor de seleccionar motivo de rechazo')
+        }
+    }
     async rejectOrdenes(){
-        console.log(this.state.data.proposal.uuid)
         const token = await AsyncStorage.getItem('ACCESS_TOKEN')
         const enterpriseUuid = await AsyncStorage.getItem('UUID');
         await fetch(`https://stage.ws.yay.do/me/account/quotation/${this.state.data.proposal.uuid}/approve`, {
@@ -42,7 +48,7 @@ export default class Rechazar extends Component{
               "X-Auth-Token": token
           },
           body: JSON.stringify({
-            status:0
+            status : 0
           }),
       }).then((response)=>{
           if(response.ok){
@@ -55,9 +61,11 @@ export default class Rechazar extends Component{
       })
     };
     async rejectSolicitudes(){
+        console.log('solicitudes', this.state.data.uuid)
+        console.log('solicitudes2', this.state.request_id)
         const token = await AsyncStorage.getItem('ACCESS_TOKEN')
         const enterpriseUuid = await AsyncStorage.getItem('UUID');
-        await fetch(`https://stage.ws.yay.do/enterprise/${enterpriseUuid}/quotation/request/${this.state.request_id}/approve`, {
+        await fetch(`https://stage.ws.yay.do/v2/enterprise/${enterpriseUuid}/quotation/request/${this.state.data.uuid}/approve`, {
           method: 'PUT',
           headers: {
               Accept: 'application/json',
@@ -65,7 +73,8 @@ export default class Rechazar extends Component{
               "X-Auth-Token": token
           },
           body: JSON.stringify({
-            status:0
+            status:0,
+            comment : this.state.notas
           }),
       }).then((response)=>{
           if(response.ok){
@@ -247,17 +256,17 @@ export default class Rechazar extends Component{
                     {this.selectType()}
                 </View>
                 <View style={{alignItems:'center', textAlign:'center', marginTop:20}}>
-                    <TouchableOpacity onPress={() => this.setState({selected1:true, selected2: false, selected3:false})} style={this.styleSelected1()}>
+                    <TouchableOpacity onPress={() => this.setState({selected1:true, selected2: false, selected3:false, notas:'No son prioridad'})} style={this.styleSelected1()}>
                     <Text style={this.styleSelected1Text1()}>No son prioridad</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{alignItems:'center', textAlign:'center', marginTop:20}}>
-                    <TouchableOpacity onPress={() => this.setState({selected2:true, selected1:false, selected3:false})} style={this.styleSelected2()}>
+                    <TouchableOpacity onPress={() => this.setState({selected2:true, selected1:false, selected3:false, notas: 'Sin presupuesto'})} style={this.styleSelected2()}>
                     <Text style={this.styleSelected1Text2()}>Sin presupuesto</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{alignItems:'center', textAlign:'center', marginTop:20}}>
-                    <TouchableOpacity onPress={() => this.setState({selected3:true, selected1:false, selected2:false})} style={this.styleSelected3()}>
+                    <TouchableOpacity onPress={() => this.setState({selected3:true, selected1:false, selected2:false, notas: 'Cambio de productos'})} style={this.styleSelected3()}>
                     <Text style={this.styleSelected1Text3()}>Cambio de productos</Text>
                     </TouchableOpacity>
                 </View>

@@ -44,7 +44,7 @@ export default class PushController extends Component{
               }
             //   notification.finish(PushNotificationIOS.FetchResult.NoData);
             },
-            // Android only
+            // Android only 945003642435
             senderID: "945003642435",
             // iOS only
             permissions: {

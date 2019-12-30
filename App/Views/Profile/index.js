@@ -419,7 +419,7 @@ export default class Profile extends Component {
               const token = await AsyncStorage.getItem('ACCESS_TOKEN')
               const enterpriseUuid = await AsyncStorage.getItem('UUID');
               console.log(enterpriseUuid)
-              await fetch(`https://stage.ws.yay.do/enterprise/${enterpriseUuid}/quotation/request/${request_id}/approve`, {
+              await fetch(`https://stage.ws.yay.do/v2/enterprise/${enterpriseUuid}/quotation/request/${request_id}/approve`, {
                 method: 'PUT',
                 headers: {
                     Accept: 'application/json',

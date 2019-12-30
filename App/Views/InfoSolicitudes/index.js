@@ -37,7 +37,7 @@ export default class InfoSolicitudes extends Component {
     UNSAFE_componentWillMount(){
         this.state.data = this.props.data
         this.state.folio = this.props.folio
-        console.log(this.state.data.account.uuid)
+        console.log(this.state.data.uuid)
     }
     informacionTitleStyle(){
         if(this.state.informacion == true){
@@ -74,7 +74,7 @@ export default class InfoSolicitudes extends Component {
     async  approveSolicitudes(){
         const token = await AsyncStorage.getItem('ACCESS_TOKEN')
         const enterpriseUuid = await AsyncStorage.getItem('UUID');
-        await fetch(`https://stage.ws.yay.do/enterprise/${enterpriseUuid}/quotation/request/${this.state.data.uuid}/approve`, {
+        await fetch(`https://stage.ws.yay.do/v2/enterprise/${enterpriseUuid}/quotation/request/${this.state.data.uuid}/approve`, {
           method: 'PUT',
           headers: {
               Accept: 'application/json',
@@ -96,7 +96,7 @@ export default class InfoSolicitudes extends Component {
     };
     rejectSolicitudes(){
         Actions.rechazar({data: this.state.data, folio: this.state.folio, tipo:this.state.data.type})
-      };
+    };
     whichToRender(){
         let arr = [this.state.data]
         let name = arr.map((el)=>{
