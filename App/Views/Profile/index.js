@@ -82,7 +82,6 @@ export default class Profile extends Component {
                               solicitudes: solicitudes,
                               solicitudesDate:createdAt
                             })
-                            console.log('from solicitudes',this.state.solicitudes[0].uuid)
                         })
                     }
                 })
@@ -158,7 +157,6 @@ export default class Profile extends Component {
                             var createdAt = pendingPo.map((element)=>{
                               return element.created_at
                             })
-                            console.log(datos.data[0].budget.available)
                             //console.log('json filter',pendingPo[0])
                             // var map2 = accountInfo.map((element) => {
                             //     return element.folio
@@ -415,10 +413,8 @@ export default class Profile extends Component {
               Actions.infoSolicitudes({data: data, folio: folio, tipo: tipo})
             };
             async function approveSolicitudes(request_id, data){
-              console.log('th',data)
               const token = await AsyncStorage.getItem('ACCESS_TOKEN')
               const enterpriseUuid = await AsyncStorage.getItem('UUID');
-              console.log(enterpriseUuid)
               await fetch(`https://stage.ws.yay.do/v2/enterprise/${enterpriseUuid}/quotation/request/${request_id}/approve`, {
                 method: 'PUT',
                 headers: {
