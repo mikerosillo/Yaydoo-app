@@ -6,6 +6,7 @@ import PlaceHolder from '../Components/PlaceHolder';
 import Welcome from '../Components/Welcome';
 import InfoOrdenes from '../Views/InfoOrdenes';
 import InfoSolicitudes from '../Views/InfoSolicitudes';
+import Rechazar from '../Views/Profile/Rechazar';
 
 const Routes = () => (
   <Router>
@@ -16,6 +17,7 @@ const Routes = () => (
       <Scene key="profile" component={Profile} hideNavBar />
       <Scene key="infoOrdenes" component={InfoOrdenes} hideNavBar />
       <Scene key="infoSolicitudes" component={InfoSolicitudes} hideNavBar />
+      <Scene key="rechazar" component={Rechazar} hideNavBar />
     </Scene>
   </Router>
 );
