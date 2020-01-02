@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import PushNotification from "react-native-push-notification";
 import {Platform, AsyncStorage,Alert} from 'react-native';
 import firebase from 'react-native-firebase';
+import  { RemoteMessage } from 'react-native-firebase';
 
 // var PushNotification = require("react-native-push-notification");
 export default class PushController extends Component{
