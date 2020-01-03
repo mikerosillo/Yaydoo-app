@@ -43,15 +43,15 @@ export default class InfoSolicitudes extends Component {
         if(this.state.informacion == true){
             return {
                 textDecorationLine: 'underline',
-                color:'#FFF',
+                color:'#F5F5F5',
                 marginLeft:20,
-                fontSize:18
+                fontSize:13.96
             }
         } else {
             return {
-                color:'#FFF',
+                color:'#F5F5F5',
                 marginLeft:20,
-                fontSize:18
+                fontSize:13.96
             }
         }
     };
@@ -59,15 +59,15 @@ export default class InfoSolicitudes extends Component {
         if(this.state.productos == true){
             return {
                 textDecorationLine: 'underline',
-                color:'#FFF',
+                color:'#F5F5F5',
                 marginLeft:20,
-                fontSize:18
+                fontSize:13.96
             }
         } else {
             return {
-                color:'#FFF',
+                color:'#F5F5F5',
                 marginLeft:20,
-                fontSize:18
+                fontSize:13.96
             }
         }
     };
@@ -132,7 +132,7 @@ export default class InfoSolicitudes extends Component {
                                     />
                                 </View>
                                 <View style={{width:'50%', marginTop:20}}>
-                                    <Text style={{color:'#000000', marginBottom:40, fontSize:16, fontWeight:'bold'}}>{data.item.description}</Text>
+                                    <Text style={{fontFamily:'Montserrat-Medium', color:'rgba(0,0,0,0.87)', marginBottom:40, fontSize:13.96, fontWeight:'500'}}>{data.item.description}</Text>
                                     <Text style={{color:'#808080', marginBottom:20, fontSize:16}}>{data.units}{' '}piezas ={' '}{numeral(data.item.price * data.units).format('$0,0.00')}{' '}{data.item.vendor.vendor.currency}</Text>
                                     <Text style={{color:'#808080', marginBottom:20}}></Text>
                                     <Text style={{color:'#808080', fontSize:16}}>Entrega{' '}{Moment(this.state.deliveryDate).format('D MMM YY')}</Text>
@@ -151,20 +151,20 @@ export default class InfoSolicitudes extends Component {
            return   <View>
                         <View style={{flexDirection:'row'}}>
                             <View style={{width:'50%'}}>
-                                <Text style={{color:'#000000', marginLeft:20, fontSize:15, fontWeight:'bold', marginTop:20, marginBottom:20}}>Detalle</Text>
-                                <Text style={{color:'#000000', marginLeft:20, marginTop:20, marginBottom:20}}>Solicitante</Text>
-                                <Text style={{color:'#000000', marginLeft:20, marginTop:20, marginBottom:20}}>Prioridad</Text>
-                                <Text style={{color:'#000000', marginLeft:20, marginTop:20, marginBottom:20, fontWeight:'bold'}}>Entrega</Text>
-                                <Text style={{color:'#000000', marginLeft:20, marginTop:20, marginBottom:20}}>Dirección</Text>
-                                <Text style={{color:'#000000', marginLeft:20, marginTop:20, marginBottom:20}}>Fecha requerida</Text>
+                                <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, fontSize:13.96, fontFamily:'Montserrat-Medium', marginTop:20, marginBottom:10, fontWeight:'500'}}>Detalle</Text>
+                                <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>Solicitante</Text>
+                                <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>Prioridad</Text>
+                                <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontSize:13.96, fontWeight:'500', fontFamily:'Montserrat-Medium',}}>Entrega</Text>
+                                <Text style={{color:'rgba(0,0,0,0.87)', fontSize:14.09, fontFamily:'Montserrat-Regular', marginLeft:20, marginTop:0, marginBottom:10}}>Dirección</Text>
+                                <Text style={{color:'rgba(0,0,0,0.87)', fontSize:14.09, fontFamily:'Montserrat-Regular', marginLeft:20, marginTop:0, marginBottom:10}}>Fecha requerida</Text>
                             </View>
                             <View style={{width:'50%'}}>
-                                <Text style={{color:'#000000', fontSize:15, fontWeight:'bold', marginTop:20, marginBottom:20}}></Text>
-                                <Text style={{color:'#000000', marginTop:20, marginBottom:20}}>{name}</Text>
-                                <Text style={{color:'#000000', marginTop:20, marginBottom:20}}>{priority}</Text>
-                                <Text style={{color:'#000000', marginTop:20, marginBottom:20, fontWeight:'bold'}}></Text>
-                                <Text style={{color:'#000000', marginTop:20, marginBottom:20}}>{address}</Text>
-                                <Text style={{color:'#000000', marginTop:20, marginBottom:20}}>{Moment(this.state.data.delivery_date).format('D MMM YY')}</Text>
+                                <Text style={{color:'#000000', fontSize:15, fontWeight:'bold', marginTop:20, marginBottom:10}}></Text>
+                                <Text style={{color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{name}</Text>
+                                <Text style={{color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{priority}</Text>
+                                <Text style={{color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontWeight:'bold'}}></Text>
+                                <Text style={{color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{address}</Text>
+                                <Text style={{color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{Moment(this.state.data.delivery_date).format('D MMM YY')}</Text>
                             </View>
                         </View>
                     </View>
@@ -175,53 +175,54 @@ export default class InfoSolicitudes extends Component {
         if(this.state.informacion == true){
             return {
                 flex: 1,
-                backgroundColor: "#FFF",
+                backgroundColor: "#F9FAFB",
             }
         } else {
             return {
                 flex: 1,
-                backgroundColor: "rgb(211,211,211)"
+                backgroundColor: "#F9FAFB"
             }
         }
     };
     ifInfoTrue(){
         if(this.state.productos !== true){
-            return  <View style={{marginTop:80}}>
+            return  <View style={{flex:1, marginTop:200}}>
                         <View
                             style={{
                             borderBottomColor: 'black',
-                            borderBottomWidth: 1,
-                            marginBottom:20
+                            borderBottomWidth: 0.5,
+                            marginBottom:20,
+                            flex:1
                             }}
                         />
-                        <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:20, marginTop:20}}>
-                            <View style={{width:'40%', marginLeft:20}}>
+                        <View style={{flex:1,flexDirection:'row', justifyContent:'space-around', marginBottom:0, marginTop:20}}>
+                            <View style={{width:148, marginLeft:20,}}>
                                 <TouchableOpacity style={{
-                                height:30,
-                                backgroundColor:'transparent',
+                                height:36,
+                                backgroundColor:'rgba(98,2,238,0)',
                                 borderWidth:1,
                                 borderRadius:3,
                                 alignItems:'center',
                                 justifyContent:'space-around',
-                                borderColor:'#808080',
+                                borderColor:'rgba(0,0,0,0.6)',
                                 flexDirection:'row'
                                 }}
                                 onPress={() => this.rejectSolicitudes()}
                                 >
-                                <Text style={{color:'#808080'}}>
+                                <Text style={{color:'rgba(0,0,0,0.6)'}}>
                                     <Image
                                         style={{width: 15, height: 15,marginRight:5}}
                                         source={require('../../../assets/PNGIX.com_close-icon-png_904874.png')}
                                     />
                                 </Text>
-                                <Text style={{color:'#808080'}}>RECHAZAR</Text>
+                                <Text style={{color:'rgba(0,0,0,0.6)', fontSize:13.96, fontFamily:'Montserrat-Medium'}}>RECHAZAR</Text>
                                 </TouchableOpacity>
 
                             </View>
-                            <View style={{width:'20%'}}></View>
-                            <View style={{width:'40%', marginRight:20}}>
+                            <View style={{width:'10%'}}></View>
+                            <View style={{width:148, marginRight:20}}>
                             <TouchableOpacity style={{
-                                height:30,
+                                height:36,
                                 backgroundColor:'transparent',
                                 borderWidth:1,
                                 borderRadius:3,
@@ -281,7 +282,7 @@ export default class InfoSolicitudes extends Component {
     render() {
         return (
             <View style={this.stylesContainer()}>
-                <View style={{backgroundColor:'#4180fd'}}>
+                <View style={{backgroundColor:'#00A0F8'}}>
                     <TouchableOpacity  onPress={() => this.previewsPage()}>
                         <View style={{flexDirection:'row', marginTop:30}}>
                             <View style={{width:'50%', flexDirection:'row'}}>
@@ -290,12 +291,12 @@ export default class InfoSolicitudes extends Component {
                                         <Image
                                             source={require('../../../assets/icons8-chevron-left-48.png')}
                                             // source={{uri : 'assets/icons8-chevron-left-48.png'}}
-                                            style={{ width: 15, height: 15, marginLeft: 20,color:'#FFF'}}
+                                            style={{ width: 15, height: 15, marginLeft: 20,color:'#FFFFFF'}}
                                         />
                                     </TouchableOpacity>
                             </View>
                             <View style={{width:'60%'}}>
-                                <Text style={{color:'#FFF', fontSize:20}}># {this.state.folio}</Text>
+                                <Text style={{fontWeight:'500',color:'#FFFFFF', fontSize:19.94, fontFamily:'Montserrat-Medium'}}># {this.state.folio}</Text>
                             </View>
                             </View>
                             <View style={{width:'50%'}}></View>
@@ -334,7 +335,7 @@ export default class InfoSolicitudes extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "rgb(211,211,211)",
+        backgroundColor: "#F9FAFB",
 
     },
     solicitudesMain: {
@@ -347,14 +348,14 @@ const styles = StyleSheet.create({
         borderTopLeftRadius:4,
         borderTopRightRadius:4,
         borderRadius:4,
-        shadowColor: "#000000",
+        shadowColor: "rgba(0,0,0,0.14)",
         shadowOffset: {
             width: 0,
             height: 5,
         },
         shadowOpacity: 0.34,
-        shadowRadius: 6.27,
-        elevation: 10,
+        shadowRadius: 0.27,
+        elevation: 3,
         marginTop:20,
         marginBottom:20,
         backgroundColor:'#ffffff',
