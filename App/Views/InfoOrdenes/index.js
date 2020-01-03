@@ -151,13 +151,17 @@ export default class InfoOrdenes extends Component {
                 textDecorationLine: 'underline',
                 color:'#FFF',
                 marginLeft:20,
-                fontSize:18
+                fontSize:13.96,
+                fontFamily:'Montserrat-Medium',
+                letterSpacing:1.25
             }
         } else {
             return {
                 color:'#FFF',
                 marginLeft:20,
-                fontSize:18
+                fontSize:13.96,
+                fontFamily:'Montserrat-Medium',
+                letterSpacing:1.25
             }
         }
     };
@@ -167,13 +171,17 @@ export default class InfoOrdenes extends Component {
                 textDecorationLine: 'underline',
                 color:'#FFF',
                 marginLeft:20,
-                fontSize:18
+                fontSize:13.96,
+                fontFamily:'Montserrat-Medium',
+                letterSpacing:1.25
             }
         } else {
             return {
                 color:'#FFF',
                 marginLeft:20,
-                fontSize:18
+                fontSize:13.96,
+                fontFamily:'Montserrat-Medium',
+                letterSpacing:1.25
             }
         }
     };
@@ -196,15 +204,18 @@ export default class InfoOrdenes extends Component {
                                 {ifImageNotNull()}
                             </View>
                             <View style={{width:'50%', marginTop:20}}>
-                                <Text style={{color:'#000000', marginBottom:40, fontSize:16, fontWeight:'bold'}}>{data.item.description}</Text>
-                                <Text style={{color:'#808080', marginBottom:20, fontSize:16}}>{data.units}{' '}piezas ={' '}{numeral(data.item.price * data.units).format('$0,0.00')}{' '}{data.item.vendor.vendor.currency}</Text>
-                                <Text style={{color:'#808080', marginBottom:20}}></Text>
-                                <Text style={{color:'#808080', fontSize:16}}>Entrega{' '}{Moment(this.state.deliveryDate).format('D MMM YY')}</Text>
+                                <Text style={{color:'rgba(0,0,0,0.87)', marginBottom:10, fontSize:13.96, fontWeight:'500', fontFamily:'Montserrat-Medium'}}>{data.item.description}</Text>
+                                <Text style={{color:'rgba(0,0,0,0.6)', marginBottom:0, fontSize:12.09, fontFamily:'Montserrat-Regular'}}>{data.units}{' '}pieza ={' '}{numeral(data.item.price * data.units).format('$0,0.00')}{' '}{data.item.vendor.vendor.currency}</Text>
+                                {/* <Text style={{color:'#808080', marginBottom:20}}></Text> */}
+                                <Text style={{color:'rgba(0,0,0,0.6)', fontSize:12.09, fontFamily:'Montserrat-Regular'}}>Entrega{' '}{Moment(this.state.deliveryDate).format('D MMM YY')}</Text>
                             </View>
                         </View>
-                        <View style={{}}>
-                            <Text style={{color:'#808080', marginBottom:20, marginLeft:30, marginTop:20, fontSize:16}}>
-                               Pieza{' '}{numeral(data.item.price).format('$0,0.00')}{' '}{data.item.vendor.vendor.currency}
+                        <View style={{flexDirection:'row'}}>
+                            <Text style={{color:'rgba(0,0,0,0.87)', marginBottom:20, marginLeft:30, marginTop:20, fontSize:12.08, fontFamily:'Montserrat-Regular'}}>
+                               Pieza
+                            </Text>
+                            <Text style={{color:'rgba(0,0,0,0.6)', marginBottom:20, marginLeft:5, marginTop:20, fontSize:12.09, fontFamily:'Montserrat-Regular'}}>
+                              {numeral(data.item.price).format('$0,0.00')}{' '}{data.item.vendor.vendor.currency}
                             </Text>
                         </View>
                     </View>
@@ -216,6 +227,7 @@ export default class InfoOrdenes extends Component {
                 function ifProgressBarNotANumber(){
                     if( bar >= 0.1){
                         return <Progress.Bar
+                                    style={{marginLeft:20}}
                                     fillStyle={{}}
                                     progress={bar}
                                     width={Dimensions.get('window').width - 240}
@@ -226,6 +238,7 @@ export default class InfoOrdenes extends Component {
                                 />
                     } else {
                         return <Progress.Bar
+                                    style={{marginLeft:20}}
                                     fillStyle={{}}
                                     progress={0}
                                     width={Dimensions.get('window').width - 240}
@@ -239,34 +252,34 @@ export default class InfoOrdenes extends Component {
             return  <View>
                             <View style={{flexDirection:'row'}}>
                                 <View style={{width:'40%'}}>
-                                    <Text style={{color:'#000000', marginLeft:20, fontSize:15, fontWeight:'bold', marginTop:20, marginBottom:20}}>Entrega</Text>
-                                    <Text style={{color:'#000000', marginLeft:20, marginTop:20, marginBottom:20}}>Dirección</Text>
+                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, fontSize:13.96, fontWeight:'500', fontFamily:'Montserrat-Medium', marginTop:20, marginBottom:10}}>Entrega</Text>
+                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Dirección</Text>
                                     <Text style={{color:'#000000', marginLeft:20, marginTop:0, marginBottom:0}}></Text>
-                                    <Text style={{color:'#000000', marginLeft:20, marginTop:20, marginBottom:20}}>Fecha requerida</Text>
-                                    <Text style={{color:'#000000', marginLeft:20, marginTop:20, marginBottom:20}}>Factura</Text>
-                                    <Text style={{color:'#000000', marginLeft:20, marginTop:20, marginBottom:20}}>Fecha requerida</Text>
-                                    <Text style={{color:'#000000', marginLeft:20, marginTop:20, marginBottom:20}}>Proveedor</Text>
-                                    <Text style={{color:'#000000', marginLeft:20, marginTop:20, marginBottom:20}}>Terminos de pago</Text>
-                                    <Text style={{color:'#000000', marginLeft:20, marginTop:20, marginBottom:20, fontWeight:'bold'}}>Presupuesto</Text>
-                                    <Text style={{color:'#000000', marginLeft:20, marginTop:20, marginBottom:20}}>Asignado</Text>
-                                    <Text style={{color:'#000000', marginLeft:20, marginTop:20, marginBottom:20}}>Disponible</Text>
-                                    <Text style={{color:'#000000', marginLeft:20, marginTop:20, marginBottom:20}}>Gastado</Text>
+                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Fecha requerida</Text>
+                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Factura</Text>
+                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Fecha requerida</Text>
+                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Proveedor</Text>
+                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Terminos de pago</Text>
+                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, fontSize:13.96, fontWeight:'500', fontFamily:'Montserrat-Medium', marginTop:20, marginBottom:10}}>Presupuesto</Text>
+                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Asignado</Text>
+                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Disponible</Text>
+                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Gastado</Text>
                                 </View>
                                 <View style={{width:'60%'}}>
-                                    <Text style={{color:'#000000', fontSize:15, fontWeight:'bold', marginTop:20, marginBottom:20}}></Text>
-                                    <Text style={{color:'#000000', fontSize:15, marginTop:0, marginBottom:0}}>{this.state.street}{'  '}No.{this.state.no}</Text>
-                                    <Text style={{color:'#000000', fontSize:15, marginTop:0, marginBottom:20}}>{this.state.city}{'   '}{this.state.state}</Text>
-                                    <Text style={{marginLeft:20,color:'#000000', marginTop:38, marginBottom:20}}>{Moment(this.state.deliveryDate).format('D MMM YY')}</Text>
-                                    <Text style={{marginLeft:20,color:'#000000', marginTop:20, marginBottom:20}}>{this.state.factura}</Text>
-                                    <Text style={{marginLeft:20,color:'#000000', marginTop:20, marginBottom:20}}>{Moment(this.state.deliveryDate).format('D MMM YY')}</Text>
-                                    <Text style={{marginLeft:20,color:'#000000', marginTop:20, marginBottom:20}}>{this.state.proveedor}</Text>
-                                    <Text style={{marginLeft:20,color:'#000000', marginTop:20, marginBottom:20}}>{this.state.payment_terms}</Text>
+                                    <Text style={{color:'#000000', fontSize:14.09, fontWeight:'bold', marginTop:0, marginBottom:10}}></Text>
+                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:0, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.street}{'  '}No.{this.state.no}</Text>
+                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:0, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.city}{'   '}{this.state.state}</Text>
+                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:30, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{Moment(this.state.deliveryDate).format('D MMM YY')}</Text>
+                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:10, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.factura}</Text>
+                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:10, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{Moment(this.state.deliveryDate).format('D MMM YY')}</Text>
+                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:10, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.proveedor}</Text>
+                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:25, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.payment_terms}</Text>
 
                                     <Text style={{color:'#000000', marginTop:20, marginBottom:20, fontWeight:'bold'}}></Text>
-                                    <Text style={{color:'#000000', marginTop:20, marginBottom:20}}>{this.state.asignado}</Text>
-                                    <Text style={{color:'#000000', marginTop:20, marginBottom:20}}>{numeral(this.state.disponible).format('$0,0.00')}</Text>
-                                    <Text style={{color:'#000000', marginTop:20, marginBottom:0}}>{numeral(this.state.gastado).format('$0,0.00')}</Text>
-                                    <Text style={{color:'#000000', marginTop:0, marginBottom:0}}>de{' '}{numeral(this.state.disponible).format('$0,0.00')}</Text>
+                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:0, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.asignado}</Text>
+                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:10, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{numeral(this.state.disponible).format('$0,0.00')}</Text>
+                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', marginTop:10, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{numeral(this.state.gastado).format('$0,0.00')}</Text>
+                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular'}}>de{' '}{numeral(this.state.disponible).format('$0,0.00')}</Text>
                                     {ifProgressBarNotANumber()}
                                     <Text style={{color:'#000000', marginTop:20, marginBottom:0}}></Text>
                                 </View>
@@ -287,20 +300,20 @@ export default class InfoOrdenes extends Component {
         if(this.state.productos !== true){
             return  <View>
                         <View style={{justifyContent:'center', alignItems:'center'}}>
-                            <Text style={{color:'#000000', fontSize:20, flexDirection:'row', justifyContent:'center'}}>
-                                Total: <Text style={{fontSize:25, fontWeight:'bold'}}>{numeral(this.state.gastado).format('$0,0.00')}{' '}{this.state.currency}</Text>
+                            <Text style={{fontFamily:'Montserrat-Regular',color:'rgba(0,0,0,0.87)', fontSize:16.1, flexDirection:'row', justifyContent:'center'}}>
+                                Total: <Text style={{color:'rgba(0,0,0,0.87)',fontSize:19.94, fontWeight:'500', fontFamily:'Montserrat-Medium'}}>{numeral(this.state.gastado).format('$0,0.00')}{' '}{this.state.currency}</Text>
                             </Text>
                         </View>
                         <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:20, marginTop:20}}>
-                            <View style={{width:'40%', marginLeft:20}}>
+                            <View style={{width:148, marginLeft:20}}>
                                 <TouchableOpacity style={{
-                                height:30,
+                                height:41,
                                 backgroundColor:'transparent',
                                 borderWidth:1,
                                 borderRadius:3,
                                 alignItems:'center',
                                 justifyContent:'space-around',
-                                borderColor:'#808080',
+                                borderColor:'rgba(0,0,0,0.6)',
                                 flexDirection:'row'
                                 }}
                                 
@@ -312,20 +325,20 @@ export default class InfoOrdenes extends Component {
                                         source={require('../../../assets/PNGIX.com_close-icon-png_904874.png')}
                                     />
                                 </Text>
-                                <Text style={{color:'#808080'}}>RECHAZAR</Text>
+                                <Text style={{color:'rgba(0,0,0,0.6)', fontSize:13.96, fontFamily:'Montserrat-Medium'}}>RECHAZAR</Text>
                                 </TouchableOpacity>
 
                             </View>
-                            <View style={{width:'20%'}}></View>
-                            <View style={{width:'40%', marginRight:20}}>
+                            <View style={{width:'10%'}}></View>
+                            <View style={{width:148, marginRight:20}}>
                             <TouchableOpacity style={{
-                                height:30,
+                                height:41,
                                 backgroundColor:'transparent',
                                 borderWidth:1,
                                 borderRadius:3,
                                 alignItems:'center',
                                 justifyContent:'space-around',
-                                borderColor:'#08d06a',
+                                borderColor:'#4BBC68',
                                 flexDirection:'row'
                                 }}
                                 onPress={() => this.approveOrdenes()}
@@ -336,7 +349,7 @@ export default class InfoOrdenes extends Component {
                                         source={require('../../../assets/pngfuel.com.png')}
                                     />
                                 </Text>
-                                <Text style={{color:'#08d06a'}}>APROBAR</Text>
+                                <Text style={{color:'#4BBC68', fontSize:13.96, fontFamily:'Montserrat-Medium'}}>APROBAR</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -349,19 +362,19 @@ export default class InfoOrdenes extends Component {
         if(this.state.informacion == true){
             return {
                 flex: 1,
-                backgroundColor: "#FFF",
+                backgroundColor: "#F9FAFB",
             }
         } else {
             return {
                 flex: 1,
-                backgroundColor: "rgb(211,211,211)"
+                backgroundColor: "#F9FAFB"
             }
         }
     };
     render() {
         return (
             <View style={this.stylesContainer()}>
-                <View style={{backgroundColor:'#4180fd'}}>
+                <View style={{backgroundColor:'#00A0F8'}}>
                     <TouchableOpacity  onPress={() => this.previewsPage()}>
                         <View style={{flexDirection:'row', marginTop:40}}>
                             <View style={{width:'50%', flexDirection:'row'}}>
@@ -369,11 +382,11 @@ export default class InfoOrdenes extends Component {
                                 <Image
                                     source={require('../../../assets/icons8-chevron-left-48.png')}
                                     // source={{uri : 'assets/icons8-chevron-left-48.png'}}
-                                    style={{ width: 15, height: 15, marginLeft: 20,color:'#FFF'}}
+                                    style={{ width: 24, height: 24, marginLeft: 20,color:'#FFF'}}
                                 />
                             </View>
                             <View style={{width:'60%'}}>
-                                <Text style={{color:'#FFF', fontSize:20}}># {this.state.folio}</Text>
+                                <Text style={{color:'#FFFFFF', fontSize:19.94, fontFamily:'Montserrat-Medium'}}># {this.state.folio}</Text>
                             </View>
                             </View>
                             <View style={{width:'50%'}}></View>
@@ -416,7 +429,7 @@ export default class InfoOrdenes extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "rgb(211,211,211)",
+        backgroundColor: "#F9FAFB",
 
     },
     solicitudes:{
@@ -429,8 +442,8 @@ const styles = StyleSheet.create({
             height: 5,
         },
         shadowOpacity: 0.34,
-        shadowRadius: 6.27,
-        elevation: 10,
+        shadowRadius: 0.27,
+        elevation: 3,
         marginTop:20,
         marginBottom:20,
         backgroundColor:'#ffffff',

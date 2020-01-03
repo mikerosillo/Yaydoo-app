@@ -45,13 +45,17 @@ export default class InfoSolicitudes extends Component {
                 textDecorationLine: 'underline',
                 color:'#F5F5F5',
                 marginLeft:20,
-                fontSize:13.96
+                fontSize:13.96,
+                fontFamily:'montserrat-Medium',
+                letterSpacing:1.25
             }
         } else {
             return {
                 color:'#F5F5F5',
                 marginLeft:20,
-                fontSize:13.96
+                fontSize:13.96,
+                fontFamily:'montserrat-Medium',
+                letterSpacing:1.25
             }
         }
     };
@@ -61,13 +65,17 @@ export default class InfoSolicitudes extends Component {
                 textDecorationLine: 'underline',
                 color:'#F5F5F5',
                 marginLeft:20,
-                fontSize:13.96
+                fontSize:13.96,
+                fontFamily:'montserrat-Medium',
+                letterSpacing:1.25
             }
         } else {
             return {
                 color:'#F5F5F5',
                 marginLeft:20,
-                fontSize:13.96
+                fontSize:13.96,
+                fontFamily:'montserrat-Medium',
+                letterSpacing:1.25
             }
         }
     };
@@ -132,15 +140,18 @@ export default class InfoSolicitudes extends Component {
                                     />
                                 </View>
                                 <View style={{width:'50%', marginTop:20}}>
-                                    <Text style={{fontFamily:'Montserrat-Medium', color:'rgba(0,0,0,0.87)', marginBottom:40, fontSize:13.96, fontWeight:'500'}}>{data.item.description}</Text>
-                                    <Text style={{color:'#808080', marginBottom:20, fontSize:16}}>{data.units}{' '}piezas ={' '}{numeral(data.item.price * data.units).format('$0,0.00')}{' '}{data.item.vendor.vendor.currency}</Text>
-                                    <Text style={{color:'#808080', marginBottom:20}}></Text>
-                                    <Text style={{color:'#808080', fontSize:16}}>Entrega{' '}{Moment(this.state.deliveryDate).format('D MMM YY')}</Text>
+                                    <Text style={{fontFamily:'Montserrat-Medium', color:'rgba(0,0,0,0.87)', marginBottom:10, fontSize:13.96, fontWeight:'500'}}>{data.item.description}</Text>
+                                    <Text style={{color:'rgba(0,0,0,0.6)', marginBottom:0, fontSize:12.09, fontFamily:'Montserrat-Regular'}}>{data.units}{' '}pieza ={' '}{numeral(data.item.price * data.units).format('$0,0.00')}{' '}{data.item.vendor.vendor.currency}</Text>
+                                    {/* <Text style={{color:'#808080', marginBottom:20}}></Text> */}
+                                    <Text style={{color:'rgba(0,0,0,0.6)', fontSize:12.09, fontFamily:'Montserrat-Regular'}}>Entrega{' '}{Moment(this.state.deliveryDate).format('D MMM YY')}</Text>
                                 </View>
                             </View>
-                            <View style={{maxWidth:'95%'}}>
-                                <Text style={{color:'#808080', marginBottom:20, marginLeft:30, marginTop:20, fontSize:16}}>
-                                Pieza{' '}{numeral(data.item.price).format('$0,0.00')}{' '}{data.item.vendor.vendor.currency}
+                            <View style={{maxWidth:'95%', flexDirection:'row'}}>
+                                <Text style={{color:'rgba(0,0,0,0.87)', marginBottom:20, marginLeft:30, marginTop:20, fontSize:12.08}}>
+                                Pieza
+                                </Text>
+                                <Text style={{color:'rgba(0,0,0,0.6)', marginBottom:20, marginLeft:5, marginTop:20, fontSize:12.09}}>
+                                {numeral(data.item.price).format('$0,0.00')}{' '}{data.item.vendor.vendor.currency}
                                 </Text>
                             </View>
                         </View>
