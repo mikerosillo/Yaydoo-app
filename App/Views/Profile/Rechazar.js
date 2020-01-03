@@ -64,6 +64,7 @@ export default class Rechazar extends Component{
         console.log('solicitudes', this.state.data.uuid)
         console.log('solicitudes2', this.state.request_id)
         const token = await AsyncStorage.getItem('ACCESS_TOKEN')
+        //dGaCRT8Eirg:APA91bGLU2FFhsjAvBoxjYty9BL-RwGTrWC6gbyFXZUZkU0p29EQ4159ZcW8A4ELoylJRRLtjRrj-tBC6f07irJXVkim4YSloEbyBSZ3brVfs3bn42pMuPsZ2FaZAo2wvNN-s9Y_-vTM
         const enterpriseUuid = await AsyncStorage.getItem('UUID');
         await fetch(`https://stage.ws.yay.do/v2/enterprise/${enterpriseUuid}/quotation/request/${this.state.data.uuid}/approve`, {
           method: 'PUT',
@@ -225,7 +226,7 @@ export default class Rechazar extends Component{
     render(){
         return (
             <ScrollView style={{backgroundColor:'#FFF', flex:1}}  behavior="padding" enabled>
-            <View style={{backgroundColor:'#4180fd'}}>
+            <View style={{backgroundColor:'#00A0F8'}}>
                 <View style={{ flexDirection:'row', marginTop:20, marginBottom:20}}>
                     <View style={{width:'50%'}}>
                         <TouchableOpacity style={{flexDirection:'row'}} onPress={() => Actions.profile()} >
@@ -235,7 +236,7 @@ export default class Rechazar extends Component{
                                 source={require('../../../assets/PNGIX.com_close-icon-png_904874.png')}
                                 />
                             </Text>
-                            <Text style={{color:'#FFF', marginLeft:10, fontSize:20}}>RECHAZADA</Text>
+                            <Text style={{color:'#F5F5F5', marginLeft:10, fontSize:19.94, fontWeight:'500', fontFamily:'Montserrat-Medium', letterSpacing:0.25}}>RECHAZADA</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{width:'50%'}}>
@@ -243,7 +244,7 @@ export default class Rechazar extends Component{
 
 
                         <TouchableOpacity onPress={() => this.reject()}>
-                            <Text style={{color:'#FFF', marginLeft:30, fontSize:20}}>COMFIRMAR</Text>
+                            <Text style={{marginTop:6,letterSpacing:1.25, fontFamily:'Montserrat-Medium',fontWeight:'500', color:'rgba(255,255,255,0.6)', marginLeft:50, fontSize:13.96}}>COMFIRMAR</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
