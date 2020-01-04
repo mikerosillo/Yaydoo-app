@@ -7,6 +7,15 @@ import { Actions } from 'react-native-router-flux';
 
 // var PushNotification = require("react-native-push-notification");
 export default class PushController extends Component{
+  getToken = async () => {
+    let fcmToken = await AsyncStorage.getItem('fcmToken');
+    if (!fcmToken) {
+      fcmToken = await firebase.messaging().getToken();
+      if (fcmToken) {
+          await AsyncStorage.setItem('fcmToken', fcmToken);
+      }
+    }
+  };
   async sendToken () {
     const access_token = await AsyncStorage.getItem('ACCESS_TOKEN')
     let token = await AsyncStorage.getItem('fcmToken');
@@ -27,16 +36,6 @@ export default class PushController extends Component{
       console.log('from error',err.message)
     })
   }
-  getToken = async () => {
-    let fcmToken = await AsyncStorage.getItem('fcmToken');
-    if (!fcmToken) {
-      fcmToken = await firebase.messaging().getToken();
-      if (fcmToken) {
-          await AsyncStorage.setItem('fcmToken', fcmToken);
-      }
-    }
-  };
-
   checkPermission = async () => {
     const enabled = await firebase.messaging().hasPermission();
     if (enabled) {
