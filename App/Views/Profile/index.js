@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {
     StyleSheet,
     Alert,
@@ -18,6 +18,7 @@ import { ListItem } from 'native-base';
 import Drawer from 'react-native-drawer';
 import { Actions } from 'react-native-router-flux';
 import Moment from 'moment';
+import PushController from '../../PushController';
 var numeral = require('numeral');
 
 export default class Profile extends Component {
@@ -46,11 +47,26 @@ export default class Profile extends Component {
     };
     logout() {
         // OneSignal.removeExternalUserId()
-        AsyncStorage.clear();
-        Actions.welcome({
-          type: 'reset',
-        });
+        // AsyncStorage.clear();
+        // Actions.welcome({
+        //   type: 'reset',
+        // });
+        async function removeItemValue() {
+          try {
+            await AsyncStorage.removeItem('ACCESS_TOKEN');
+            Actions.welcome({
+              type: 'reset',
+            });
+            return true;
+          }
+          catch(err) {
+            console.log(`The error is: ${err}`)
+            return false;
+          }
+        }
+      removeItemValue()
     };
+    
     refresh(){
       Actions.profile()
     };
@@ -535,7 +551,7 @@ export default class Profile extends Component {
   };
     render() {
         var drawer = (
-            <View style={{ flex: 1, backgroundColor: '#08d06a' }}>
+            <View style={{ flex: 1, backgroundColor: '#4BBC68' }}>
               <Text style={{ color: '#FFF', marginTop: 30, fontSize: 25, }}></Text>
               <View style={{ flex: 1, justifyContent: 'flex-start', marginTop: 40 }}>
 
@@ -548,6 +564,7 @@ export default class Profile extends Component {
             </View>
           );
         return (
+          
             <Drawer renderNavigationView={() => drawer}
             content={drawer}
             type="overlay"
@@ -585,6 +602,7 @@ export default class Profile extends Component {
                       <View style={{marginTop:40}}></View>
                     </ScrollView>
                 </View>
+                <PushController />
             </Drawer>
         )
     }
