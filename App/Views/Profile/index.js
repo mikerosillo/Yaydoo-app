@@ -535,7 +535,7 @@ export default class Profile extends Component {
   };
     render() {
         var drawer = (
-            <View style={{ flex: 1, backgroundColor: '#08d06a' }}>
+            <View style={{ flex: 1, backgroundColor: '#4BBC68' }}>
               <Text style={{ color: '#FFF', marginTop: 30, fontSize: 25, }}></Text>
               <View style={{ flex: 1, justifyContent: 'flex-start', marginTop: 40 }}>
 

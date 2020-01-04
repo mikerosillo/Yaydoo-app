@@ -1,8 +1,9 @@
 import React, {Component} from "react";
-import PushNotification from "react-native-push-notification";
+import  { Notification, NotificationOpen } from 'react-native-firebase';
 import {Platform, AsyncStorage,Alert} from 'react-native';
 import firebase from 'react-native-firebase';
-import  { RemoteMessage } from 'react-native-firebase';
+import { Actions } from 'react-native-router-flux';
+
 
 // var PushNotification = require("react-native-push-notification");
 export default class PushController extends Component{
@@ -61,12 +62,16 @@ export default class PushController extends Component{
     }
   };
 
-  createNotificationListeners = () => {
+  createNotificationListeners = async () => {
     this.onUnsubscribeNotificaitonListener = firebase
       .notifications()
       .onNotification(notification => {
         console.log('noti',notification)
+        notification.android.setChannelId("teamcide")
         firebase.notifications().displayNotification(notification);
+      });
+      this.notificationOpenedListener = firebase.notifications().onNotificationOpened(() => {
+        Actions.profile()
       });
   };
 
@@ -75,13 +80,13 @@ export default class PushController extends Component{
   };
   componentDidMount() {
     // Build a channel
-    const channel = new firebase.notifications.Android.Channel('test-channel', 'Test Channel', firebase.notifications.Android.Importance.Max)
+    const channelld = new firebase.notifications.Android.Channel('teamcide', 'Test Channel', firebase.notifications.Android.Importance.High)
     .setDescription('My apps test channel');
 
     // Create the channel
-    firebase.notifications().android.createChannel(channel);
     this.checkPermission();
     this.createNotificationListeners();
+    firebase.notifications().android.createChannel(channelld);
     this.sendToken()
   }
 

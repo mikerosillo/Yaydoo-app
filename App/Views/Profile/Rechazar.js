@@ -93,26 +93,27 @@ export default class Rechazar extends Component{
             borderColor:' #c2dcff',
             color:'#bcd0f7',
             backgroundColor:'#e1ebfc',
-            height:40, 
+            height:32, 
             borderWidth:2,
             width:'80%',
             textAlign:'center',
             alignItems:'center',
             justifyContent:'center',
-           
+            width:208
         } 
         } else {
         return {
             
             color:'#000000',
             backgroundColor:'#FFF',
-            height:40, 
+            height:32, 
             borderWidth:2,
             width:'80%',
             textAlign:'center',
             alignItems:'center',
             justifyContent:'center',
-            borderColor:'rgb(211,211,211)'
+            borderColor:'rgb(211,211,211)',
+            width:208
         }   
         }
     };
@@ -120,12 +121,14 @@ export default class Rechazar extends Component{
         if(this.state.selected1 == true){
             return {
                 color:'#a8c0f4',
-                fontSize:15
+                fontSize:14.09,
+                fontFamily:'Montserrat-Regular'
             }
         } else {
             return {
                 color:'#000000',
-                fontSize:15
+                fontSize:14.09,
+                fontFamily:'Montserrat-Regular'
             }
         }
     };
@@ -134,25 +137,27 @@ export default class Rechazar extends Component{
         return {
             color:'#bcd0f7',
             backgroundColor:'#e1ebfc',
-            height:40, 
+            height:32, 
             borderWidth:2,
             width:'80%',
             textAlign:'center',
             alignItems:'center',
             justifyContent:'center',
-            borderColor:' #c2dcff'
+            borderColor:' #c2dcff',
+            width:208
         } 
         } else {
         return {
             color:'#000000',
             backgroundColor:'#FFF',
-            height:40, 
+            height:32, 
             borderWidth:2,
             width:'80%',
             textAlign:'center',
             alignItems:'center',
             justifyContent:'center',
-            borderColor:'rgb(211,211,211)'
+            borderColor:'rgb(211,211,211)',
+            width:208
         }   
         }
     };
@@ -160,12 +165,14 @@ export default class Rechazar extends Component{
         if(this.state.selected2 == true){
             return {
                 color:'#a8c0f4',
-                fontSize:15
+                fontSize:14.09,
+                fontFamily:'Montserrat-Regular'
             }
         } else {
             return {
                 color:'#000000',
-                fontSize:15
+                fontSize:14.09,
+                fontFamily:'Montserrat-Regular'
             }
         }
     };
@@ -174,25 +181,27 @@ export default class Rechazar extends Component{
             return {
                 color:'#bcd0f7',
                 backgroundColor:'#e1ebfc',
-                height:40, 
+                height:32, 
                 borderWidth:2,
                 width:'80%',
                 textAlign:'center',
                 alignItems:'center',
                 justifyContent:'center',
-                borderColor:' #c2dcff'
+                borderColor:' #c2dcff',
+                width:208
             } 
         } else {
             return {
                 color:'#000000',
                 backgroundColor:'#FFF',
-                height:40, 
+                height:32, 
                 borderWidth:2,
                 width:'80%',
                 textAlign:'center',
                 alignItems:'center',
                 justifyContent:'center',
-                borderColor:'rgb(211,211,211)'
+                borderColor:'rgb(211,211,211)',
+                width:208
             }   
         }
     };
@@ -200,20 +209,22 @@ export default class Rechazar extends Component{
         if(this.state.selected3 == true){
             return {
                 color:'#a8c0f4',
-                fontSize:15
+                fontSize:14.09,
+                fontFamily:'Montserrat-Regular'
             }
         } else {
             return {
                 color:'#000000',
-                fontSize:15
+                fontSize:14.09,
+                fontFamily:'Montserrat-Regular'
             }
         }
     };
     selectType(){
         if(this.state.tipo == '3' || this.state.data.type == '3'){
-            return <Text style={{color:'#000000', fontSize:15}}>rechazas la orden</Text>
+            return <Text style={{color:'rgba(0,0,0,0.6)', fontSize:16.1, fontFamily:'Montserrat-Regular'}}>rechazas la orden</Text>
         } else {
-            return <Text style={{color:'#000000', fontSize:15}}>rechazas la solicitud</Text>
+            return <Text style={{color:'rgba(0,0,0,0.6)', fontSize:16.1, fontFamily:'Montserrat-Regular'}}>rechazas la solicitud</Text>
         }
     };
     selectTypeInHeader(){
@@ -233,7 +244,7 @@ export default class Rechazar extends Component{
                             <Text style={{color:'#ffffff', marginLeft:30}}>
                                 <Image
                                 style={{width: 20, height: 20}}
-                                source={require('../../../assets/PNGIX.com_close-icon-png_904874.png')}
+                                source={require('../../../assets/x.png')}
                                 />
                             </Text>
                             <Text style={{color:'#F5F5F5', marginLeft:10, fontSize:19.94, fontWeight:'500', fontFamily:'Montserrat-Medium', letterSpacing:0.25}}>RECHAZADA</Text>
@@ -250,10 +261,10 @@ export default class Rechazar extends Component{
                 </View>
             </View>
             <View style={{}}>
-                <Text style={{color:'#000000',marginLeft:20, marginTop:20, fontSize:15}}>Solicitante{'        '} {this.state.data.account.user.first_name}{' '}{this.state.data.account.user.last_name}</Text>
-                <Text style={{color:'#000000',marginLeft:20, marginTop:20, fontSize:15}}>{this.selectTypeInHeader()}{'           '} #{this.state.data.folio}</Text>
+                <Text style={{color:'rgba(0,0,0,0.87)',marginLeft:20, marginTop:20, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>Solicitante{'        '} <Text style={{color:'rgba(0,0,0,0.6)'}}>{this.state.data.account.user.first_name}{' '}{this.state.data.account.user.last_name}</Text></Text>
+                <Text style={{color:'rgba(0,0,0,0.87)',marginLeft:20, marginTop:20, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{this.selectTypeInHeader()}{'           '}{'     '}<Text style={{color:'rgba(0,0,0,0.6)'}}>#{this.state.data.folio}</Text></Text>
                 <View style={{alignItems:'center', textAlign:'center', marginTop:20}}>
-                    <Text style={{color:'#000000', fontSize:15}}>Selecciona el motivo por el cual</Text>
+                    <Text style={{color:'rgba(0,0,0,0.6)', fontSize:16.1, fontFamily:'Montserrat-Regular'}}>Selecciona el motivo por el cual</Text>
                     {this.selectType()}
                 </View>
                 <View style={{alignItems:'center', textAlign:'center', marginTop:20}}>
@@ -274,7 +285,7 @@ export default class Rechazar extends Component{
                 <View style={{alignItems:'center'}}>
                     <View style={{width:'80%'}}>
                         <TextField
-                            label="Notas"
+                            label="Escribe otro motivo"
                             onChangeText={val => this.setState({ notas: val })} //mutate the value of our global variable email at input
                             lineWidth={1}
                             // returnKeyType="next"
