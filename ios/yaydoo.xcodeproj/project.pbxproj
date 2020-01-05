@@ -39,7 +39,6 @@
 		F7A987DE3A0F4567956F90CE /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 939A61ACB9FA4C948A4B73CF /* AntDesign.ttf */; };
 		FD44342B742DD312BF88ADA2 /* libPods-yaydoo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 659101546259128F7D92CE09 /* libPods-yaydoo-tvOS.a */; };
 		FD510058DD38406484FCF4C3 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC8ECA4F57DF4E88ADE5413E /* FontAwesome5_Solid.ttf */; };
-		0493657308E84BC09666A3F4 /* Monserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6E9B674547D54D928B22FCE1 /* Monserrat-Regular.ttf */; };
 		54A60C71B9D7436DA4992403 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FE75678B3244F58903EFE32 /* Montserrat-Light.ttf */; };
 		F5B839EF5D7544B2BC9DE530 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4262C4277F4842A9B23FAAA2 /* OpenSans-Bold.ttf */; };
 		72F627B7C4A74343BDDE36FD /* OpenSans.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14700912305040FEB6D3CF7F /* OpenSans.ttf */; };
@@ -114,7 +113,6 @@
 		FA835432A0585508658F168C /* Pods-yaydooTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yaydooTests.release.xcconfig"; path = "Target Support Files/Pods-yaydooTests/Pods-yaydooTests.release.xcconfig"; sourceTree = "<group>"; };
 		FB0348278808EF9DB0103D0F /* Pods-yaydoo-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yaydoo-tvOS.release.xcconfig"; path = "Target Support Files/Pods-yaydoo-tvOS/Pods-yaydoo-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		FD57120D3A7740098888BC2D /* Pods-yaydoo-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yaydoo-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-yaydoo-tvOSTests/Pods-yaydoo-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		6E9B674547D54D928B22FCE1 /* Monserrat-Regular.ttf */ = {isa = PBXFileReference; name = "Monserrat-Regular.ttf"; path = "../assets/fonts/Monserrat-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		7FE75678B3244F58903EFE32 /* Montserrat-Light.ttf */ = {isa = PBXFileReference; name = "Montserrat-Light.ttf"; path = "../assets/fonts/Montserrat-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		4262C4277F4842A9B23FAAA2 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; name = "OpenSans-Bold.ttf"; path = "../assets/fonts/OpenSans-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		14700912305040FEB6D3CF7F /* OpenSans.ttf */ = {isa = PBXFileReference; name = "OpenSans.ttf"; path = "../assets/fonts/OpenSans.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
@@ -213,7 +211,6 @@
 				C232720A059D46CDB0E68B39 /* rubicon-icon-font.ttf */,
 				8759E0EFD5D44D13AF6761A9 /* SimpleLineIcons.ttf */,
 				A2FDD4E0F4964FFF9AC58D8E /* Zocial.ttf */,
-				6E9B674547D54D928B22FCE1 /* Monserrat-Regular.ttf */,
 				7FE75678B3244F58903EFE32 /* Montserrat-Light.ttf */,
 				4262C4277F4842A9B23FAAA2 /* OpenSans-Bold.ttf */,
 				14700912305040FEB6D3CF7F /* OpenSans.ttf */,
@@ -453,7 +450,6 @@
 				B36988D423B9485F00ADAA1B /* GoogleService-Info.plist in Resources */,
 				D23F20AA887D489E9F953DEB /* SimpleLineIcons.ttf in Resources */,
 				8A93CEDC098647ADAB1DE8C3 /* Zocial.ttf in Resources */,
-				0493657308E84BC09666A3F4 /* Monserrat-Regular.ttf in Resources */,
 				54A60C71B9D7436DA4992403 /* Montserrat-Light.ttf in Resources */,
 				F5B839EF5D7544B2BC9DE530 /* OpenSans-Bold.ttf in Resources */,
 				72F627B7C4A74343BDDE36FD /* OpenSans.ttf in Resources */,
