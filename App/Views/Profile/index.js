@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import {
     StyleSheet,
     Alert,
@@ -7,50 +7,52 @@ import {
     View,
     ScrollView,
     RefreshControl,
-    ImageBackground,
     TouchableOpacity,
     Image,
-    Button,
     Dimensions,
+    StatusBar
 } from 'react-native';
 import * as Progress from 'react-native-progress';
-import { ListItem } from 'native-base';
 import Drawer from 'react-native-drawer';
 import { Actions } from 'react-native-router-flux';
 import Moment from 'moment';
 import PushController from '../../PushController';
 var numeral = require('numeral');
+import Loading from 'react-native-whc-loading';
+import { List, ListItem, Container, Content, Header, Title, Body } from 'native-base';
+
 
 export default class Profile extends Component {
     constructor(props) {
-        super(props)
-        this.state = {
-            token: '',
-            codes: [],
-            refreshing: true,
-            userName: '',
-            solicitudes:[],
-            pendingPo:[],
-            solicitudesDate:[],
-            poDate:[],
-        }
-        this.getAllSolicitudes()
-        this.getAllPo()
+      super(props)
+      this.state = {
+          token: '',
+          codes: [],
+          refreshing: true,
+          userName: '',
+          solicitudes:[],
+          pendingPo:[],
+          solicitudesDate:[],
+          poDate:[],
+          show:false
+      }
+      this.getAllSolicitudes()
+      this.getAllPo()
     };
+   
     onRefresh() {
         this.setState({ solicitudes: [], pendingPo: [] })
         this.getAllSolicitudes()
         this.getAllPo()
     };
+
+
     openDrawer() {
         this.drawer.open();
     };
+
+
     logout() {
-        // OneSignal.removeExternalUserId()
-        // AsyncStorage.clear();
-        // Actions.welcome({
-        //   type: 'reset',
-        // });
         async function removeItemValue() {
           try {
             await AsyncStorage.removeItem('ACCESS_TOKEN');
@@ -66,66 +68,52 @@ export default class Profile extends Component {
         }
       removeItemValue()
     };
-    
+
+
     refresh(){
       Actions.profile()
     };
+
+
     async getAllSolicitudes() {
         const token = await AsyncStorage.getItem('ACCESS_TOKEN')
         const uuid = await AsyncStorage.getItem('UUID');
         if (token && uuid) { // if user is logged in
             await fetch(`https://stage.ws.yay.do/v2/enterprise/${uuid}/quotation/request/pending?page=1`, {
-                method: 'GET',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    "X-Auth-Token": token
-                },
-
+              method: 'GET',
+              headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                  "X-Auth-Token": token
+              },
             })
-                .then((response) => {
-                    if (response.ok) {
-                        response.json().then((datos) => {
-                          let allSolicitudes = datos.data
-                          var solicitudes = allSolicitudes.filter((element) => {
-                              return element.type == 4
-                          })
-                          var createdAt = solicitudes.map((element)=>{
-                            return element.created_at
-                          })
-                            this.setState({
-                              refreshing: false,
-                              solicitudes: solicitudes,
-                              solicitudesDate:createdAt
-                            })
+              .then((response) => {
+                  if (response.ok) {
+                      response.json().then((datos) => {
+                        let allSolicitudes = datos.data
+                        var solicitudes = allSolicitudes.filter((element) => {
+                            return element.type == 4
                         })
-                    }
-                })
+                        var createdAt = solicitudes.map((element)=>{
+                          return element.created_at
+                        })
+                          this.setState({
+                            refreshing: false,
+                            solicitudes: solicitudes,
+                            solicitudesDate:createdAt
+                          })
+                      })
+                  }
+              })
                 .catch(err => console.warn(err.message));
         } else {
             this.setState({refreshing: false})
         }
     };
-    // getAddress(data, tipo){
-    //   console.log(tipo)
-    //   if(tipo == 4){
-    //     this.getAddressSolicitudes(data)
-    //   } else {
-    //     this.getAddressPo(data)
-    //   }
-    // }
-    
-    checkStatus(data){
-      if(data == null){
-        return 'Pendiente'
-      } else {
-        return 'Aprobado'
-      }
-    };
+
+
     howManyDaysAfter(date){
-      // let dateStr = JSON.parse(date)
       var fecha = new Date(JSON.stringify(date));
-     
       let dayCreated = Moment(date).format('D') // = 9
       let todaysDate = Moment(new Date()).format('D')
       var afterCreated = todaysDate - dayCreated
@@ -143,71 +131,53 @@ export default class Profile extends Component {
       }
     };
     
+
     async getAllPo() {
         const token = await AsyncStorage.getItem('ACCESS_TOKEN')
         const enterpriseUuid = await AsyncStorage.getItem('UUID');
         if (token && enterpriseUuid) { // if user is logged in
             await fetch(`https://stage.ws.yay.do/v2/enterprise/${enterpriseUuid}/purchaseOrder/?filter=2&type=3&page=1&approver=1`, {
-                method: 'GET',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    "X-Auth-Token": token
-                },
-
+              method: 'GET',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                "X-Auth-Token": token
+              },
             })
-                .then((response) => {
-                    if (response.ok) {
-                        response.json().then((datos) => {
-                             // var ultimaFecha = Moment(lastDate[0]).format('D MMM YY')
-                         
-                          // console.log(datos.data.approved)
-                          // console.log(datos.data.internal)
-                            let accountInfo = datos.data
-                            // let solicitudes = datos.data
-                            // let name = codes[0].account.user.first_name
-
-                            var pendingPo = accountInfo.filter((element) => {
-                                return element.type == 3
-                            })
-                            var createdAt = pendingPo.map((element)=>{
-                              return element.created_at
-                            })
-                            //console.log('json filter',pendingPo[0])
-                            // var map2 = accountInfo.map((element) => {
-                            //     return element.folio
-                            // })
-                            this.setState({
-                              refreshing: false,
-                              pendingPo:pendingPo,
-                              poDate:createdAt,
-                            })
-                        })
-                    }
-                })
-                .catch(err => console.warn(err.message));
+              .then((response) => {
+                  if (response.ok) {
+                      response.json().then((datos) => {
+                          let accountInfo = datos.data
+                          var pendingPo = accountInfo.filter((element) => {
+                              return element.type == 3
+                          })
+                          var createdAt = pendingPo.map((element)=>{
+                            return element.created_at
+                          })
+                          this.setState({
+                            refreshing: false,
+                            pendingPo:pendingPo,
+                            poDate:createdAt,
+                          })
+                      })
+                  }
+              })
+              .catch(err => console.warn(err.message));
         } else {
-            this.setState({refreshing: false})
-            // Alert.alert('Favor de iniciar sesión')
+          this.setState({refreshing: false})
         }
     };
+
+
     getAddressPo(data){
       let arr = [data]
       let provider = arr.map((element)=>{
         return element.proposal.provider.address
       })
-      
-      // let address = provider.map((element)=>{
-      //   return element.address
-      // })
-      // let city = provider.map((element)=>{
-      //   return element.city
-      // })
-      // let zipCode = provider.map((element)=>{
-      //   return element.zip_code
-      // })
       return provider 
     };
+
+
     pendingPoLength(date){
       let arr = this.state.poDate
       var count = 0
@@ -218,11 +188,311 @@ export default class Profile extends Component {
       }
       return count
     };
-   
+
+
+    async approveOrdenes(data){
+      this.refs.loading4.show();
+        const token = await AsyncStorage.getItem('ACCESS_TOKEN')
+        await fetch(`https://stage.ws.yay.do/me/account/quotation/${data.proposal.uuid}/approve`, {
+          method: 'PUT',
+          headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              "X-Auth-Token": token
+          },
+          body: JSON.stringify({
+            status:1
+          }),
+      }).then((response)=>{
+          if(response.ok){
+            this.refs.loading4.close();
+              Actions.profile()
+          } else {
+            this.refs.loading4.close();
+            Alert.alert(`respuesta, ${JSON.stringify(response)}`)
+          }
+      }).catch((err)=>{
+        console.log(err.message)
+      })
+    };
+
+
+    rejectOrdenes(data, folio, tipo){
+      Actions.rechazar({data: data, folio: folio, tipo:tipo})
+    };
+
+
+    goToInfoOrdenes(data, folio, tipo){
+      Actions.infoOrdenes({data: data, folio: folio, tipo:tipo})
+    };
+
+
+    ifProgressBarNotANumber(data){
+      let bar = 0+'.'+ parseFloat(data.budget.available).toFixed(2)*100;
+      if( data.budget.available >= 0.1 && data.budget.name !== 'Bloqueado'){
+          return <Progress.Bar
+                    style={{marginTop:10}}
+                    fillStyle={{}}
+                    progress={bar}
+                    width={Dimensions.get('window').width - 240}
+                    height={6}
+                    color={'#4BBC68'}
+                    borderWidth={0}
+                    unfilledColor={'rgb(211,211,211)'}
+                  />
+      } else {
+          return <Progress.Bar
+                    style={{marginTop:10}}
+                    fillStyle={{}}
+                    progress={0}
+                    width={Dimensions.get('window').width - 240}
+                    height={6}
+                    color={'#4BBC68'}
+                    borderWidth={0}
+                    unfilledColor={'rgb(211,211,211)'}
+                  />
+      }
+    }; 
+
+
+    ifOrdenType(data, tipo) { 
+      if(tipo == 3){
+        return <View>
+                  <TouchableOpacity  onPress={() => this.goToInfoOrdenes(data, data.folio)}>
+                    <View style={styles.solicitudesDescription3}>
+                          <Image
+                              source={{uri : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZMD1evACIwv083oh-CbaavyrN-0pXUGdKHMM-Ny_oZMh7lQ928Q&s'}}
+                              style={{ width: 52, height: 52, marginLeft: 10,marginRight:10, marginTop:20, borderRadius:24}}
+                          />
+                        <View style={{color:'#000000', flexDirection:'column', marginTop:20}}>
+                            <Text style={{ color: '#000000', fontFamily: 'Montserrat-Medium', fontSize: 19.94 }}>{data.tipo} {data.folio} </Text>
+                            <Text style={{color:'#000000', fontFamily: 'Montserrat-Regular', fontSize: 14.09}}>{data.account.user.first_name}{'    '}{data.account.user.last_name}</Text>
+                        </View>
+                        <Text style={{ color: '#000000', fontFamily: 'Montserrat-Regular',  fontSize: 12.08, marginLeft:'auto', marginRight:10, marginTop:25 }}>{this.howManyDaysAfter(data.created_at.toString())}</Text>
+                    </View>
+                    <View  style={{flexDirection:'row'}}>
+                      <TouchableOpacity style={{flexDirection:'row'}}  onPress={() => this.goToInfoOrdenes(data, data.folio)}>
+                        <View style={{flexDirection:'column', width:'40%'}}>
+                          <Text style={{ color: 'rgba(0,0,0,0.87)', fontFamily: 'Montserrat-Regular',  fontSize: 14.09, marginLeft:10 , marginTop:10}}>Dirección</Text>
+                          <Text style={{ color: 'rgba(0,0,0,0.87)', fontFamily: 'Montserrat-Regular',  fontSize: 14.09, marginLeft:10 , marginTop:10}}>Monto</Text>
+                          <Text style={{ color: 'rgba(0,0,0,0.87)', fontFamily: 'Montserrat-Regular',  fontSize: 14.09, marginLeft:10, marginTop:10}}>Presupuesto</Text>
+                        </View>
+                        <View style={{flexDirection:'column', width:'40%'}}>
+                        <Text style={{ color: 'rgba(0,0,0,0.6)', fontFamily: 'Montserrat-Regular',  fontSize: 14.09, marginTop:10}}>{data.proposal.provider.address}</Text>
+                          <Text style={{ color: 'rgba(0,0,0,0.6)', fontFamily: 'Montserrat-Regular',  fontSize: 14.09, marginTop:10   }}>{numeral(data.proposal.total).format('$0,0.00')}</Text>
+                          <Text style={{ color: 'rgba(0,0,0,0.6)', fontFamily: 'Montserrat-Regular',  fontSize: 14.09, marginTop:10  }}>{data.budget.name}</Text>
+                          <Text style={{ color: 'rgba(0,0,0,0.6)', fontFamily: 'Montserrat-Regular',  fontSize: 14.09 }}>de {numeral(data.budget.amount).format('$0,0.00')}</Text>
+                          {this.ifProgressBarNotANumber(data)}
+                        </View>
+                        <View style={{flexDirection:'column', width:'20%', justifyContent:'flex-end'}}>
+                          <TouchableOpacity  onPress={() => this.goToInfoOrdenes(data, data.folio)}>
+                            <Image
+                                source={{uri : 'https://img.icons8.com/material-rounded/2x/chevron-right.png'}}
+                                style={{ width: 24, height: 24, marginLeft: 'auto',marginRight:5, marginTop:20}}
+                            />
+                          </TouchableOpacity>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                  </TouchableOpacity>
+               <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:20, marginTop:20}}>
+                <View style={{width:148, marginLeft:10}}>
+                  <TouchableOpacity style={{
+                    height:36,
+                    backgroundColor:'rgba(98,2,238,0)',
+                    borderWidth:1,
+                    borderRadius:3,
+                    alignItems:'center',
+                    justifyContent:'center',
+                    borderColor:'rgba(0,0,0,0.6)'
+                  }}
+                    onPress={() => this.rejectOrdenes(data, data.folio, tipo)}
+                  >
+                  <Text style={{color:'rgba(0,0,0,0.6)', fontSize:13.96, fontFamily: 'Montserrat-Medium',}}>RECHAZAR</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={{width:'10%'}}></View>
+                <View style={{width:148, marginRight:10}}>
+                  <TouchableOpacity style={{
+                    height:36,
+                    backgroundColor:'rgba(98,2,238,0)',
+                    borderWidth:1,
+                    borderRadius:3,
+                    alignItems:'center',
+                    justifyContent:'center',
+                    borderColor:'#4BBC68'
+                  }}
+                    onPress={() => Alert.alert(
+                      'Advertencia:', '¿Estás seguro de querer aprobar esta orden de compra?',
+                      [
+                        { text: "NO",
+                        style: "cancel"
+                        },
+                        { text: 'SI',onPress: () => this.approveOrdenes(data)},
+                      ],
+                      { cancelable: false },
+                    )}  
+                  >
+                  <Text style={{color:'#4BBC68', fontSize:13.96, fontFamily: 'Montserrat-Medium',}}>APROBAR</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+             </View>
+      } else {
+        return false
+      } 
+    };
+
+
+    async approveSolicitudes(request_id, data){
+      this.refs.loading4.show()
+      const token = await AsyncStorage.getItem('ACCESS_TOKEN')
+      const enterpriseUuid = await AsyncStorage.getItem('UUID');
+      await fetch(`https://stage.ws.yay.do/v2/enterprise/${enterpriseUuid}/quotation/request/${request_id}/approve`, {
+        method: 'PUT',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          "X-Auth-Token": token
+        },
+        body: JSON.stringify({
+          status:1
+        }),
+    }).then((response)=>{
+      if(response.ok){
+        this.refs.loading4.close()
+        Actions.profile()
+      } else {
+        this.refs.loading4.close()
+        Alert.alert(`respuesta, ${JSON.stringify(response)}`)
+      }
+    }).catch((err)=>{
+      console.log(err.message)
+    })
+    };
+
+
+    ifSolicitudType(data, tipo) { 
+      function goToInfoSolicitudes(data, folio, tipo){
+        Actions.infoSolicitudes({data: data, folio: folio, tipo: tipo})
+      };
+      function getAddressSolicitudes(data, tipo){
+        var arr = [data]
+        if(tipo == 4){
+          let shipping = arr.map((element)=>{
+            return element.shipping
+          })
+          let address = shipping.map((element)=>{
+            return element.address
+          })
+          let city = address.map((element)=>{
+            return element.city
+          })
+          let street = address.map((element)=>{
+            return element.street
+          })
+          let mapstate = address.map((element)=>{
+            return element.state
+          })
+          let country = mapstate.map((element)=>{
+            return element.country.name
+          })
+            return country+' ' + city +' '+ street
+        } else {
+          let provider = arr.map((element)=>{
+            return element.proposal.provider.address
+          })
+          return provider 
+        }
+        
+      };
+      function rejectSolicitudes(data, request_id, tipo){
+        Actions.rechazar({request_id: request_id, data:data, tipo:tipo})
+      }
+      if(tipo == 4){
+        return  <View>
+                  <TouchableOpacity  onPress={() => goToInfoSolicitudes(data, data.folio)}>
+                    <View style={styles.solicitudesDescription3}>
+                          <Image
+                              source={{uri : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZMD1evACIwv083oh-CbaavyrN-0pXUGdKHMM-Ny_oZMh7lQ928Q&s'}}
+                              style={{ width: 52, height: 52, marginLeft: 10,marginRight:10, marginTop:20, borderRadius:24}}
+                          />
+                        <View style={{color:'#000000', flexDirection:'column', marginTop:20}}>
+                            <Text style={{ color: '#000000', fontFamily: 'Montserrat-Medium', fontSize: 19.94 }}>{data.tipo} {data.folio} </Text>
+                            <Text style={{color:'#000000', fontFamily: 'Montserrat-Regular', fontSize: 14.09}}>{data.account.user.first_name}{'   '}{data.account.user.last_name}</Text>
+                        </View>
+                        <Text style={{ color: '#000000', fontFamily: 'Montserrat-Regular',  fontSize: 12.08, marginLeft:'auto', marginRight:10, marginTop:25 }}>{this.howManyDaysAfter(data.created_at.toString())}</Text>
+                    </View>
+                    <View style={{flexDirection:'row', marginTop:10}}>
+                      <TouchableOpacity style={{flexDirection:'row'}} onPress={() => goToInfoSolicitudes(data, data.folio)}>
+                          <View style={{width:'30%'}}>
+                              <Text style={{ color: 'rgba(0,0,0,0.87)',fontSize:14.9, fontFamily: 'Montserrat-Regular', marginLeft:10 }}>Dirección </Text>
+                          </View>
+                          <View style={{width:'50%'}}>
+                            <Text style={{color:'rgba(0,0,0,0.6)',fontFamily: 'Montserrat-Regular', fontSize: 14.09}}>{getAddressSolicitudes(data, data.type)}</Text>
+                          </View>
+                          <View style={{width:'20%'}}>
+                          <TouchableOpacity  onPress={() => goToInfoSolicitudes(data, data.folio)}>
+                              <Image
+                                  source={{uri : 'https://img.icons8.com/material-rounded/2x/chevron-right.png'}}
+                                  style={{ width: 24, height: 24, marginLeft: 'auto',marginRight:5}}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                      </TouchableOpacity>  
+                    </View>
+                  </TouchableOpacity>
+                  <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:20, marginTop:20}}>
+                    <View style={{width:148, marginLeft:10}}>
+                      <TouchableOpacity style={{
+                        height:36,
+                        backgroundColor:'rgba(98,2,238,0)',
+                        borderWidth:1,
+                        borderRadius:3,
+                        alignItems:'center',
+                        justifyContent:'center',
+                        borderColor:'rgba(0,0,0,0.6)'
+                      }}
+                        onPress={() => rejectSolicitudes(data, data.uuid)}
+                      >
+                      <Text style={{color:'rgba(0,0,0,0.6)', fontSize:13.96, fontFamily:'Montserrat-Medium'}}>RECHAZAR</Text>
+                      </TouchableOpacity>
+                    </View>
+                    <View style={{width:'10%'}}></View>
+                    <View style={{width:148, marginRight:10}}>
+                      <TouchableOpacity style={{
+                        height:36,
+                        backgroundColor:'rgba(98,2,238,0)',
+                        borderWidth:1,
+                        borderRadius:3,
+                        alignItems:'center',
+                        justifyContent:'center',
+                        borderColor:'#4BBC68'
+                      }}
+                      onPress={() => Alert.alert(
+                        'Advertencia:', '¿Estás seguro de querer aprobar esta solicitud?',
+                        [
+                          { text: "NO",
+                          style: "cancel"
+                          },
+                          { text: 'SI',onPress: () => this.approveSolicitudes(data.uuid, data)},
+                        ],
+                        { cancelable: false },
+                      )} 
+                        // onPress={() => this.approveSolicitudes(data.uuid, data)}
+                      >
+                      <Text style={{color:'#4BBC68', fontSize:13.96, fontFamily:'Montserrat-Medium'}}>APROBAR</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+      } else {
+        return false
+      } 
+    };
+
+
     getPoAndSolicitudesPending() {
-      // let both = Array.prototype.push.apply(payments, capital)
-      // console.log('fr',this.state.solicitudes[0])
-      
       let arr1 = this.state.pendingPo
       arr1.forEach(function (element) {
           element.tipo = "Orden";
@@ -232,13 +502,12 @@ export default class Profile extends Component {
           element.tipo = "Solicitud";
       });
       Array.prototype.push.apply(arr1, arr2)
-      // let both = concat.reduce((acc, val) => acc.concat(val), []);
       let both = arr1
       let sort1 = both.sort(function (a, b) { return new Date(b.created_at) - new Date(a.created_at) });
-     
-      // let sort2 = sort1.reverse()
       var map = sort1.map((data, key) => {
+        
         function solicitudesAndPoLength(date, tipo, solicitudesDate, poDate){
+          
           if(tipo == 4){
           let arr = solicitudesDate
     
@@ -260,263 +529,7 @@ export default class Profile extends Component {
           return count
         }
         };
-        function getAddressSolicitudes(data, tipo){
-          var arr = [data]
-          if(tipo == 4){
-            let shipping = arr.map((element)=>{
-              return element.shipping
-            })
-            let address = shipping.map((element)=>{
-              return element.address
-            })
-            //  console.log(address)
-            // let address = provider.map((element)=>{
-            //   return element.address
-            // })
-            let city = address.map((element)=>{
-              return element.city
-            })
-            let street = address.map((element)=>{
-              return element.street
-            })
-            let mapstate = address.map((element)=>{
-              return element.state
-            })
-            let country = mapstate.map((element)=>{
-              return element.country.name
-            })
-              return country+' ' + city +' '+ street
-          } else {
-            let provider = arr.map((element)=>{
-              return element.proposal.provider.address
-            })
-           
-            // let address = provider.map((element)=>{
-            //   return element.address
-            // })
-            // let city = provider.map((element)=>{
-            //   return element.city
-            // })
-            // let zipCode = provider.map((element)=>{
-            //   return element.zip_code
-            // })
-            return provider 
-          }
-          
-        };
-          function ifOrdenType(data, tipo) { 
-            function goToInfoOrdenes(data, folio, tipo){
-              Actions.infoOrdenes({data: data, folio: folio, tipo:tipo})
-            };
-            function rejectOrdenes(data, folio, tipo){
-              Actions.rechazar({data: data, folio: folio, tipo:tipo})
-            };
-            async function approveOrdenes(data){
-              const token = await AsyncStorage.getItem('ACCESS_TOKEN')
-              await fetch(`https://stage.ws.yay.do/me/account/quotation/${data.proposal.uuid}/approve`, {
-                method: 'PUT',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    "X-Auth-Token": token
-                },
-                body: JSON.stringify({
-                  status:1
-                }),
-            }).then((response)=>{
-                if(response.ok){
-                    Actions.profile()
-                } else {
-                  Alert.alert(`respuesta, ${JSON.stringify(response)}`)
-                }
-            }).catch((err)=>{
-              console.log(err.message)
-            })
-          };
-            if(tipo == 3){
-              function ifProgressBarNotANumber(){
-                let bar = 0+'.'+ parseFloat(data.budget.available).toFixed(2)*100;
-                if( data.budget.available >= 0.1 && data.budget.name !== 'Bloqueado'){
-                  
-                    return <Progress.Bar
-                                style={{marginTop:10}}
-                                fillStyle={{}}
-                                progress={bar}
-                                width={Dimensions.get('window').width - 240}
-                                height={6}
-                                color={'#4BBC68'}
-                                borderWidth={0}
-                                unfilledColor={'rgb(211,211,211)'}
-                            />
-                } else {
-                    return <Progress.Bar
-                                style={{marginTop:10}}
-                                fillStyle={{}}
-                                progress={0}
-                                width={Dimensions.get('window').width - 240}
-                                height={6}
-                                color={'#4BBC68'}
-                                borderWidth={0}
-                                unfilledColor={'rgb(211,211,211)'}
-                            />
-                }
-            } 
-              return <View>
-                        <View  style={{flexDirection:'row'}}>
-                          <TouchableOpacity style={{flexDirection:'row'}}  onPress={() => goToInfoOrdenes(data, data.folio)}>
-                            <View style={{flexDirection:'column', width:'40%'}}>
-                              <Text style={{ color: 'rgba(0,0,0,0.87)', fontFamily: 'Montserrat-Regular',  fontSize: 14.09, marginLeft:10 , marginTop:10}}>Dirección</Text>
-                              <Text style={{ color: 'rgba(0,0,0,0.87)', fontFamily: 'Montserrat-Regular',  fontSize: 14.09, marginLeft:10 , marginTop:10}}>Monto</Text>
-                              <Text style={{ color: 'rgba(0,0,0,0.87)', fontFamily: 'Montserrat-Regular',  fontSize: 14.09, marginLeft:10, marginTop:10}}>Presupuesto</Text>
-                            </View>
-                            <View style={{flexDirection:'column', width:'40%'}}>
-                            <Text style={{ color: 'rgba(0,0,0,0.6)', fontFamily: 'Montserrat-Regular',  fontSize: 14.09, marginTop:10}}>{data.proposal.provider.address}</Text>
-                              <Text style={{ color: 'rgba(0,0,0,0.6)', fontFamily: 'Montserrat-Regular',  fontSize: 14.09, marginTop:10   }}>{numeral(data.proposal.total).format('$0,0.00')}</Text>
-                              <Text style={{ color: 'rgba(0,0,0,0.6)', fontFamily: 'Montserrat-Regular',  fontSize: 14.09, marginTop:10  }}>{data.budget.name}</Text>
-                              <Text style={{ color: 'rgba(0,0,0,0.6)', fontFamily: 'Montserrat-Regular',  fontSize: 14.09 }}>de {numeral(data.budget.amount).format('$0,0.00')}</Text>
-                              {ifProgressBarNotANumber()}
-                            </View>
-                            <View style={{flexDirection:'column', width:'20%', justifyContent:'flex-end'}}>
-                              <TouchableOpacity  onPress={() => goToInfoOrdenes(data, data.folio)}>
-                                <Image
-                                    source={{uri : 'https://img.icons8.com/material-rounded/2x/chevron-right.png'}}
-                                    style={{ width: 24, height: 24, marginLeft: 'auto',marginRight:5, marginTop:20}}
-                                />
-                              </TouchableOpacity>
-                            </View>
-                          </TouchableOpacity>
-                        </View>
-                     <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:20, marginTop:20}}>
-                      <View style={{width:148, marginLeft:10}}>
-                        <TouchableOpacity style={{
-                          height:36,
-                          backgroundColor:'rgba(98,2,238,0)',
-                          borderWidth:1,
-                          borderRadius:3,
-                          alignItems:'center',
-                          justifyContent:'center',
-                          borderColor:'rgba(0,0,0,0.6)'
-                        }}
-                          onPress={() => rejectOrdenes(data, data.folio, tipo)}
-                        >
-                        <Text style={{color:'rgba(0,0,0,0.6)', fontSize:13.96, fontFamily: 'Montserrat-Medium',}}>RECHAZAR</Text>
-                        </TouchableOpacity>
-
-                      </View>
-                      <View style={{width:'10%'}}></View>
-                      <View style={{width:148, marginRight:10}}>
-                        <TouchableOpacity style={{
-                          height:36,
-                          backgroundColor:'rgba(98,2,238,0)',
-                          borderWidth:1,
-                          borderRadius:3,
-                          alignItems:'center',
-                          justifyContent:'center',
-                          borderColor:'#4BBC68'
-                        }}
-                          onPress={() => approveOrdenes(data)}
-                        >
-                        <Text style={{color:'#4BBC68', fontSize:13.96, fontFamily: 'Montserrat-Medium',}}>APROBAR</Text>
-                        </TouchableOpacity>
-
-                      </View>
-                    </View>
-                   </View>
-            } else {
-              return false
-            } 
-          };
-          function ifSolicitudType(data, tipo) { 
-            function goToInfoSolicitudes(data, folio, tipo){
-              Actions.infoSolicitudes({data: data, folio: folio, tipo: tipo})
-            };
-            async function approveSolicitudes(request_id, data){
-              const token = await AsyncStorage.getItem('ACCESS_TOKEN')
-              const enterpriseUuid = await AsyncStorage.getItem('UUID');
-              await fetch(`https://stage.ws.yay.do/v2/enterprise/${enterpriseUuid}/quotation/request/${request_id}/approve`, {
-                method: 'PUT',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    "X-Auth-Token": token
-                },
-                body: JSON.stringify({
-                  status:1
-                }),
-            }).then((response)=>{
-              if(response.ok){
-                Actions.profile()
-              } else {
-                Alert.alert(`respuesta, ${JSON.stringify(response)}`)
-              }
-            }).catch((err)=>{
-              console.log(err.message)
-            })
-            };
-            function rejectSolicitudes(data, request_id, tipo){
-              Actions.rechazar({request_id: request_id, data:data, tipo:tipo})
-            }
-            if(tipo == 4){
-              return <View>
-                        <View style={{flexDirection:'row', marginTop:10}}>
-                          <TouchableOpacity style={{flexDirection:'row'}} onPress={() => goToInfoSolicitudes(data, data.folio)}>
-                              <View style={{width:'30%'}}>
-                                  <Text style={{ color: 'rgba(0,0,0,0.87)',fontSize:14.9, fontFamily: 'Montserrat-Regular', marginLeft:10 }}>Dirección </Text>
-                              </View>
-                              <View style={{width:'50%'}}>
-                                <Text style={{color:'rgba(0,0,0,0.6)',fontFamily: 'Montserrat-Regular', fontSize: 14.09}}>{getAddressSolicitudes(data, data.type)}</Text>
-                              </View>
-                              <View style={{width:'20%'}}>
-                              <TouchableOpacity  onPress={() => goToInfoSolicitudes(data, data.folio)}>
-                                  <Image
-                                      source={{uri : 'https://img.icons8.com/material-rounded/2x/chevron-right.png'}}
-                                      style={{ width: 24, height: 24, marginLeft: 'auto',marginRight:5}}
-                                  />
-                                </TouchableOpacity>
-                              </View>
-                          </TouchableOpacity>  
-                        </View>
-                        <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:20, marginTop:20}}>
-                          <View style={{width:148, marginLeft:10}}>
-                            <TouchableOpacity style={{
-                              height:36,
-                              backgroundColor:'rgba(98,2,238,0)',
-                              borderWidth:1,
-                              borderRadius:3,
-                              alignItems:'center',
-                              justifyContent:'center',
-                              borderColor:'rgba(0,0,0,0.6)'
-                            }}
-                              onPress={() => rejectSolicitudes(data, data.uuid)}
-                            >
-                            <Text style={{color:'rgba(0,0,0,0.6)', fontSize:13.96, fontFamily:'Montserrat-Medium'}}>RECHAZAR</Text>
-                            </TouchableOpacity>
-
-                          </View>
-                          <View style={{width:'10%'}}></View>
-                          <View style={{width:148, marginRight:10}}>
-                            <TouchableOpacity style={{
-                              height:36,
-                              backgroundColor:'rgba(98,2,238,0)',
-                              borderWidth:1,
-                              borderRadius:3,
-                              alignItems:'center',
-                              justifyContent:'center',
-                              borderColor:'#4BBC68'
-                            }}
-                              onPress={() => approveSolicitudes(data.uuid, data)}
-                            >
-                            <Text style={{color:'#4BBC68', fontSize:13.96, fontFamily:'Montserrat-Medium'}}>APROBAR</Text>
-                            </TouchableOpacity>
-
-                          </View>
-                        </View>
-                     
-                  </View>
-            } else {
-              return false
-            } 
-          };
+        
           return <View style={{alignItems:'center', display:'flex'}}>
                     <View style={styles.solicitudesMain}>
                         <View style={{flexDirection:'row'}}>
@@ -524,31 +537,22 @@ export default class Profile extends Component {
                            <View style={{ alignItems: 'flex-end',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 12.08, marginBottom:10, marginRight:10 }}>{solicitudesAndPoLength( data.created_at, data.type,this.state.solicitudesDate, this.state.poDate)} por resolver</Text></View>
                         </View>
                         <View style={styles.solicitudes}>
-                          <View style={styles.solicitudesDescription3}>
-                                <Image
-                                    source={{uri : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZMD1evACIwv083oh-CbaavyrN-0pXUGdKHMM-Ny_oZMh7lQ928Q&s'}}
-                                    style={{ width: 52, height: 52, marginLeft: 10,marginRight:10, marginTop:20, borderRadius:24}}
-                                />
-                              <View style={{color:'#000000', flexDirection:'column', marginTop:20}}>
-                                  <Text style={{ color: '#000000', fontFamily: 'Montserrat-Medium', fontSize: 19.94 }}>{data.tipo} {data.folio} </Text>
-                                  <Text style={{color:'#000000', fontFamily: 'Montserrat-Regular', fontSize: 14.09}}>{data.account.user.first_name}</Text>
-                              </View>
-                              <Text style={{ color: '#000000', fontFamily: 'Montserrat-Regular',  fontSize: 12.08, marginLeft:'auto', marginRight:10, marginTop:25 }}>{this.howManyDaysAfter(data.created_at.toString())}</Text>
-                          </View>
                           <View style={styles.solicitudesDescription3}> 
-                            {ifSolicitudType(data, data.type)}
-                            {ifOrdenType(data, data.type)}
+                            {this.ifSolicitudType(data, data.type, key)}
+                            {this.ifOrdenType(data, data.type, key)}
                           </View>
                         </View>
                   </View>
-              </View>
+                </View>
       });
       if (this.state.solicitudes.length >= 1 || this.state.pendingPo.length >= 1) {
           return map
       } else {
           return false
       }
-  };
+    };
+
+
     render() {
         var drawer = (
             <View style={{ flex: 1, backgroundColor: '#4BBC68' }}>
@@ -562,45 +566,53 @@ export default class Profile extends Component {
                 </TouchableOpacity>
               </View>
             </View>
-          );
+        );
         return (
-          
             <Drawer renderNavigationView={() => drawer}
-            content={drawer}
-            type="overlay"
-            tapToClose={true}
-            openDrawerOffset={0.4}
-            ref={_drawer => (this.drawer = _drawer)}>
+              content={drawer}
+              type="overlay"
+              tapToClose={true}
+              openDrawerOffset={0.4}
+              ref={_drawer => (this.drawer = _drawer)}>
                 <View
                     style={styles.container}
-                    // resizeMode="cover"
-                    // source={require('../../../assets/FONDO_16.png')}
                 >
-                    <View style={{flexDirection: 'row'}}>
+                  <Header style={{backgroundColor:'#00A0F8'}}>
+                    <Body style={{flexDirection:'row', justifyContent:'space-between'}}>
+                      <Title style={{fontSize:19.94, letterSpacing:0.25, marginLeft:16}}>Aprobaciones</Title>
+                      <Title style={{marginRight:13, fontSize:13.96, letterSpacing:0.25, marginTop:5}}>FILTRAR</Title>
+                    </Body>
+                  </Header>
+                  <Loading 
+                  borderRadius={50}
+                  size={40}
+                  ref='loading4'
+                  backgroundColor={'#FFF'}
+                  indicatorColor={'#000000'}/>
+                    {/* <View style={{flexDirection: 'row'}}>
                         <TouchableOpacity style={{marginLeft:'auto', marginRight:20}} onPress={this.openDrawer.bind(this)} >
                         <Image
                             source={{uri : 'https://img.icons8.com/ultraviolet/2x/menu.png'}}
                             style={{ width: 25, height: 25,  padding:20, marginTop:5}}
                         />
                         </TouchableOpacity>
-                        {/* <Image
-                          style={styles.yayImage}
-                          resizeMode={'contain'}
-                          source={require('../../../assets/yay.png')}
-                        /> */}
-                    </View>
+                    </View> */}
                     <ScrollView style={{marginTop:0}}
-                        refreshControl={
-                            <RefreshControl
-                                //refresh control used for the Pull to Refresh
-                                refreshing={this.state.refreshing}
-                                onRefresh={this.onRefresh.bind(this)}
-                            />
-                        }
+                      refreshControl={
+                        <RefreshControl
+                          refreshing={this.state.refreshing}
+                          onRefresh={this.onRefresh.bind(this)}
+                        />
+                      }
                     >
                       {this.getPoAndSolicitudesPending()}
                       <View style={{marginTop:40}}></View>
                     </ScrollView>
+                    <View>
+                    <TouchableOpacity style={{backgroundColor:'#00A0F8', height:40, justifyContent:'center'}} onPress={this.logout}>
+                      <Text style={{ color: '#FFF', marginLeft: 20, marginBottom: 10, fontFamily: 'Montserrat-Regular' }}> CERRAR SESIÓN  </Text>
+                    </TouchableOpacity>
+                    </View>
                 </View>
                 <PushController />
             </Drawer>
