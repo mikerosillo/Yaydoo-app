@@ -8,7 +8,7 @@ class PlaceHolder extends Component {
         if (gotToken) {
             Actions.profile({ type: 'reset' })
         } else {
-            Actions.welcome({ type: 'reset' });
+            Actions.login({ type: 'reset' });
         }
     }
     render() {

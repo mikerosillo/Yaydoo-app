@@ -60,7 +60,7 @@ export default class InfoOrdenes extends Component {
         async function removeItemValue() {
           try {
             await AsyncStorage.removeItem('ACCESS_TOKEN');
-            Actions.welcome({
+            Actions.login({
               type: 'reset',
             });
             return true;
