@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:drawable="@color/blue"
+        android:statusBarColor="@color/blue"/>
+
+    <item
+        android:width="350dp"
+        android:height="350dp"
+        android:drawable="@mipmap/appstore"
+        android:gravity="center" />
+
+</layer-list>                                                                                                                                               

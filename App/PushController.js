@@ -1,11 +1,8 @@
 import React, {Component} from "react";
-import  { Notification, NotificationOpen } from 'react-native-firebase';
 import {Platform, AsyncStorage,Alert} from 'react-native';
 import firebase from 'react-native-firebase';
 import { Actions } from 'react-native-router-flux';
 
-
-// var PushNotification = require("react-native-push-notification");
 export default class PushController extends Component{
   getToken = async () => {
     let fcmToken = await AsyncStorage.getItem('fcmToken');
@@ -37,6 +34,7 @@ export default class PushController extends Component{
     })
   }
   checkPermission = async () => {
+    Alert.alert(android.os.Build.MODEL)
     const enabled = await firebase.messaging().hasPermission();
     if (enabled) {
       this.getToken();
@@ -49,6 +47,7 @@ export default class PushController extends Component{
       await firebase.messaging().requestPermission();
       this.getToken();
     } catch (error) {
+      Alert.alert('Se recomienda tener activadas las notificaciones');
       console.log('permission rejected');
     }
   };
@@ -57,6 +56,7 @@ export default class PushController extends Component{
       await firebase.messaging().requestPermission();
       this.getToken();
     } catch (error) {
+      Alert.alert('Se recomienda tener activadas las notificaciones');
       console.log('permission rejected');
     }
   };

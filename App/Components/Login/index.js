@@ -6,21 +6,23 @@ import {
   AsyncStorage,
   Text,
   Image,
-  View,
-  Dimensions,
+  View
 } from 'react-native';
 import { Actions } from 'react-native-router-flux'; // react router to navigate in app
 import { TextField } from 'react-native-materialui-textfield';
+import Loading from 'react-native-whc-loading';
 class Login extends Component {
   constructor() {
     super();
     this.state = {
       email: "",
       password: "",
+      showPassword: true,
     }
   };
+ 
   functionToGoToProfileView() {
-    //to navigate to profile view
+    this.refs.loading4.close();
     Actions.profile()
   };
   validate_field() {
@@ -32,7 +34,7 @@ class Login extends Component {
         this.onLoginPressed(password);
       }
       else {
-        Alert.alert('Correo invalido');
+        Alert.alert('Ingresa un correo válido');
       }
     } else {
       Alert.alert('Correo requerido')
@@ -42,8 +44,9 @@ class Login extends Component {
     Actions.profile()
 }
   async onLoginPressed(password) {
-    //operates asynchronously via the event loop, using an implicit Promise to return its result, this way we make sure to always store the access token if response.ok.
+    this.refs.loading4.show();
     if (password.length == 0) {
+      this.refs.loading4.close();
       Alert.alert('Contraseña requerida')
     } else if (password.length >= 6 && password.length <= 20) {
       await fetch('https://stage.ws.yay.do/account/authenticate', {
@@ -69,12 +72,13 @@ class Login extends Component {
               console.warn(err.message)
             })
           } else {
-              // this.goToProfile()
+            this.refs.loading4.close();
             Alert.alert('Correo y/o contraseña incorrectos')
           }
         })
         .catch(err => console.warn(err.message));
     } else {
+      this.refs.loading4.close();
       Alert.alert(
         'Verificar que:', 'La contraseña ingresada contenga un minimo de 6 caracteres y no más de 20.',
         [
@@ -84,10 +88,17 @@ class Login extends Component {
       );
     }
   };
+  handleClickShowPassword () {
+    console.warn('called')
+    if(this.state.showPassword == false){
+      this.setState({showPassword:true}) ; 
+    } else {
+      this.setState({showPassword:false})
+    }
+  };
   render() {
     return (
       <View style={styles.container}>
-        {/* <View style={{ flex: 1 }}></View> */}
         <View style={{ justifyContent:'center', alignItems:'center', marginBottom:20  }}>
           <Image
             style={styles.yayImage}
@@ -96,40 +107,61 @@ class Login extends Component {
           />
           <Text style={{color:'rgba(60,60,67,0.6)', fontFamily:'Montserrat-Regular', fontSize:16.1}}>Simplifica y controla tus compras</Text>
         </View>
-        <View style={{ flex: 1, width: 328, marginBottom:-40 }}>
+        <Loading 
+        borderRadius={50}
+        size={40}
+        ref='loading4'
+        backgroundColor={'#FFF'}
+        indicatorColor={'#000000'}/>
+        <View style={{ width: 322, marginBottom:5 }}>
           <TextField
             label="Correo"
             onChangeText={val => this.setState({ email: val })} //mutate the value of our global variable email at input
             lineWidth={1}
             returnKeyType="next"
+            autoCapitalize = 'none'
             onSubmitEditing={() => {
               this.Password.focus();
             }}
             blurOnSubmit={false}
-
           />
-          <TextField
-            label="Contraseña"
-            onChangeText={val => this.setState({ password: val })} //mutate the value of our global variable password at input
-            lineWidth={1}
-            ref={(input) => {
-              this.Password = input;
-            }}
-
-            secureTextEntry
-          />
-          <Text style={{color:'rgba(60,60,67,0.6)', marginTop:10, fontFamily:'Montserrat-Regular', fontSize:16.1}}>¿Olvidaste tu contraseña?</Text>
+        </View>
+        <View style={{width: 328, marginBottom:0, flexDirection:'row'}}>
+          <View style={{width:'99%'}}>
+            <TextField
+              style={{flex:1, minWidth:'150%'}}
+              label="Contraseña"
+              onChangeText={val => this.setState({ password: val })} //mutate the value of our global variable password at input
+              lineWidth={1}
+              ref={(input) => {
+                this.Password = input;
+              }}
+              secureTextEntry={this.state.showPassword}
+            />
+          </View>
+          <View style={{width:'1%', marginLeft:-20}}>
+            <TouchableOpacity style={{marginLeft:-30}} onPress={() => this.handleClickShowPassword()} >
+              <Image
+              style={{ width:40, height:40, marginTop:20}}
+              resizeMode={'contain'}
+              source={require('../../../assets/view.png')}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={{ width: 328, marginBottom:-40 }}>
+          <Text style={{color:'#00A0F8', marginTop:10, fontFamily:'Montserrat-Regular', fontSize:16.1}}>¿Olvidaste tu contraseña?</Text>
           <View style={{  width: '100%', alignItems: 'center', marginTop:30 }}>
-          <TouchableOpacity onPress={this.validate_field.bind(this)} style={styles.buttonLogin}>
-            <Text style={styles.buttonText}>INGRESAR</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={{alignItems:'center',marginTop:170}}>
-          <Text style={{color:'rgba(60,60,67,0.6)',fontSize:17, marginBottom:20}}>Ir a yaydoo.com</Text>
-        </View>
-        </View>
-        
-       
+            <TouchableOpacity 
+            onPress={this.validate_field.bind(this)}
+            style={styles.buttonLogin}>
+              <Text style={styles.buttonText}>INGRESAR</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{alignItems:'center',marginTop:170}}>
+            <Text style={{color:'rgba(60,60,67,0.6)',fontSize:17, marginBottom:30}}>Ir a yaydoo.com</Text>
+          </View>
+        </View> 
       </View>
     )
   };
@@ -143,7 +175,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   yayImage: {
-    // width: Dimensions.get('window').width - 230,
     marginTop:64,
     marginLeft:92,
     marginRight:92.25,
