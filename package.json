@@ -7,9 +7,11 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "postinstall": "npx jetify"
   },
   "dependencies": {
+    "jetifier": "^1.6.5",
     "moment": "^2.24.0",
     "native-base": "^2.13.8",
     "numeral": "^2.0.6",
@@ -21,6 +23,7 @@
     "react-native-materialui-textfield": "^0.13.2",
     "react-native-progress": "^3.6.0",
     "react-native-router-flux": "^4.0.6",
+    "react-native-splash-screen": "^3.2.0",
     "react-native-svg": "^10.1.0",
     "react-native-svg-transformer": "^0.14.3",
     "react-native-whc-loading": "^1.0.3"

@@ -26,9 +26,9 @@ export default class Welcome extends Component {
         return (
            
                 <View style={styles.MainContainer}>
-                    <LOGOSVG 
-                        width="100%"
-                        height="70%"
+                    <LOGOSVG style={{marginTop:10}}
+                        width="400px"
+                        height="350px"
                     />
                     {/* <SvgUri width="200" height="200" source={require('../../../assets/logo-yaydoo.svg')} /> */}
                     

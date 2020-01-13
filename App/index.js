@@ -3,11 +3,14 @@ import {
   SafeAreaView, 
   StyleSheet, 
 } from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
 import Routes from './Routes/index';
 
 
 class App extends Component {
-  
+  componentDidMount() {
+    SplashScreen.hide()
+  }
   render() {
 
     return (
