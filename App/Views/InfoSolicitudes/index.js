@@ -71,7 +71,6 @@ export default class InfoSolicitudes extends Component {
     productosTitleStyle(){
         if(this.state.productos == true){
             return {
-                textDecorationLine: 'underline',
                 color:'#F5F5F5',
                 marginLeft:20,
                 fontSize:13.96,
