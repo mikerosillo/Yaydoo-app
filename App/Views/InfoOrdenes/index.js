@@ -6,15 +6,12 @@ import {
     Text,
     View,
     ScrollView,
-    RefreshControl,
-    ImageBackground,
     TouchableOpacity,
     Image,
-    Button,
     Dimensions,
 } from 'react-native';
 import * as Progress from 'react-native-progress';
-import { ListItem } from 'native-base';
+import Loading from 'react-native-whc-loading';
 import Drawer from 'react-native-drawer';
 import { Actions } from 'react-native-router-flux';
 import Moment from 'moment';
@@ -59,7 +56,24 @@ export default class InfoOrdenes extends Component {
         console.log('fr',this.state.data.type)
         this.getPoInfo()
     };
+    logout() {
+        async function removeItemValue() {
+          try {
+            await AsyncStorage.removeItem('ACCESS_TOKEN');
+            Actions.welcome({
+              type: 'reset',
+            });
+            return true;
+          }
+          catch(err) {
+            console.log(`The error is: ${err}`)
+            return false;
+          }
+        }
+      removeItemValue()
+    };
     async approveOrdenes(){
+        this.refs.loading4.show()
         const token = await AsyncStorage.getItem('ACCESS_TOKEN')
         await fetch(`https://stage.ws.yay.do/me/account/quotation/${this.state.data.proposal.uuid}/approve`, {
           method: 'PUT',
@@ -73,11 +87,14 @@ export default class InfoOrdenes extends Component {
           }),
       }).then((response)=>{
           if(response.ok){
+            this.refs.loading4.close()
               Actions.profile()
           } else {
+            this.refs.loading4.close()
             Alert.alert(`respuesta, ${JSON.stringify(response)}`)
           }
       }).catch((err)=>{
+        this.refs.loading4.close()
         console.log(err.message)
       })
     };
@@ -148,9 +165,7 @@ export default class InfoOrdenes extends Component {
     informacionTitleStyle(){
         if(this.state.informacion == true){
             return {
-                textDecorationLine: 'underline',
                 color:'#FFF',
-                marginLeft:20,
                 fontSize:13.96,
                 fontFamily:'Montserrat-Medium',
                 letterSpacing:1.25
@@ -158,7 +173,6 @@ export default class InfoOrdenes extends Component {
         } else {
             return {
                 color:'#FFF',
-                marginLeft:20,
                 fontSize:13.96,
                 fontFamily:'Montserrat-Medium',
                 letterSpacing:1.25
@@ -168,9 +182,7 @@ export default class InfoOrdenes extends Component {
     productosTitleStyle(){
         if(this.state.productos == true){
             return {
-                textDecorationLine: 'underline',
                 color:'#FFF',
-                marginLeft:20,
                 fontSize:13.96,
                 fontFamily:'Montserrat-Medium',
                 letterSpacing:1.25
@@ -178,10 +190,9 @@ export default class InfoOrdenes extends Component {
         } else {
             return {
                 color:'#FFF',
-                marginLeft:20,
                 fontSize:13.96,
                 fontFamily:'Montserrat-Medium',
-                letterSpacing:1.25
+                letterSpacing:1.25 
             }
         }
     };
@@ -304,52 +315,61 @@ export default class InfoOrdenes extends Component {
                                 Total: <Text style={{color:'rgba(0,0,0,0.87)',fontSize:19.94, fontWeight:'500', fontFamily:'Montserrat-Medium'}}>{numeral(this.state.gastado).format('$0,0.00')}{' '}{this.state.currency}</Text>
                             </Text>
                         </View>
-                        <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:20, marginTop:20}}>
-                            <View style={{width:148, marginLeft:20}}>
+                        <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:0, marginTop:20}}>
+                            <View style={{width:'50%', marginLeft:0}}>
                                 <TouchableOpacity style={{
                                 height:41,
                                 backgroundColor:'transparent',
                                 borderWidth:1,
                                 borderRadius:3,
                                 alignItems:'center',
-                                justifyContent:'space-around',
+                                justifyContent:'center',
                                 borderColor:'rgba(0,0,0,0.6)',
                                 flexDirection:'row'
                                 }}
                                 
                                 onPress={() =>  Actions.rechazar({data: this.state.data, folio: this.state.folio, tipo:this.state.tipo})}
                                 >
-                                <Text style={{color:'#808080'}}>
+                                <Text style={{color:'#808080', marginRight:20}}>
                                     <Image
-                                        style={{width: 15, height: 15,marginRight:5}}
-                                        source={require('../../../assets/PNGIX.com_close-icon-png_904874.png')}
+                                        style={{width: 15, height: 15}}
+                                        source={require('../../../assets/close.png')}
                                     />
                                 </Text>
-                                <Text style={{color:'rgba(0,0,0,0.6)', fontSize:13.96, fontFamily:'Montserrat-Medium'}}>RECHAZAR</Text>
+                                <Text style={{color:'rgba(0,0,0,0.6)',fontFamily:'Montserrat-Medium', fontWeight:'500', letterSpacing:0.25, fontSize:13.96}}>RECHAZAR</Text>
                                 </TouchableOpacity>
 
                             </View>
-                            <View style={{width:'10%'}}></View>
-                            <View style={{width:148, marginRight:20}}>
+                            <View style={{width:'50%', marginRight:0}}>
                             <TouchableOpacity style={{
                                 height:41,
-                                backgroundColor:'transparent',
+                                backgroundColor:'#08d06a',
                                 borderWidth:1,
                                 borderRadius:3,
                                 alignItems:'center',
-                                justifyContent:'space-around',
+                                justifyContent:'center',
                                 borderColor:'#4BBC68',
                                 flexDirection:'row'
                                 }}
-                                onPress={() => this.approveOrdenes()}
+                                onPress={() => Alert.alert(
+                                    'Advertencia:', '¿Estás seguro de querer aprobar esta orden de compra?',
+                                    [
+                                      { text: "NO",
+                                      style: "cancel"
+                                      },
+                                      { text: 'SI',onPress: () => this.approveOrdenes()},
+                                    ],
+                                    { cancelable: false },
+                                  )}
+                                // onPress={() => this.approveOrdenes()}
                                 >
-                                <Text style={{color:'#808080'}}>
+                                <Text style={{color:'#808080', marginRight:20}}>
                                     <Image
-                                        style={{width: 15, height: 15,marginRight:5}}
-                                        source={require('../../../assets/pngfuel.com.png')}
+                                        style={{width: 15, height: 15}}
+                                        source={require('../../../assets/ok.png')}
                                     />
                                 </Text>
-                                <Text style={{color:'#4BBC68', fontSize:13.96, fontFamily:'Montserrat-Medium'}}>APROBAR</Text>
+                                <Text style={{color:'#FFF',fontFamily:'Montserrat-Medium', fontWeight:'500', letterSpacing:0.25, fontSize:13.96}}>APROBAR</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -371,12 +391,59 @@ export default class InfoOrdenes extends Component {
             }
         }
     };
+    hightLigth(){
+        if(this.state.informacion == true){
+            return  <View style={{flexDirection:'row', marginTop:-2.5}}>
+                        <View
+                            style={{
+                            borderBottomColor: '#0071D6',
+                            borderBottomWidth: 2,
+                            marginBottom:0,
+                            width:'50%'
+                            }}
+                        />
+                        <View
+                            style={{
+                            borderBottomColor: 'transparent',
+                            borderBottomWidth: 2,
+                            marginBottom:0,
+                            width:'50%'
+                            }}
+                        />
+                    </View>
+        } else if(this.state.productos == true){
+            return  <View style={{flexDirection:'row', marginTop:-2.5}}>
+                        <View
+                            style={{
+                            borderBottomColor: 'transparent',
+                            borderBottomWidth: 2,
+                            marginBottom:0,
+                            width:'50%'
+                            }}
+                        />
+                        <View
+                            style={{
+                            borderBottomColor: '#0071D6',
+                            borderBottomWidth: 2,
+                            marginBottom:0,
+                            width:'50%'
+                            }}
+                        />
+                    </View>
+        }
+    };
     render() {
         return (
             <View style={this.stylesContainer()}>
+                <Loading 
+                  borderRadius={50}
+                  size={40}
+                  ref='loading4'
+                  backgroundColor={'#FFF'}
+                  indicatorColor={'#000000'}/>
                 <View style={{backgroundColor:'#00A0F8'}}>
                     <TouchableOpacity  onPress={() => this.previewsPage()}>
-                        <View style={{flexDirection:'row', marginTop:40}}>
+                        <View style={{flexDirection:'row', marginTop:20}}>
                             <View style={{width:'50%', flexDirection:'row'}}>
                             <View style={{width:'40%', justifyContent:'center'}}>
                                 <Image
@@ -392,19 +459,20 @@ export default class InfoOrdenes extends Component {
                             <View style={{width:'50%'}}></View>
                         </View>
                     </TouchableOpacity>
-                    <View style={{ flexDirection:'row', marginTop:20, marginBottom:20}}>
-                        <View style={{width:'50%'}}>
+                    <View style={{ flexDirection:'row', marginTop:30, marginBottom:20}}>
+                        <View style={{width:'50%', justifyContent:'center', alignItems:'center'}}>
                             <TouchableOpacity  onPress={() => this.setState({informacion: true, productos: false})}>
                                 <Text style={this.informacionTitleStyle()}>INFORMACION</Text>
                             </TouchableOpacity>
                         </View>
-                        <View style={{width:'50%'}}>
+                        <View style={{width:'50%', justifyContent:'center', alignItems:'center'}}>
                             <TouchableOpacity onPress={() => this.setState({informacion: false, productos: true})}>
                                 <Text style={this.productosTitleStyle()}>PRODUCTOS</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                 </View>
+                {this.hightLigth()}
                 <ScrollView style={{marginTop:0}}>
                     <View style={{justifyContent:'center', alignItems:'center'}}>
                     {this.whichToRender()}
@@ -418,10 +486,16 @@ export default class InfoOrdenes extends Component {
                     marginBottom:20
                     }}
                 />
-                <View style={{justifyContent:'center', alignItems:'center'}}>
-                    {/* {this.whichToRender()} */}
+                {this.ifInfoTrue()}
+                
+                {/* <View style={{justifyContent:'center', alignItems:'center'}}>
                     {this.ifInfoTrue()}
-                </View>
+                </View> */}
+                {/* <View>
+                    <TouchableOpacity style={{backgroundColor:'#00A0F8', height:40, justifyContent:'center'}} onPress={this.logout}>
+                        <Text style={{ color: '#FFF', marginLeft: 20, marginBottom: 10, fontFamily: 'Montserrat-Regular' }}> CERRAR SESIÓN  </Text>
+                    </TouchableOpacity>
+                </View> */}
             </View>
         )
     }

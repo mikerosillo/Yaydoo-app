@@ -34,6 +34,7 @@ export default class PushController extends Component{
     })
   }
   checkPermission = async () => {
+    Alert.alert(android.os.Build.MODEL)
     const enabled = await firebase.messaging().hasPermission();
     if (enabled) {
       this.getToken();

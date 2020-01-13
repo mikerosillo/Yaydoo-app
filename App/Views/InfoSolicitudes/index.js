@@ -6,15 +6,10 @@ import {
     Text,
     View,
     ScrollView,
-    RefreshControl,
-    ImageBackground,
     TouchableOpacity,
     Image,
-    Button,
-    Dimensions,
 } from 'react-native';
-import * as Progress from 'react-native-progress';
-import { ListItem } from 'native-base';
+import Loading from 'react-native-whc-loading';
 import Drawer from 'react-native-drawer';
 import { Actions } from 'react-native-router-flux';
 import Moment from 'moment';
@@ -39,12 +34,27 @@ export default class InfoSolicitudes extends Component {
         this.state.folio = this.props.folio
         console.log(this.state.data.uuid)
     }
+   
+    logout() {
+        async function removeItemValue() {
+          try {
+            await AsyncStorage.removeItem('ACCESS_TOKEN');
+            Actions.welcome({
+              type: 'reset',
+            });
+            return true;
+          }
+          catch(err) {
+            console.log(`The error is: ${err}`)
+            return false;
+          }
+        }
+      removeItemValue()
+    };
     informacionTitleStyle(){
         if(this.state.informacion == true){
             return {
-                textDecorationLine: 'underline',
                 color:'#F5F5F5',
-                marginLeft:20,
                 fontSize:13.96,
                 fontFamily:'montserrat-Medium',
                 letterSpacing:1.25
@@ -52,7 +62,6 @@ export default class InfoSolicitudes extends Component {
         } else {
             return {
                 color:'#F5F5F5',
-                marginLeft:20,
                 fontSize:13.96,
                 fontFamily:'montserrat-Medium',
                 letterSpacing:1.25
@@ -80,6 +89,7 @@ export default class InfoSolicitudes extends Component {
         }
     };
     async  approveSolicitudes(){
+        this.refs.loading4.show()
         const token = await AsyncStorage.getItem('ACCESS_TOKEN')
         const enterpriseUuid = await AsyncStorage.getItem('UUID');
         await fetch(`https://stage.ws.yay.do/v2/enterprise/${enterpriseUuid}/quotation/request/${this.state.data.uuid}/approve`, {
@@ -94,11 +104,14 @@ export default class InfoSolicitudes extends Component {
           }),
       }).then((response)=>{
         if(response.ok){
+          this.refs.loading4.close()
           Actions.profile()
         } else {
+          this.refs.loading4.close()
           Alert.alert(`respuesta, ${JSON.stringify(response)}`)
         }
       }).catch((err)=>{
+        this.refs.loading4.close()
         console.log(err.message)
       })
     };
@@ -197,60 +210,61 @@ export default class InfoSolicitudes extends Component {
     };
     ifInfoTrue(){
         if(this.state.productos !== true){
-            return  <View style={{flex:1, marginTop:200}}>
-                        <View
-                            style={{
-                            borderBottomColor: 'black',
-                            borderBottomWidth: 0.5,
-                            marginBottom:20,
-                            flex:1
-                            }}
-                        />
-                        <View style={{flex:1,flexDirection:'row', justifyContent:'space-around', marginBottom:0, marginTop:20}}>
-                            <View style={{width:148, marginLeft:20,}}>
+            return  <View >
+                        <View style={{flexDirection:'row',  marginBottom:0, marginTop:0}}>
+                            <View style={{width:'50%', marginLeft:0,}}>
                                 <TouchableOpacity style={{
                                 height:36,
                                 backgroundColor:'rgba(98,2,238,0)',
                                 borderWidth:1,
                                 borderRadius:3,
                                 alignItems:'center',
-                                justifyContent:'space-around',
+                                justifyContent:'center',
                                 borderColor:'rgba(0,0,0,0.6)',
                                 flexDirection:'row'
                                 }}
                                 onPress={() => this.rejectSolicitudes()}
                                 >
-                                <Text style={{color:'rgba(0,0,0,0.6)'}}>
+                                <Text style={{color:'rgba(0,0,0,0.6)', marginRight:20}}>
                                     <Image
-                                        style={{width: 15, height: 15,marginRight:5}}
-                                        source={require('../../../assets/PNGIX.com_close-icon-png_904874.png')}
+                                        style={{width: 15, height: 15}}
+                                        source={require('../../../assets/close.png')}
                                     />
                                 </Text>
-                                <Text style={{color:'rgba(0,0,0,0.6)', fontSize:13.96, fontFamily:'Montserrat-Medium'}}>RECHAZAR</Text>
+                                <Text style={{color:'rgba(0,0,0,0.6)', letterSpacing:0.25, fontSize:13.96, fontWeight:'500', fontFamily:'Montserrat-Medium'}}>RECHAZAR</Text>
                                 </TouchableOpacity>
 
                             </View>
-                            <View style={{width:'10%'}}></View>
-                            <View style={{width:148, marginRight:20}}>
+                            <View style={{width:'50%', marginRight:0}}>
                             <TouchableOpacity style={{
                                 height:36,
-                                backgroundColor:'transparent',
+                                backgroundColor:'#08d06a',
                                 borderWidth:1,
                                 borderRadius:3,
                                 alignItems:'center',
-                                justifyContent:'space-around',
+                                justifyContent:'center',
                                 borderColor:'#08d06a',
                                 flexDirection:'row'
                                 }}
-                                onPress={() => this.approveSolicitudes()}
+                                onPress={() => Alert.alert(
+                                    'Advertencia:', '¿Estás seguro de querer aprobar esta solicitud?',
+                                    [
+                                      { text: "NO",
+                                      style: "cancel"
+                                      },
+                                      { text: 'SI',onPress: () => this.approveSolicitudes()},
+                                    ],
+                                    { cancelable: false },
+                                  )}
+                                // onPress={() => this.approveSolicitudes()}
                                 >
-                                <Text style={{color:'#808080'}}>
+                                <Text style={{ marginRight:20}}>
                                     <Image
-                                        style={{width: 15, height: 15,marginRight:5}}
-                                        source={require('../../../assets/pngfuel.com.png')}
+                                        style={{width: 15, height: 15}}
+                                        source={require('../../../assets/ok.png')}
                                     />
                                 </Text>
-                                <Text style={{color:'#08d06a'}}>APROBAR</Text>
+                                <Text style={{color:'#FFF',fontFamily:'Montserrat-Medium', fontWeight:'500', letterSpacing:0.25, fontSize:13.96}}>APROBAR</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -289,10 +303,57 @@ export default class InfoSolicitudes extends Component {
           } else {
               return false
           }
-      }
+      };
+      hightLigth(){
+        if(this.state.informacion == true){
+            return  <View style={{flexDirection:'row', marginTop:-2.5}}>
+                        <View
+                            style={{
+                            borderBottomColor: '#0071D6',
+                            borderBottomWidth: 2,
+                            marginBottom:0,
+                            width:'50%'
+                            }}
+                        />
+                        <View
+                            style={{
+                            borderBottomColor: 'transparent',
+                            borderBottomWidth: 2,
+                            marginBottom:0,
+                            width:'50%'
+                            }}
+                        />
+                    </View>
+        } else if(this.state.productos == true){
+            return  <View style={{flexDirection:'row', marginTop:-2.5}}>
+                        <View
+                            style={{
+                            borderBottomColor: 'transparent',
+                            borderBottomWidth: 2,
+                            marginBottom:0,
+                            width:'50%'
+                            }}
+                        />
+                        <View
+                            style={{
+                            borderBottomColor: '#0071D6',
+                            borderBottomWidth: 2,
+                            marginBottom:0,
+                            width:'50%'
+                            }}
+                        />
+                    </View>
+        }
+    };
     render() {
         return (
             <View style={this.stylesContainer()}>
+                 <Loading 
+                  borderRadius={50}
+                  size={40}
+                  ref='loading4'
+                  backgroundColor={'#FFF'}
+                  indicatorColor={'#000000'}/>
                 <View style={{backgroundColor:'#00A0F8'}}>
                     <TouchableOpacity  onPress={() => this.previewsPage()}>
                         <View style={{flexDirection:'row', marginTop:30}}>
@@ -314,31 +375,35 @@ export default class InfoSolicitudes extends Component {
                         </View>
                     </TouchableOpacity>
                     <View style={{ flexDirection:'row', marginTop:20, marginBottom:20}}>
-                        <View style={{width:'50%'}}>
+                        <View style={{width:'50%', justifyContent:'center', alignItems:'center'}}>
                             <TouchableOpacity  onPress={() => this.setState({informacion: true, productos: false})}>
                                 <Text style={this.informacionTitleStyle()}>INFORMACION</Text>
                             </TouchableOpacity>
                         </View>
-                        <View style={{width:'50%'}}>
-
-
-
+                        <View style={{width:'50%', justifyContent:'center', alignItems:'center'}}>
                             <TouchableOpacity onPress={() => this.setState({productos: true, informacion: false})}>
                                 <Text style={this.productosTitleStyle()}>PRODUCTOS</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                 </View>
+                {this.hightLigth()}
                 <ScrollView style={{marginTop:0}}>
                     <View style={styles.solicitudesMain}>
                     {this.whichToRender()}
-                    {this.ifInfoTrue()}
+                    
                     <View style={{ alignItems:'center'}}>
                         <Text style={{fontSize:20}}>{this.ifProductosTrue()}</Text>
                         <Text style={{fontSize:20}}>{this.howManyDaysAfter()}</Text>
                     </View>
                     </View>
                 </ScrollView>
+                {this.ifInfoTrue()}
+                {/* <View>
+                    <TouchableOpacity style={{backgroundColor:'#00A0F8', height:40, justifyContent:'center'}} onPress={this.logout}>
+                        <Text style={{ color: '#FFF', marginLeft: 20, marginBottom: 10, fontFamily: 'Montserrat-Regular' }}> CERRAR SESIÓN  </Text>
+                    </TouchableOpacity>
+                </View> */}
             </View>
         )
     }

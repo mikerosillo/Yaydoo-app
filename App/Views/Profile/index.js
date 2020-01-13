@@ -34,7 +34,9 @@ export default class Profile extends Component {
           pendingPo:[],
           solicitudesDate:[],
           poDate:[],
-          show:false
+          show:false,
+          noSolicitudesPending:'',
+          noOrdenesPending:'',
       }
       this.getAllSolicitudes()
       this.getAllPo()
@@ -94,6 +96,9 @@ export default class Profile extends Component {
                         var solicitudes = allSolicitudes.filter((element) => {
                             return element.type == 4
                         })
+                        if(allSolicitudes.length <= 0){
+                          this.setState({noSolicitudesPending:'Todas tus solicitudes han sido aprobadas'})
+                        }
                         var createdAt = solicitudes.map((element)=>{
                           return element.created_at
                         })
@@ -151,6 +156,9 @@ export default class Profile extends Component {
                           var pendingPo = accountInfo.filter((element) => {
                               return element.type == 3
                           })
+                          if(pendingPo.length <= 0){
+                            this.setState({noOrdenesPending:'Todas tus Ordenes han sido aprobadas'})
+                          }
                           var createdAt = pendingPo.map((element)=>{
                             return element.created_at
                           })
@@ -551,7 +559,15 @@ export default class Profile extends Component {
           return false
       }
     };
-
+    ifNoSolicitudesPending(){
+      if(this.state.noSolicitudesPending.length >= 1 && this.state.noOrdenesPending.length >= 1){
+        return  <View style={{flex:1,}}>
+                  <Text style={{ textAlign: 'center', color:'#000000', fontSize:20, marginTop:20}}>Todas tus solicitudes han sido aprobadas!</Text>
+                </View>
+      } else {
+        return false
+      }
+    };
 
     render() {
         var drawer = (
@@ -597,6 +613,7 @@ export default class Profile extends Component {
                         />
                         </TouchableOpacity>
                     </View> */}
+                    {this.ifNoSolicitudesPending()}
                     <ScrollView style={{marginTop:0}}
                       refreshControl={
                         <RefreshControl
@@ -609,9 +626,9 @@ export default class Profile extends Component {
                       <View style={{marginTop:40}}></View>
                     </ScrollView>
                     <View>
-                    <TouchableOpacity style={{backgroundColor:'#00A0F8', height:40, justifyContent:'center'}} onPress={this.logout}>
-                      <Text style={{ color: '#FFF', marginLeft: 20, marginBottom: 10, fontFamily: 'Montserrat-Regular' }}> CERRAR SESIÓN  </Text>
-                    </TouchableOpacity>
+                      <TouchableOpacity style={{backgroundColor:'#00A0F8', height:40, justifyContent:'center'}} onPress={this.logout}>
+                        <Text style={{ color: '#FFF', marginLeft: 20, marginBottom: 10, fontFamily: 'Montserrat-Regular' }}> CERRAR SESIÓN  </Text>
+                      </TouchableOpacity>
                     </View>
                 </View>
                 <PushController />
