@@ -635,7 +635,7 @@ export default class Profile extends Component {
                   <Header style={{backgroundColor:'#00A0F8'}}>
                     <Body style={{flexDirection:'row', justifyContent:'space-between'}}>
                       <Title style={{fontSize:19.94, letterSpacing:0.25, marginLeft:16}}>Aprobaciones</Title>
-                      <Title style={{marginRight:13, fontSize:13.96, letterSpacing:0.25, marginTop:5}}>FILTRAR</Title>
+                      <Title style={{marginRight:13, fontSize:13.96, letterSpacing:0.25, marginTop:5}}></Title>
                     </Body>
                   </Header>
                   <Loading 
