@@ -80,7 +80,7 @@ class Login extends Component {
     } else {
       this.refs.loading4.close();
       Alert.alert(
-        'Verificar que:', 'La contraseña ingresada contenga un minimo de 6 caracteres y no más de 20.',
+        'Verificar que:', 'La contraseña ingresada contenga un mínimo de 6 caracteres y un máximo de 20',
         [
           { text: 'OK' },
         ],
@@ -96,6 +96,21 @@ class Login extends Component {
       this.setState({showPassword:false})
     }
   };
+  eyeCloseOrOpen(){
+    if(this.state.showPassword == false){
+      return <Image
+      style={{ width:20, height:20, marginTop:30, marginLeft:10}}
+      resizeMode={'contain'}
+      source={require('../../../assets/viewHide.png')}
+      />
+    } else {
+      return <Image
+      style={{color:'#FFF', width:40, height:40, marginTop:20}}
+      resizeMode={'contain'}
+      source={require('../../../assets/view.png')}
+      />
+    }
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -111,8 +126,8 @@ class Login extends Component {
         borderRadius={50}
         size={40}
         ref='loading4'
-        backgroundColor={'#FFF'}
-        indicatorColor={'#000000'}/>
+        backgroundColor={'transparent'}
+        indicatorColor={'#00A0F8'}/>
         <View style={{ width: 322, marginBottom:5 }}>
           <TextField
             label="Correo"
@@ -141,11 +156,12 @@ class Login extends Component {
           </View>
           <View style={{width:'1%', marginLeft:-20}}>
             <TouchableOpacity style={{marginLeft:-30}} onPress={() => this.handleClickShowPassword()} >
-              <Image
+              {this.eyeCloseOrOpen()}
+              {/* <Image
               style={{ width:40, height:40, marginTop:20}}
               resizeMode={'contain'}
               source={require('../../../assets/view.png')}
-              />
+              /> */}
             </TouchableOpacity>
           </View>
         </View>

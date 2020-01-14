@@ -12,15 +12,16 @@ import {
 import Loading from 'react-native-whc-loading';
 import Drawer from 'react-native-drawer';
 import { Actions } from 'react-native-router-flux';
-import Moment from 'moment';
+import moment from 'moment';
+import 'moment/locale/es';
 var numeral = require('numeral');
 
 export default class InfoSolicitudes extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            data:[],
-            folio:'',
+            data:props.data,
+            folio:props.folio,
             informacion: true,
             productos: false,
         }
@@ -29,11 +30,6 @@ export default class InfoSolicitudes extends Component {
     previewsPage(){
       Actions.profile()
     };
-    UNSAFE_componentWillMount(){
-        this.state.data = this.props.data
-        this.state.folio = this.props.folio
-        console.log(this.state.data.uuid)
-    }
    
     logout() {
         async function removeItemValue() {
@@ -155,7 +151,7 @@ export default class InfoSolicitudes extends Component {
                                     <Text style={{fontFamily:'Montserrat-Medium', color:'rgba(0,0,0,0.87)', marginBottom:10, fontSize:13.96, fontWeight:'500'}}>{data.item.description}</Text>
                                     <Text style={{color:'rgba(0,0,0,0.6)', marginBottom:0, fontSize:12.09, fontFamily:'Montserrat-Regular'}}>{data.units}{' '}pieza ={' '}{numeral(data.item.price * data.units).format('$0,0.00')}{' '}{data.item.vendor.vendor.currency}</Text>
                                     {/* <Text style={{color:'#808080', marginBottom:20}}></Text> */}
-                                    <Text style={{color:'rgba(0,0,0,0.6)', fontSize:12.09, fontFamily:'Montserrat-Regular'}}>Entrega{' '}{Moment(this.state.deliveryDate).format('D MMM YY')}</Text>
+                                    <Text style={{color:'rgba(0,0,0,0.6)', fontSize:12.09, fontFamily:'Montserrat-Regular'}}>Entrega{' '}{moment(this.state.deliveryDate).locale('es').format('D MMM YY')}</Text>
                                 </View>
                             </View>
                             <View style={{maxWidth:'95%', flexDirection:'row'}}>
@@ -187,7 +183,7 @@ export default class InfoSolicitudes extends Component {
                                 <Text style={{color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{priority}</Text>
                                 <Text style={{color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontWeight:'bold'}}></Text>
                                 <Text style={{color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{address}</Text>
-                                <Text style={{color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{Moment(this.state.data.delivery_date).format('D MMM YY')}</Text>
+                                <Text style={{color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{moment(this.state.data.delivery_date).locale('es').format('D MMM YY')}</Text>
                             </View>
                         </View>
                     </View>
@@ -277,8 +273,8 @@ export default class InfoSolicitudes extends Component {
             let date = this.state.data.account.created_at
 
 
-            let dayCreated = Moment(date).format('D') // = 9
-            let todaysDate = Moment(new Date()).format('D')
+            let dayCreated = moment(date).format('D') // = 9
+            let todaysDate = moment(new Date()).format('D')
             var afterCreated = todaysDate - dayCreated
 
             if(afterCreated <= 30 && afterCreated >= 1 ){
@@ -376,7 +372,7 @@ export default class InfoSolicitudes extends Component {
                     <View style={{ flexDirection:'row', marginTop:20, marginBottom:20}}>
                         <View style={{width:'50%', justifyContent:'center', alignItems:'center'}}>
                             <TouchableOpacity  onPress={() => this.setState({informacion: true, productos: false})}>
-                                <Text style={this.informacionTitleStyle()}>INFORMACION</Text>
+                                <Text style={this.informacionTitleStyle()}>INFORMACIÓN</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={{width:'50%', justifyContent:'center', alignItems:'center'}}>

@@ -10,12 +10,13 @@ import {
     TouchableOpacity,
     Image,
     Dimensions,
-    StatusBar
+    NativeModules
 } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Drawer from 'react-native-drawer';
 import { Actions } from 'react-native-router-flux';
-import Moment from 'moment';
+import moment from 'moment';
+import 'moment/locale/es';
 import PushController from '../../PushController';
 var numeral = require('numeral');
 import Loading from 'react-native-whc-loading';
@@ -43,7 +44,7 @@ export default class Profile extends Component {
     };
    
     onRefresh() {
-        this.setState({ solicitudes: [], pendingPo: [] })
+        this.setState({ solicitudes: [], pendingPo: [], noSolicitudesPending:'', noOrdenesPending:'' })
         this.getAllSolicitudes()
         this.getAllPo()
     };
@@ -78,6 +79,7 @@ export default class Profile extends Component {
 
 
     async getAllSolicitudes() {
+      console.log(NativeModules.DeviceInfo)
         const token = await AsyncStorage.getItem('ACCESS_TOKEN')
         const uuid = await AsyncStorage.getItem('UUID');
         if (token && uuid) { // if user is logged in
@@ -99,7 +101,7 @@ export default class Profile extends Component {
                         if(allSolicitudes.length <= 0){
                           this.setState({noSolicitudesPending:'Todas tus solicitudes han sido aprobadas'})
                         }
-                        var createdAt = solicitudes.map((element)=>{
+                        var createdAt = solicitudes.map((element, key)=>{
                           return element.created_at
                         })
                           this.setState({
@@ -119,8 +121,8 @@ export default class Profile extends Component {
 
     howManyDaysAfter(date){
       var fecha = new Date(JSON.stringify(date));
-      let dayCreated = Moment(date).format('D') // = 9
-      let todaysDate = Moment(new Date()).format('D')
+      let dayCreated = moment(date).format('D') // = 9
+      let todaysDate = moment(new Date()).format('D')
       var afterCreated = todaysDate - dayCreated
       
       if(afterCreated <= 30 && afterCreated >= 1 ){
@@ -131,6 +133,8 @@ export default class Profile extends Component {
         return <Text>Hace 2 meses</Text>
       } else if(afterCreated <= -60){
         return <Text>Hace 3 meses</Text>
+      } else if(afterCreated == 0) {
+        return <Text>Hoy</Text>
       } else {
         return <Text>Hace meses</Text>
       }
@@ -159,7 +163,7 @@ export default class Profile extends Component {
                           if(pendingPo.length <= 0){
                             this.setState({noOrdenesPending:'Todas tus Ordenes han sido aprobadas'})
                           }
-                          var createdAt = pendingPo.map((element)=>{
+                          var createdAt = pendingPo.map((element, key)=>{
                             return element.created_at
                           })
                           this.setState({
@@ -179,7 +183,7 @@ export default class Profile extends Component {
 
     getAddressPo(data){
       let arr = [data]
-      let provider = arr.map((element)=>{
+      let provider = arr.map((element, key)=>{
         return element.proposal.provider.address
       })
       return provider 
@@ -190,7 +194,7 @@ export default class Profile extends Component {
       let arr = this.state.poDate
       var count = 0
       for(let i = 0; i < arr.length; i++){
-         if(Moment(arr[i]).format('D MMM YY') == Moment(date).format('D MMM YY') ){
+         if(moment(arr[i]).format('D MMM YY') == moment(date).format('D MMM YY') ){
            count ++
          }
       }
@@ -239,26 +243,26 @@ export default class Profile extends Component {
       let bar = 0+'.'+ parseFloat(data.budget.available).toFixed(2)*100;
       if( data.budget.available >= 0.1 && data.budget.name !== 'Bloqueado'){
           return <Progress.Bar
-                    style={{marginTop:10}}
-                    fillStyle={{}}
-                    progress={bar}
-                    width={Dimensions.get('window').width - 240}
-                    height={6}
-                    color={'#4BBC68'}
-                    borderWidth={0}
-                    unfilledColor={'rgb(211,211,211)'}
-                  />
+          style={{marginTop:10}}
+          fillStyle={{}}
+          progress={bar}
+          width={Dimensions.get('window').width - 240}
+          height={6}
+          color={'#4BBC68'}
+          borderWidth={0}
+          unfilledColor={'rgb(211,211,211)'}
+        />
       } else {
           return <Progress.Bar
-                    style={{marginTop:10}}
-                    fillStyle={{}}
-                    progress={0}
-                    width={Dimensions.get('window').width - 240}
-                    height={6}
-                    color={'#4BBC68'}
-                    borderWidth={0}
-                    unfilledColor={'rgb(211,211,211)'}
-                  />
+          style={{marginTop:10}}
+          fillStyle={{}}
+          progress={0}
+          width={Dimensions.get('window').width - 240}
+          height={6}
+          color={'#4BBC68'}
+          borderWidth={0}
+          unfilledColor={'rgb(211,211,211)'}
+        />
       }
     }; 
 
@@ -367,16 +371,16 @@ export default class Profile extends Component {
           status:1
         }),
     }).then((response)=>{
-      if(response.ok){
-        this.refs.loading4.close()
-        Actions.profile()
-      } else {
-        this.refs.loading4.close()
-        Alert.alert(`respuesta, ${JSON.stringify(response)}`)
-      }
-    }).catch((err)=>{
-      console.log(err.message)
-    })
+        if(response.ok){
+          this.refs.loading4.close()
+          Actions.profile()
+        } else {
+          this.refs.loading4.close()
+          Alert.alert(`respuesta, ${JSON.stringify(response)}`)
+        }
+      }).catch((err)=>{
+        console.log(err.message)
+      })
     };
 
 
@@ -387,27 +391,27 @@ export default class Profile extends Component {
       function getAddressSolicitudes(data, tipo){
         var arr = [data]
         if(tipo == 4){
-          let shipping = arr.map((element)=>{
+          let shipping = arr.map((element, key)=>{
             return element.shipping
           })
-          let address = shipping.map((element)=>{
+          let address = shipping.map((element, key)=>{
             return element.address
           })
-          let city = address.map((element)=>{
+          let city = address.map((element, key)=>{
             return element.city
           })
-          let street = address.map((element)=>{
+          let street = address.map((element, key)=>{
             return element.street
           })
-          let mapstate = address.map((element)=>{
+          let mapstate = address.map((element, key)=>{
             return element.state
           })
-          let country = mapstate.map((element)=>{
+          let country = mapstate.map((element, key)=>{
             return element.country.name
           })
             return country+' ' + city +' '+ street
         } else {
-          let provider = arr.map((element)=>{
+          let provider = arr.map((element, key)=>{
             return element.proposal.provider.address
           })
           return provider 
@@ -487,7 +491,6 @@ export default class Profile extends Component {
                         ],
                         { cancelable: false },
                       )} 
-                        // onPress={() => this.approveSolicitudes(data.uuid, data)}
                       >
                       <Text style={{color:'#4BBC68', fontSize:13.96, fontFamily:'Montserrat-Medium'}}>APROBAR</Text>
                       </TouchableOpacity>
@@ -514,36 +517,50 @@ export default class Profile extends Component {
       let sort1 = both.sort(function (a, b) { return new Date(b.created_at) - new Date(a.created_at) });
       var map = sort1.map((data, key) => {
         
-        function solicitudesAndPoLength(date, tipo, solicitudesDate, poDate){
-          
-          if(tipo == 4){
-          let arr = solicitudesDate
-    
-          var count = 0
-          for(let i = 0; i < arr.length; i++){
-             if(Moment(arr[i]).format('D MMM YY') == Moment(date).format('D MMM YY') ){
-               count ++
-             }
-          }
-          return count
-        } else {
-              let arr = poDate
-          var count = 0
-          for(let i = 0; i < arr.length; i++){
-            if(Moment(arr[i]).format('D MMM YY') == Moment(date).format('D MMM YY') ){
-              count ++
+        function solicitudesLength(date, tipo, solicitudesDate, poDate, key){
+              if(tipo == 4 && key == poDate.length ){
+              let arr = solicitudesDate
+              var count = 0
+              for(let i = 0; i < arr.length; i++){
+                if(moment(arr[i]).format('D MMM YY') == moment(date).format('D MMM YY') ){
+                  count ++
+                }
+              } return  <View key={key} style={{flexDirection:'row'}}>
+                            <View style={{ alignItems: 'flex-start',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 13.96, marginBottom:10, marginLeft:10 }}>{moment(data.created_at).locale('es').format('D MMM YY')}</Text></View>
+                            <View style={{ alignItems: 'flex-end',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 12.08, marginBottom:10, marginRight:10 }}>{count} por resolver</Text></View>
+                        </View>    
+            }  else {
+              return false
             }
-          }
-          return count
-        }
+        };
+        function poLength(date, tipo, solicitudesDate, poDate, key){
+          
+             if(tipo == 3 && key == 0) {
+                  let arr = poDate
+              var count = 0
+              for(let i = 0; i < arr.length; i++){
+                if(moment(arr[i]).format('D MMM YY') == moment(date).format('D MMM YY') ){
+                  count ++
+                }
+              }
+              return  <View key={key} style={{flexDirection:'row'}}>
+                          <View style={{ alignItems: 'flex-start',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 13.96, marginBottom:10, marginLeft:10 }}>{moment(data.created_at).locale('es').format('D MMM YY')}</Text></View>
+                          <View style={{ alignItems: 'flex-end',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 12.08, marginBottom:10, marginRight:10 }}>{count} por resolver</Text></View>
+                      </View>
+            } else {
+              return false
+            }
+          
         };
         
           return <View style={{alignItems:'center', display:'flex'}}>
                     <View style={styles.solicitudesMain}>
-                        <View style={{flexDirection:'row'}}>
-                           <View style={{ alignItems: 'flex-start',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 13.96, marginBottom:10, marginLeft:10 }}>{Moment(data.created_at).format('D MMM YY')}</Text></View>
+                        {/* <View style={{flexDirection:'row'}}>
+                           <View style={{ alignItems: 'flex-start',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 13.96, marginBottom:10, marginLeft:10 }}>{Moment(data.created_at).locale('es',momentES ).format('D MMM YY')}</Text></View>
                            <View style={{ alignItems: 'flex-end',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 12.08, marginBottom:10, marginRight:10 }}>{solicitudesAndPoLength( data.created_at, data.type,this.state.solicitudesDate, this.state.poDate)} por resolver</Text></View>
-                        </View>
+                        </View> */}
+                        {poLength( data.created_at, data.type,this.state.solicitudesDate, this.state.poDate, key)}
+                        {solicitudesLength( data.created_at, data.type,this.state.solicitudesDate, this.state.poDate, key)}
                         <View style={styles.solicitudes}>
                           <View style={styles.solicitudesDescription3}> 
                             {this.ifSolicitudType(data, data.type, key)}
@@ -561,11 +578,34 @@ export default class Profile extends Component {
     };
     ifNoSolicitudesPending(){
       if(this.state.noSolicitudesPending.length >= 1 && this.state.noOrdenesPending.length >= 1){
-        return  <View style={{flex:1,}}>
-                  <Text style={{ textAlign: 'center', color:'#000000', fontSize:20, marginTop:20}}>Todas tus solicitudes han sido aprobadas!</Text>
-                </View>
+        return  <ScrollView
+          refreshControl={
+          <RefreshControl
+          progressBackgroundColor='#FFFFFF'
+          tintColor='#00A0F8'
+          colors={['#00A0F8']}
+          refreshing={this.state.refreshing}
+          onRefresh={this.onRefresh.bind(this)}
+          />
+        } 
+        style={{flex:1,}}>
+          <Text style={{ textAlign: 'center', color:'#000000', fontSize:20, marginTop:20}}>¡Todas tus solicitudes han sido aprobadas!</Text>
+        </ScrollView>
       } else {
-        return false
+        return <ScrollView style={{marginTop:0}}
+          refreshControl={
+          <RefreshControl
+          progressBackgroundColor='#FFFFFF'
+          tintColor='#00A0F8'
+          colors={['#00A0F8']}
+          refreshing={this.state.refreshing}
+          onRefresh={this.onRefresh.bind(this)}
+          />
+          }
+        >
+          {this.getPoAndSolicitudesPending()}
+          <View style={{marginTop:40}}></View>
+        </ScrollView>
       }
     };
 
@@ -574,7 +614,6 @@ export default class Profile extends Component {
             <View style={{ flex: 1, backgroundColor: '#4BBC68' }}>
               <Text style={{ color: '#FFF', marginTop: 30, fontSize: 25, }}></Text>
               <View style={{ flex: 1, justifyContent: 'flex-start', marginTop: 40 }}>
-
               </View>
               <View style={{ flex: 1, justifyContent: 'flex-end', marginBottom: 50 }}>
                 <TouchableOpacity onPress={this.logout}>
@@ -603,8 +642,8 @@ export default class Profile extends Component {
                   borderRadius={50}
                   size={40}
                   ref='loading4'
-                  backgroundColor={'#FFF'}
-                  indicatorColor={'#000000'}/>
+                  backgroundColor={'transparent'}
+                  indicatorColor={'#00A0F8'}/>
                     {/* <View style={{flexDirection: 'row'}}>
                         <TouchableOpacity style={{marginLeft:'auto', marginRight:20}} onPress={this.openDrawer.bind(this)} >
                         <Image
@@ -614,20 +653,20 @@ export default class Profile extends Component {
                         </TouchableOpacity>
                     </View> */}
                     {this.ifNoSolicitudesPending()}
-                    <ScrollView style={{marginTop:0}}
-                      refreshControl={
-                        <RefreshControl
-                          refreshing={this.state.refreshing}
-                          onRefresh={this.onRefresh.bind(this)}
-                        />
-                      }
-                    >
-                      {this.getPoAndSolicitudesPending()}
-                      <View style={{marginTop:40}}></View>
-                    </ScrollView>
                     <View>
-                      <TouchableOpacity style={{backgroundColor:'#00A0F8', height:40, justifyContent:'center'}} onPress={this.logout}>
-                        <Text style={{ color: '#FFF', marginLeft: 20, marginBottom: 10, fontFamily: 'Montserrat-Regular' }}> CERRAR SESIÓN  </Text>
+                      <TouchableOpacity style={{backgroundColor:'#00A0F8', height:40, justifyContent:'center', textAlign:'center'}}
+                        onPress={() => Alert.alert(
+                          '¿Estás seguro de que deseas cerrar sesión?', '',
+                          [
+                            { text: "NO",
+                            style: "cancel"
+                            },
+                            { text: 'SI',onPress: () => this.logout()},
+                          ],
+                          { cancelable: false },
+                        )}
+                       >
+                        <Text style={{ color: '#FFF', textAlign:'center', marginBottom: 10, fontFamily: 'Montserrat-Regular' }}> CERRAR SESIÓN  </Text>
                       </TouchableOpacity>
                     </View>
                 </View>
