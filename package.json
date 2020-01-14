@@ -11,6 +11,7 @@
     "postinstall": "npx jetify"
   },
   "dependencies": {
+    "@types/moment": "^2.13.0",
     "jetifier": "^1.6.5",
     "moment": "^2.24.0",
     "native-base": "^2.13.8",

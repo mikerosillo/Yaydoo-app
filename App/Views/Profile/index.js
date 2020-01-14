@@ -10,13 +10,13 @@ import {
     TouchableOpacity,
     Image,
     Dimensions,
-    StatusBar
+    NativeModules
 } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Drawer from 'react-native-drawer';
 import { Actions } from 'react-native-router-flux';
-import Moment from 'moment';
-import momentES from 'moment/src/locale/es' 
+import moment from 'moment';
+import 'moment/locale/es';
 import PushController from '../../PushController';
 var numeral = require('numeral');
 import Loading from 'react-native-whc-loading';
@@ -79,7 +79,7 @@ export default class Profile extends Component {
 
 
     async getAllSolicitudes() {
-      console.log('getAllSolicitudes called')
+      console.log(NativeModules.DeviceInfo)
         const token = await AsyncStorage.getItem('ACCESS_TOKEN')
         const uuid = await AsyncStorage.getItem('UUID');
         if (token && uuid) { // if user is logged in
@@ -101,7 +101,7 @@ export default class Profile extends Component {
                         if(allSolicitudes.length <= 0){
                           this.setState({noSolicitudesPending:'Todas tus solicitudes han sido aprobadas'})
                         }
-                        var createdAt = solicitudes.map((element)=>{
+                        var createdAt = solicitudes.map((element, key)=>{
                           return element.created_at
                         })
                           this.setState({
@@ -121,8 +121,8 @@ export default class Profile extends Component {
 
     howManyDaysAfter(date){
       var fecha = new Date(JSON.stringify(date));
-      let dayCreated = Moment(date).format('D') // = 9
-      let todaysDate = Moment(new Date()).format('D')
+      let dayCreated = moment(date).format('D') // = 9
+      let todaysDate = moment(new Date()).format('D')
       var afterCreated = todaysDate - dayCreated
       
       if(afterCreated <= 30 && afterCreated >= 1 ){
@@ -163,7 +163,7 @@ export default class Profile extends Component {
                           if(pendingPo.length <= 0){
                             this.setState({noOrdenesPending:'Todas tus Ordenes han sido aprobadas'})
                           }
-                          var createdAt = pendingPo.map((element)=>{
+                          var createdAt = pendingPo.map((element, key)=>{
                             return element.created_at
                           })
                           this.setState({
@@ -183,7 +183,7 @@ export default class Profile extends Component {
 
     getAddressPo(data){
       let arr = [data]
-      let provider = arr.map((element)=>{
+      let provider = arr.map((element, key)=>{
         return element.proposal.provider.address
       })
       return provider 
@@ -194,7 +194,7 @@ export default class Profile extends Component {
       let arr = this.state.poDate
       var count = 0
       for(let i = 0; i < arr.length; i++){
-         if(Moment(arr[i]).format('D MMM YY') == Moment(date).format('D MMM YY') ){
+         if(moment(arr[i]).format('D MMM YY') == moment(date).format('D MMM YY') ){
            count ++
          }
       }
@@ -391,27 +391,27 @@ export default class Profile extends Component {
       function getAddressSolicitudes(data, tipo){
         var arr = [data]
         if(tipo == 4){
-          let shipping = arr.map((element)=>{
+          let shipping = arr.map((element, key)=>{
             return element.shipping
           })
-          let address = shipping.map((element)=>{
+          let address = shipping.map((element, key)=>{
             return element.address
           })
-          let city = address.map((element)=>{
+          let city = address.map((element, key)=>{
             return element.city
           })
-          let street = address.map((element)=>{
+          let street = address.map((element, key)=>{
             return element.street
           })
-          let mapstate = address.map((element)=>{
+          let mapstate = address.map((element, key)=>{
             return element.state
           })
-          let country = mapstate.map((element)=>{
+          let country = mapstate.map((element, key)=>{
             return element.country.name
           })
             return country+' ' + city +' '+ street
         } else {
-          let provider = arr.map((element)=>{
+          let provider = arr.map((element, key)=>{
             return element.proposal.provider.address
           })
           return provider 
@@ -520,14 +520,13 @@ export default class Profile extends Component {
         function solicitudesLength(date, tipo, solicitudesDate, poDate, key){
               if(tipo == 4 && key == poDate.length ){
               let arr = solicitudesDate
-              console.log(arr.length)
               var count = 0
               for(let i = 0; i < arr.length; i++){
-                if(Moment(arr[i]).format('D MMM YY') == Moment(date).format('D MMM YY') ){
+                if(moment(arr[i]).format('D MMM YY') == moment(date).format('D MMM YY') ){
                   count ++
                 }
-              } return  <View style={{flexDirection:'row'}}>
-                            <View style={{ alignItems: 'flex-start',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 13.96, marginBottom:10, marginLeft:10 }}>{Moment(data.created_at).locale('es',momentES ).format('D MMM YY')}</Text></View>
+              } return  <View key={key} style={{flexDirection:'row'}}>
+                            <View style={{ alignItems: 'flex-start',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 13.96, marginBottom:10, marginLeft:10 }}>{moment(data.created_at).locale('es').format('D MMM YY')}</Text></View>
                             <View style={{ alignItems: 'flex-end',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 12.08, marginBottom:10, marginRight:10 }}>{count} por resolver</Text></View>
                         </View>    
             }  else {
@@ -535,19 +534,17 @@ export default class Profile extends Component {
             }
         };
         function poLength(date, tipo, solicitudesDate, poDate, key){
-          console.log(poDate)
-          console.log(solicitudesDate)
           
              if(tipo == 3 && key == 0) {
                   let arr = poDate
               var count = 0
               for(let i = 0; i < arr.length; i++){
-                if(Moment(arr[i]).format('D MMM YY') == Moment(date).format('D MMM YY') ){
+                if(moment(arr[i]).format('D MMM YY') == moment(date).format('D MMM YY') ){
                   count ++
                 }
               }
-              return  <View style={{flexDirection:'row'}}>
-                          <View style={{ alignItems: 'flex-start',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 13.96, marginBottom:10, marginLeft:10 }}>{Moment(data.created_at).locale('es',momentES ).format('D MMM YY')}</Text></View>
+              return  <View key={key} style={{flexDirection:'row'}}>
+                          <View style={{ alignItems: 'flex-start',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 13.96, marginBottom:10, marginLeft:10 }}>{moment(data.created_at).locale('es').format('D MMM YY')}</Text></View>
                           <View style={{ alignItems: 'flex-end',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 12.08, marginBottom:10, marginRight:10 }}>{count} por resolver</Text></View>
                       </View>
             } else {
@@ -584,7 +581,7 @@ export default class Profile extends Component {
         return  <ScrollView
           refreshControl={
           <RefreshControl
-          progressBackgroundColor='transparent'
+          progressBackgroundColor='#FFFFFF'
           tintColor='#00A0F8'
           colors={['#00A0F8']}
           refreshing={this.state.refreshing}
@@ -598,7 +595,7 @@ export default class Profile extends Component {
         return <ScrollView style={{marginTop:0}}
           refreshControl={
           <RefreshControl
-          progressBackgroundColor='transparent'
+          progressBackgroundColor='#FFFFFF'
           tintColor='#00A0F8'
           colors={['#00A0F8']}
           refreshing={this.state.refreshing}

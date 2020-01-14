@@ -15,6 +15,7 @@ import Loading from 'react-native-whc-loading';
 import Drawer from 'react-native-drawer';
 import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
+import 'moment/locale/es';
 import momentES from 'moment/src/locale/es' 
 
 var numeral = require('numeral');
@@ -23,8 +24,8 @@ export default class InfoOrdenes extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            data:[],
-            folio:'',
+            data:props.data,
+            folio:props.folio,
             informacion: true,
             productos: false,
             poInfo: [],
@@ -43,7 +44,7 @@ export default class InfoOrdenes extends Component {
             cero:0.,
             currency:'',
             items:[],
-            tipo:null,
+            tipo:props.tipo,
         }
         this.getPoInfo()
     };
@@ -51,13 +52,7 @@ export default class InfoOrdenes extends Component {
     previewsPage(){
       Actions.profile()
     };
-    UNSAFE_componentWillMount(){
-        this.state.data = this.props.data
-        this.state.folio = this.props.folio
-        this.state.tipo = this.props.tipo
-        console.log('fr',this.state.data.type)
-        this.getPoInfo()
-    };
+  
     logout() {
         async function removeItemValue() {
           try {
@@ -220,7 +215,7 @@ export default class InfoOrdenes extends Component {
                                 <Text style={{color:'rgba(0,0,0,0.87)', marginBottom:10, fontSize:13.96, fontWeight:'500', fontFamily:'Montserrat-Medium'}}>{data.item.description}</Text>
                                 <Text style={{color:'rgba(0,0,0,0.6)', marginBottom:0, fontSize:12.09, fontFamily:'Montserrat-Regular'}}>{data.units}{' '}pieza ={' '}{numeral(data.item.price * data.units).format('$0,0.00')}{' '}{data.item.vendor.vendor.currency}</Text>
                                 {/* <Text style={{color:'#808080', marginBottom:20}}></Text> */}
-                                <Text style={{color:'rgba(0,0,0,0.6)', fontSize:12.09, fontFamily:'Montserrat-Regular'}}>Entrega{' '}{moment(this.state.deliveryDate).locale('es',momentES ).format('D MMM YY')}</Text>
+                                <Text style={{color:'rgba(0,0,0,0.6)', fontSize:12.09, fontFamily:'Montserrat-Regular'}}>Entrega{' '}{moment(this.state.deliveryDate).locale('es').format('D MMM YY')}</Text>
                             </View>
                         </View>
                         <View style={{flexDirection:'row'}}>
@@ -281,7 +276,7 @@ export default class InfoOrdenes extends Component {
                                     <Text style={{color:'#000000', fontSize:14.09, fontWeight:'bold', marginTop:0, marginBottom:10}}></Text>
                                     <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:0, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.street}{'  '}No.{this.state.no}</Text>
                                     <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:0, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.city}{'   '}{this.state.state}</Text>
-                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:30, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{moment(this.state.deliveryDate).locale('es',momentES ).format('D MMM YY')}</Text>
+                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:30, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{moment(this.state.deliveryDate).locale('es').format('D MMM YY')}</Text>
                                     <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:10, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.factura}</Text>
                                     <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:10, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.proveedor}</Text>
                                     <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:30, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.payment_terms}{' '}dias</Text>

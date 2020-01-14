@@ -126,8 +126,8 @@ class Login extends Component {
         borderRadius={50}
         size={40}
         ref='loading4'
-        backgroundColor={'#FFF'}
-        indicatorColor={'#000000'}/>
+        backgroundColor={'transparent'}
+        indicatorColor={'#00A0F8'}/>
         <View style={{ width: 322, marginBottom:5 }}>
           <TextField
             label="Correo"
