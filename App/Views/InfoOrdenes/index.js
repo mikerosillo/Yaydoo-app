@@ -14,7 +14,9 @@ import * as Progress from 'react-native-progress';
 import Loading from 'react-native-whc-loading';
 import Drawer from 'react-native-drawer';
 import { Actions } from 'react-native-router-flux';
-import Moment from 'moment';
+import moment from 'moment';
+import momentES from 'moment/src/locale/es' 
+
 var numeral = require('numeral');
 
 export default class InfoOrdenes extends Component {
@@ -218,7 +220,7 @@ export default class InfoOrdenes extends Component {
                                 <Text style={{color:'rgba(0,0,0,0.87)', marginBottom:10, fontSize:13.96, fontWeight:'500', fontFamily:'Montserrat-Medium'}}>{data.item.description}</Text>
                                 <Text style={{color:'rgba(0,0,0,0.6)', marginBottom:0, fontSize:12.09, fontFamily:'Montserrat-Regular'}}>{data.units}{' '}pieza ={' '}{numeral(data.item.price * data.units).format('$0,0.00')}{' '}{data.item.vendor.vendor.currency}</Text>
                                 {/* <Text style={{color:'#808080', marginBottom:20}}></Text> */}
-                                <Text style={{color:'rgba(0,0,0,0.6)', fontSize:12.09, fontFamily:'Montserrat-Regular'}}>Entrega{' '}{Moment(this.state.deliveryDate).format('D MMM YY')}</Text>
+                                <Text style={{color:'rgba(0,0,0,0.6)', fontSize:12.09, fontFamily:'Montserrat-Regular'}}>Entrega{' '}{moment(this.state.deliveryDate).locale('es',momentES ).format('D MMM YY')}</Text>
                             </View>
                         </View>
                         <View style={{flexDirection:'row'}}>
@@ -268,11 +270,10 @@ export default class InfoOrdenes extends Component {
                                     <Text style={{color:'#000000', marginLeft:20, marginTop:0, marginBottom:0}}></Text>
                                     <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Fecha requerida</Text>
                                     <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Factura</Text>
-                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Fecha requerida</Text>
                                     <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Proveedor</Text>
                                     <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Terminos de pago</Text>
                                     <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, fontSize:13.96, fontWeight:'500', fontFamily:'Montserrat-Medium', marginTop:20, marginBottom:10}}>Presupuesto</Text>
-                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Asignado</Text>
+                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:3, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Asignado</Text>
                                     <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Disponible</Text>
                                     <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Gastado</Text>
                                 </View>
@@ -280,11 +281,10 @@ export default class InfoOrdenes extends Component {
                                     <Text style={{color:'#000000', fontSize:14.09, fontWeight:'bold', marginTop:0, marginBottom:10}}></Text>
                                     <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:0, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.street}{'  '}No.{this.state.no}</Text>
                                     <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:0, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.city}{'   '}{this.state.state}</Text>
-                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:30, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{Moment(this.state.deliveryDate).format('D MMM YY')}</Text>
+                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:30, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{moment(this.state.deliveryDate).locale('es',momentES ).format('D MMM YY')}</Text>
                                     <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:10, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.factura}</Text>
-                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:10, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{Moment(this.state.deliveryDate).format('D MMM YY')}</Text>
                                     <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:10, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.proveedor}</Text>
-                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:25, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.payment_terms}</Text>
+                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:30, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.payment_terms}{' '}dias</Text>
 
                                     <Text style={{color:'#000000', marginTop:20, marginBottom:20, fontWeight:'bold'}}></Text>
                                     <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:0, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.asignado}</Text>
@@ -462,7 +462,7 @@ export default class InfoOrdenes extends Component {
                     <View style={{ flexDirection:'row', marginTop:30, marginBottom:20}}>
                         <View style={{width:'50%', justifyContent:'center', alignItems:'center'}}>
                             <TouchableOpacity  onPress={() => this.setState({informacion: true, productos: false})}>
-                                <Text style={this.informacionTitleStyle()}>INFORMACION</Text>
+                                <Text style={this.informacionTitleStyle()}>INFORMACIÓN</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={{width:'50%', justifyContent:'center', alignItems:'center'}}>

@@ -13,6 +13,7 @@ import Loading from 'react-native-whc-loading';
 import Drawer from 'react-native-drawer';
 import { Actions } from 'react-native-router-flux';
 import Moment from 'moment';
+import momentES from 'moment/src/locale/es' 
 var numeral = require('numeral');
 
 export default class InfoSolicitudes extends Component {
@@ -155,7 +156,7 @@ export default class InfoSolicitudes extends Component {
                                     <Text style={{fontFamily:'Montserrat-Medium', color:'rgba(0,0,0,0.87)', marginBottom:10, fontSize:13.96, fontWeight:'500'}}>{data.item.description}</Text>
                                     <Text style={{color:'rgba(0,0,0,0.6)', marginBottom:0, fontSize:12.09, fontFamily:'Montserrat-Regular'}}>{data.units}{' '}pieza ={' '}{numeral(data.item.price * data.units).format('$0,0.00')}{' '}{data.item.vendor.vendor.currency}</Text>
                                     {/* <Text style={{color:'#808080', marginBottom:20}}></Text> */}
-                                    <Text style={{color:'rgba(0,0,0,0.6)', fontSize:12.09, fontFamily:'Montserrat-Regular'}}>Entrega{' '}{Moment(this.state.deliveryDate).format('D MMM YY')}</Text>
+                                    <Text style={{color:'rgba(0,0,0,0.6)', fontSize:12.09, fontFamily:'Montserrat-Regular'}}>Entrega{' '}{Moment(this.state.deliveryDate).locale('es',momentES ).format('D MMM YY')}</Text>
                                 </View>
                             </View>
                             <View style={{maxWidth:'95%', flexDirection:'row'}}>
@@ -187,7 +188,7 @@ export default class InfoSolicitudes extends Component {
                                 <Text style={{color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{priority}</Text>
                                 <Text style={{color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontWeight:'bold'}}></Text>
                                 <Text style={{color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{address}</Text>
-                                <Text style={{color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{Moment(this.state.data.delivery_date).format('D MMM YY')}</Text>
+                                <Text style={{color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{Moment(this.state.data.delivery_date).locale('es',momentES ).format('D MMM YY')}</Text>
                             </View>
                         </View>
                     </View>
@@ -376,7 +377,7 @@ export default class InfoSolicitudes extends Component {
                     <View style={{ flexDirection:'row', marginTop:20, marginBottom:20}}>
                         <View style={{width:'50%', justifyContent:'center', alignItems:'center'}}>
                             <TouchableOpacity  onPress={() => this.setState({informacion: true, productos: false})}>
-                                <Text style={this.informacionTitleStyle()}>INFORMACION</Text>
+                                <Text style={this.informacionTitleStyle()}>INFORMACIÓN</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={{width:'50%', justifyContent:'center', alignItems:'center'}}>
