@@ -9,7 +9,7 @@ import Routes from './Routes/index';
 
 class App extends Component {
   componentDidMount() {
-    console.disableYellowBox = true;
+    // console.disableYellowBox = true;
     SplashScreen.hide()
   }
   render() {

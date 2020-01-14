@@ -46,7 +46,7 @@ export default class PushController extends Component{
       await firebase.messaging().requestPermission();
       this.getToken();
     } catch (error) {
-      Alert.alert('Se recomienda tener activadas las notificaciones');
+      // Alert.alert('Se recomienda tener activadas las notificaciones');
       console.log('permission rejected');
     }
   };
@@ -55,7 +55,7 @@ export default class PushController extends Component{
       await firebase.messaging().requestPermission();
       this.getToken();
     } catch (error) {
-      Alert.alert('Se recomienda tener activadas las notificaciones');
+      // Alert.alert('Se recomienda tener activadas las notificaciones');
       console.log('permission rejected');
     }
   };
@@ -64,7 +64,7 @@ export default class PushController extends Component{
     this.onUnsubscribeNotificaitonListener = firebase
       .notifications()
       .onNotification(notification => {
-        console.log('noti',notification)
+        console.warn('noti',notification)
         notification.android.setChannelId("teamcide")
         firebase.notifications().displayNotification(notification);
       });
