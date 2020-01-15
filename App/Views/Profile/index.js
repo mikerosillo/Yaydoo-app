@@ -280,7 +280,7 @@ export default class Profile extends Component {
                             <Text style={{ color: '#000000', fontFamily: 'Montserrat-Medium', fontSize: 19.94 }}>{data.tipo} {data.folio} </Text>
                             <Text style={{color:'#000000', fontFamily: 'Montserrat-Regular', fontSize: 14.09}}>{data.account.user.first_name}{'    '}{data.account.user.last_name}</Text>
                         </View>
-                        <Text style={{ color: '#000000', fontFamily: 'Montserrat-Regular',  fontSize: 12.08, marginLeft:'auto', marginRight:10, marginTop:25 }}>{this.howManyDaysAfter(data.created_at.toString())}</Text>
+                        <Text style={{ color: '#000000', fontFamily: 'Montserrat-Regular',  fontSize: 12.08, marginLeft:'auto', marginRight:10, marginTop:25 }}></Text>
                     </View>
                     <View  style={{flexDirection:'row'}}>
                       <TouchableOpacity style={{flexDirection:'row'}}  onPress={() => this.goToInfoOrdenes(data, data.folio)}>
@@ -307,30 +307,31 @@ export default class Profile extends Component {
                       </TouchableOpacity>
                     </View>
                   </TouchableOpacity>
-               <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:20, marginTop:20}}>
-                <View style={{width:148, marginLeft:10}}>
+               <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:0, marginTop:20}}>
+                <View style={{width:'50%', marginLeft:0}}>
                   <TouchableOpacity style={{
-                    height:36,
-                    backgroundColor:'rgba(98,2,238,0)',
+                    height:50,
+                    backgroundColor:'#EBF0F2',
                     borderWidth:1,
                     borderRadius:3,
                     alignItems:'center',
                     justifyContent:'center',
-                    borderColor:'rgba(0,0,0,0.6)'
+                    borderBottomLeftRadius:3,
+                    borderColor:'#EBF0F2'
                   }}
                     onPress={() => this.rejectOrdenes(data, data.folio, tipo)}
                   >
-                  <Text style={{color:'rgba(0,0,0,0.6)', fontSize:13.96, fontFamily: 'Montserrat-Medium',}}>RECHAZAR</Text>
+                  <Text style={{color:'rgba(0,0,0,0.6)', letterSpacing:0.25, fontSize:13.96, fontFamily: 'Montserrat-Medium',}}>RECHAZAR</Text>
                   </TouchableOpacity>
                 </View>
-                <View style={{width:'10%'}}></View>
-                <View style={{width:148, marginRight:10}}>
+                <View style={{width:'50%', marginRight:0}}>
                   <TouchableOpacity style={{
-                    height:36,
-                    backgroundColor:'rgba(98,2,238,0)',
+                    height:50,
+                    backgroundColor:'#4BBC68',
                     borderWidth:1,
-                    borderRadius:3,
+                    borderRadius:0,
                     alignItems:'center',
+                    borderBottomRightRadius:3,
                     justifyContent:'center',
                     borderColor:'#4BBC68'
                   }}
@@ -345,7 +346,7 @@ export default class Profile extends Component {
                       { cancelable: false },
                     )}  
                   >
-                  <Text style={{color:'#4BBC68', fontSize:13.96, fontFamily: 'Montserrat-Medium',}}>APROBAR</Text>
+                  <Text style={{color:'#FFFFFF', letterSpacing:0.25, fontSize:13.96, fontFamily: 'Montserrat-Medium',}}>APROBAR</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -433,7 +434,7 @@ export default class Profile extends Component {
                             <Text style={{ color: '#000000', fontFamily: 'Montserrat-Medium', fontSize: 19.94 }}>{data.tipo} {data.folio} </Text>
                             <Text style={{color:'#000000', fontFamily: 'Montserrat-Regular', fontSize: 14.09}}>{data.account.user.first_name}{'   '}{data.account.user.last_name}</Text>
                         </View>
-                        <Text style={{ color: '#000000', fontFamily: 'Montserrat-Regular',  fontSize: 12.08, marginLeft:'auto', marginRight:10, marginTop:25 }}>{this.howManyDaysAfter(data.created_at.toString())}</Text>
+                        <Text style={{ color: '#000000', fontFamily: 'Montserrat-Regular',  fontSize: 12.08, marginLeft:'auto', marginRight:10, marginTop:25 }}></Text>
                     </View>
                     <View style={{flexDirection:'row', marginTop:10}}>
                       <TouchableOpacity style={{flexDirection:'row'}} onPress={() => goToInfoSolicitudes(data, data.folio)}>
@@ -454,29 +455,30 @@ export default class Profile extends Component {
                       </TouchableOpacity>  
                     </View>
                   </TouchableOpacity>
-                  <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:20, marginTop:20}}>
-                    <View style={{width:148, marginLeft:10}}>
+                  <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:0, marginTop:20}}>
+                    <View style={{width:'50%', marginLeft:0}}>
                       <TouchableOpacity style={{
-                        height:36,
-                        backgroundColor:'rgba(98,2,238,0)',
+                        height:50,
+                        backgroundColor:'#EBF0F2',
                         borderWidth:1,
-                        borderRadius:3,
+                        borderRadius:0,
                         alignItems:'center',
                         justifyContent:'center',
-                        borderColor:'rgba(0,0,0,0.6)'
+                        borderBottomLeftRadius:3,
+                        borderColor:'#EBF0F2'
                       }}
                         onPress={() => rejectSolicitudes(data, data.uuid)}
                       >
-                      <Text style={{color:'rgba(0,0,0,0.6)', fontSize:13.96, fontFamily:'Montserrat-Medium'}}>RECHAZAR</Text>
+                      <Text style={{color:'rgba(0,0,0,0.6)', letterSpacing:0.25, fontSize:13.96, fontFamily:'Montserrat-Medium'}}>RECHAZAR</Text>
                       </TouchableOpacity>
                     </View>
-                    <View style={{width:'10%'}}></View>
-                    <View style={{width:148, marginRight:10}}>
+                    <View style={{width:'50%', marginRight:0}}>
                       <TouchableOpacity style={{
-                        height:36,
-                        backgroundColor:'rgba(98,2,238,0)',
+                        height:50,
+                        backgroundColor:'#4BBC68',
                         borderWidth:1,
-                        borderRadius:3,
+                        borderRadius:0,
+                        borderBottomRightRadius:3,
                         alignItems:'center',
                         justifyContent:'center',
                         borderColor:'#4BBC68'
@@ -492,7 +494,7 @@ export default class Profile extends Component {
                         { cancelable: false },
                       )} 
                       >
-                      <Text style={{color:'#4BBC68', fontSize:13.96, fontFamily:'Montserrat-Medium'}}>APROBAR</Text>
+                      <Text style={{color:'#FFF', fontSize:13.96, fontFamily:'Montserrat-Medium', letterSpacing:0.25}}>APROBAR</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -527,7 +529,7 @@ export default class Profile extends Component {
                 }
               } return  <View key={key} style={{flexDirection:'row'}}>
                             <View style={{ alignItems: 'flex-start',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 13.96, marginBottom:10, marginLeft:10 }}>{moment(data.created_at).locale('es').format('D MMM YY')}</Text></View>
-                            <View style={{ alignItems: 'flex-end',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 12.08, marginBottom:10, marginRight:10 }}>{count} por resolver</Text></View>
+                            <View style={{ alignItems: 'flex-end',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 12.08, marginBottom:10, marginRight:10 }}>Pendientes {count}</Text></View>
                         </View>    
             }  else {
               return false
@@ -545,7 +547,7 @@ export default class Profile extends Component {
               }
               return  <View key={key} style={{flexDirection:'row'}}>
                           <View style={{ alignItems: 'flex-start',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 13.96, marginBottom:10, marginLeft:10 }}>{moment(data.created_at).locale('es').format('D MMM YY')}</Text></View>
-                          <View style={{ alignItems: 'flex-end',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 12.08, marginBottom:10, marginRight:10 }}>{count} por resolver</Text></View>
+                          <View style={{ alignItems: 'flex-end',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 12.08, marginBottom:10, marginRight:10 }}>Pendientes {count}</Text></View>
                       </View>
             } else {
               return false
