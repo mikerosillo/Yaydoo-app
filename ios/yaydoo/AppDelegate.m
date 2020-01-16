@@ -13,6 +13,7 @@
 #import <Firebase.h>
 #import "RNFirebaseNotifications.h"
 #import "RNFirebaseMessaging.h"
+#import "SplashScreen.h"
 @import Firebase;
 
 @implementation AppDelegate
@@ -35,6 +36,7 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   
+  [SplashScreen show];
   return YES;
 }
 
