@@ -19,8 +19,10 @@ import moment from 'moment';
 import 'moment/locale/es';
 import PushController from '../../PushController';
 var numeral = require('numeral');
-import Loading from 'react-native-whc-loading';
-import { List, ListItem, Container, Content, Header, Title, Body } from 'native-base';
+import Loading from 'react-native-whc-loading'; 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Iconuser from 'react-native-vector-icons/FontAwesome';
+import { Header, Title, Body } from 'native-base';
 
 
 export default class Profile extends Component {
@@ -637,7 +639,7 @@ export default class Profile extends Component {
                   <Header style={{backgroundColor:'#00A0F8'}}>
                     <Body style={{flexDirection:'row', justifyContent:'space-between'}}>
                       <Title style={{fontSize:19.94, letterSpacing:0.25, marginLeft:16}}>Aprobaciones</Title>
-                      <Title style={{marginRight:13, fontSize:13.96, letterSpacing:0.25, marginTop:5}}>FILTRAR</Title>
+                      <Title style={{marginRight:13, fontSize:13.96, letterSpacing:0.25, marginTop:5}}></Title>
                     </Body>
                   </Header>
                   <Loading 
@@ -655,8 +657,9 @@ export default class Profile extends Component {
                         </TouchableOpacity>
                     </View> */}
                     {this.ifNoSolicitudesPending()}
-                    <View>
-                      <TouchableOpacity style={{backgroundColor:'#00A0F8', height:40, justifyContent:'center', textAlign:'center'}}
+                    <View style={{flexDirection:'row', backgroundColor:'#FFFFFF'}}>
+                      <View style={{width:'33%'}}>
+                      <TouchableOpacity style={{justifyContent:'center', alignItems:'center', alignContent:'center', height:56}}
                         onPress={() => Alert.alert(
                           '¿Estás seguro de que deseas cerrar sesión?', '',
                           [
@@ -668,8 +671,27 @@ export default class Profile extends Component {
                           { cancelable: false },
                         )}
                        >
-                        <Text style={{ color: '#FFF', textAlign:'center', marginBottom: 10, fontFamily: 'Montserrat-Regular' }}> CERRAR SESIÓN  </Text>
+                        <Icon name="logout" size={20} color="#848F9D" />
                       </TouchableOpacity>
+                      </View>
+                      <View style={{width:'33%'}}>
+                      <TouchableOpacity style={{justifyContent:'center', alignItems:'center', alignContent:'center', height:56}}
+                        onPress={() => Alert.alert('Solicitudes')}>
+                        {/* <Image
+                        style={{ width:20, height:20, marginTop:0}}
+                        resizeMode={'contain'}
+                        source={require('../../../assets/solicitudes.png')}
+                        /> */}
+                        <Icon name="format-float-left" size={20} color="#848F9D" />
+                        
+                      </TouchableOpacity>
+                      </View>
+                      <View style={{width:'33%'}}>
+                        <TouchableOpacity style={{justifyContent:'center', alignItems:'center', alignContent:'center', height:56}}
+                          onPress={() => Alert.alert( 'Profile')}>
+                          <Iconuser name="user" size={20} color="#848F9D" />
+                        </TouchableOpacity>
+                      </View>
                     </View>
                 </View>
                 <PushController />
