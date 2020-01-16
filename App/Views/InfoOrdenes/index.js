@@ -16,7 +16,8 @@ import Drawer from 'react-native-drawer';
 import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
 import 'moment/locale/es';
-import momentES from 'moment/src/locale/es' 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; 
+import Iconx from 'react-native-vector-icons/Feather';
 
 var numeral = require('numeral');
 
@@ -313,58 +314,51 @@ export default class InfoOrdenes extends Component {
                         <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:0, marginTop:20}}>
                             <View style={{width:'50%', marginLeft:0}}>
                                 <TouchableOpacity style={{
-                                height:41,
-                                backgroundColor:'transparent',
-                                borderWidth:1,
-                                borderRadius:3,
-                                alignItems:'center',
-                                justifyContent:'center',
-                                borderColor:'rgba(0,0,0,0.6)',
-                                flexDirection:'row'
+                                    height:50,
+                                    backgroundColor:'#EBF0F2',
+                                    borderWidth:1,
+                                    borderRadius:0,
+                                    alignItems:'center',
+                                    justifyContent:'center',
+                                    flexDirection:'row',
+                                    borderBottomLeftRadius:3,
+                                    borderColor:'#EBF0F2'
                                 }}
-                                
                                 onPress={() =>  Actions.rechazar({data: this.state.data, folio: this.state.folio, tipo:this.state.tipo})}
                                 >
                                 <Text style={{color:'#808080', marginRight:20}}>
-                                    <Image
-                                        style={{width: 15, height: 15}}
-                                        source={require('../../../assets/close.png')}
-                                    />
+                                <Iconx name="x" size={20} color="rgba(0,0,0,0.6)" />
                                 </Text>
-                                <Text style={{color:'rgba(0,0,0,0.6)',fontFamily:'Montserrat-Medium', fontWeight:'500', letterSpacing:0.25, fontSize:13.96}}>RECHAZAR</Text>
+                                <Text style={{color:'rgba(0,0,0,0.6)', letterSpacing:0.25, fontSize:13.96, fontFamily:'Montserrat-Medium'}}>RECHAZAR</Text>
                                 </TouchableOpacity>
-
-                            </View>
-                            <View style={{width:'50%', marginRight:0}}>
-                            <TouchableOpacity style={{
-                                height:41,
-                                backgroundColor:'#08d06a',
-                                borderWidth:1,
-                                borderRadius:3,
-                                alignItems:'center',
-                                justifyContent:'center',
-                                borderColor:'#4BBC68',
-                                flexDirection:'row'
+                                </View>
+                                <View style={{width:'50%', marginRight:0}}>
+                                <TouchableOpacity style={{
+                                    height:50,
+                                    backgroundColor:'#4BBC68',
+                                    borderWidth:1,
+                                    borderRadius:0,
+                                    borderBottomRightRadius:3,
+                                    alignItems:'center',
+                                    justifyContent:'center',
+                                    flexDirection:'row',
+                                    borderColor:'#4BBC68'
                                 }}
                                 onPress={() => Alert.alert(
-                                    'Advertencia:', '¿Estás seguro de querer aprobar esta orden de compra?',
+                                    'Advertencia:', '¿Estás seguro de querer aprobar esta orden?',
                                     [
-                                      { text: "NO",
-                                      style: "cancel"
-                                      },
-                                      { text: 'SI',onPress: () => this.approveOrdenes()},
+                                    { text: "NO",
+                                    style: "cancel"
+                                    },
+                                    { text: 'SI',onPress: () => this.approveOrdenes()},
                                     ],
                                     { cancelable: false },
-                                  )}
-                                // onPress={() => this.approveOrdenes()}
+                                )} 
                                 >
                                 <Text style={{color:'#808080', marginRight:20}}>
-                                    <Image
-                                        style={{width: 15, height: 15}}
-                                        source={require('../../../assets/ok.png')}
-                                    />
+                                    <Icon name="check" size={20} color="#FFFFFF" />
                                 </Text>
-                                <Text style={{color:'#FFF',fontFamily:'Montserrat-Medium', fontWeight:'500', letterSpacing:0.25, fontSize:13.96}}>APROBAR</Text>
+                                <Text style={{color:'#FFF', fontSize:13.96, fontFamily:'Montserrat-Medium', letterSpacing:0.25}}>APROBAR</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -441,11 +435,14 @@ export default class InfoOrdenes extends Component {
                         <View style={{flexDirection:'row', marginTop:20}}>
                             <View style={{width:'50%', flexDirection:'row'}}>
                             <View style={{width:'40%', justifyContent:'center'}}>
-                                <Image
+                                {/* <Image
                                     source={require('../../../assets/icons8-chevron-left-48.png')}
                                     // source={{uri : 'assets/icons8-chevron-left-48.png'}}
                                     style={{ width: 24, height: 24, marginLeft: 20,color:'#FFF'}}
-                                />
+                                /> */}
+                                <Text style={{marginLeft: 15}}>
+                                    <Icon name="chevron-left" size={24} color="#FFFFFF" />
+                                </Text>
                             </View>
                             <View style={{width:'60%'}}>
                                 <Text style={{color:'#FFFFFF', fontSize:19.94, fontFamily:'Montserrat-Medium'}}># {this.state.folio}</Text>

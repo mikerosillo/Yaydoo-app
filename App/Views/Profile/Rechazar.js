@@ -1,8 +1,9 @@
 import React, {Component} from "react";
 import Loading from 'react-native-whc-loading';
-import { AsyncStorage,View, Text, TouchableOpacity, Image, Alert, ScrollView} from 'react-native';
+import { AsyncStorage,View, Text, TouchableOpacity, Alert, ScrollView} from 'react-native';
 import { Actions } from "react-native-router-flux";
 import { TextField } from 'react-native-materialui-textfield';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class Rechazar extends Component{
     constructor(props) {
@@ -20,7 +21,7 @@ export default class Rechazar extends Component{
     
     reject(){
         if(this.state.data.type == '3'){
-            this.rejectOrdenes()
+            this.ifNotasNotNullOrdenes()
         } else {
             this.ifNotasNotNull()
         }
@@ -35,6 +36,13 @@ export default class Rechazar extends Component{
     ifNotasNotNull(){
         if(this.state.notas !== ''){
             this.rejectSolicitudes()
+        } else {
+            Alert.alert('Favor de seleccionar motivo de rechazo')
+        }
+    };
+    ifNotasNotNullOrdenes(){
+        if(this.state.notas !== ''){
+            this.rejectOrdenes()
         } else {
             Alert.alert('Favor de seleccionar motivo de rechazo')
         }
@@ -100,14 +108,15 @@ export default class Rechazar extends Component{
         return {
             borderColor:' #00A0F8',
             color:'#bcd0f7',
-            backgroundColor:'#e1ebfc',
+            backgroundColor:'#00A0F8',
             height:32, 
-            borderWidth:2,
+            borderWidth:0,
             width:'80%',
             textAlign:'center',
             alignItems:'center',
             justifyContent:'center',
-            width:208
+            width:208,
+            borderRadius:5
         } 
         } else {
         return {
@@ -121,7 +130,8 @@ export default class Rechazar extends Component{
             alignItems:'center',
             justifyContent:'center',
             borderColor:'rgb(211,211,211)',
-            width:208
+            width:208,
+            borderRadius:5
         }   
         }
     };
@@ -144,15 +154,16 @@ export default class Rechazar extends Component{
         if(this.state.selected2 == true){
         return {
             color:'#bcd0f7',
-            backgroundColor:'#e1ebfc',
+            backgroundColor:'#00A0F8',
             height:32, 
-            borderWidth:2,
+            borderWidth:0,
             width:'80%',
             textAlign:'center',
             alignItems:'center',
             justifyContent:'center',
             borderColor:' #c2dcff',
-            width:208
+            width:208,
+            borderRadius:5
         } 
         } else {
         return {
@@ -165,7 +176,8 @@ export default class Rechazar extends Component{
             alignItems:'center',
             justifyContent:'center',
             borderColor:'rgb(211,211,211)',
-            width:208
+            width:208,
+            borderRadius:5
         }   
         }
     };
@@ -188,15 +200,16 @@ export default class Rechazar extends Component{
         if(this.state.selected3 == true){
             return {
                 color:'#bcd0f7',
-                backgroundColor:'#e1ebfc',
+                backgroundColor:'#00A0F8',
                 height:32, 
-                borderWidth:2,
+                borderWidth:0,
                 width:'80%',
                 textAlign:'center',
                 alignItems:'center',
                 justifyContent:'center',
                 borderColor:' #c2dcff',
-                width:208
+                width:208,
+                borderRadius:5
             } 
         } else {
             return {
@@ -209,7 +222,8 @@ export default class Rechazar extends Component{
                 alignItems:'center',
                 justifyContent:'center',
                 borderColor:'rgb(211,211,211)',
-                width:208
+                width:208,
+                borderRadius:5
             }   
         }
     };
@@ -255,10 +269,9 @@ export default class Rechazar extends Component{
                     <View style={{ flexDirection:'row',backgroundColor:'#00A0F8', height:56,justifyContent:'center', alignItems:'center'}}>
                         <View style={{width:'10%'}}>
                             <TouchableOpacity  onPress={() => Actions.profile()} >
-                                <Image
-                                style={{width: 20, height: 20}}
-                                source={require('../../../assets/icons8-chevron-left-48.png')}
-                                />
+                                <Text style={{marginLeft: 0}}>
+                                    <Icon name="chevron-left" size={24} color="#FFFFFF" />
+                                </Text>
                             </TouchableOpacity>
                         </View>
                         <View style={{width:'60%'}}>
@@ -317,7 +330,7 @@ export default class Rechazar extends Component{
                             <View style={{width:'80%'}}>
                                 <TextField
                                     label="Escribe otro motivo"
-                                    onChangeText={val => this.setState({ notas: val })} //mutate the value of our global variable email at input
+                                    onChangeText={val => this.setState({ notas: val, selected3:false, selected1:false, selected2:false })} //mutate the value of our global variable email at input
                                     lineWidth={1}
                                     // returnKeyType="next"
                                     // onSubmitEditing={() => {

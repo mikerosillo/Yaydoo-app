@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     View,
-    ImageBackground,
+    Image,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 export default class Welcome extends Component {
@@ -21,20 +21,21 @@ export default class Welcome extends Component {
     };
     render() {
         return (
-            <ImageBackground style={styles.imgBackground}
-                resizeMode='cover'
-                source={require('../../../assets/imageSplash.jpg')}>
-                <View style={styles.MainContainer}>
-                   
-                </View>
-            </ImageBackground>
+            <View style={styles.container}> 
+            <Image 
+            style={{ width: 350, height: 300}}
+            source={require('../../../assets/appstore.png')} />   
+            </View>
         );
     }
 }
 const styles = StyleSheet.create({
-    imgBackground: {
-        width: '100%',
-        height: '100%',
-        flex: 1,
-    },
+    container: {
+        flex:1,
+        width:'100%',
+        height:'100%',
+        backgroundColor: '#2a2a33',
+        justifyContent:'center',
+        alignContent:'center'
+    }
 });

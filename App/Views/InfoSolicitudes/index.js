@@ -10,10 +10,11 @@ import {
     Image,
 } from 'react-native';
 import Loading from 'react-native-whc-loading';
-import Drawer from 'react-native-drawer';
 import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
 import 'moment/locale/es';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; 
+import Iconx from 'react-native-vector-icons/Feather';
 var numeral = require('numeral');
 
 export default class InfoSolicitudes extends Component {
@@ -207,7 +208,7 @@ export default class InfoSolicitudes extends Component {
         if(this.state.productos !== true){
             return  <View >
                         <View style={{flexDirection:'row',  marginBottom:0, marginTop:0}}>
-                            <View style={{width:'50%', marginLeft:0,}}>
+                            {/* <View style={{width:'50%', marginLeft:0,}}>
                                 <TouchableOpacity style={{
                                 height:36,
                                 backgroundColor:'rgba(98,2,238,0)',
@@ -260,6 +261,55 @@ export default class InfoSolicitudes extends Component {
                                     />
                                 </Text>
                                 <Text style={{color:'#FFF',fontFamily:'Montserrat-Medium', fontWeight:'500', letterSpacing:0.25, fontSize:13.96}}>APROBAR</Text>
+                                </TouchableOpacity>
+                            </View> */}
+                            <View style={{width:'50%', marginLeft:0}}>
+                                <TouchableOpacity style={{
+                                    height:50,
+                                    backgroundColor:'#EBF0F2',
+                                    borderWidth:1,
+                                    borderRadius:0,
+                                    alignItems:'center',
+                                    justifyContent:'center',
+                                    flexDirection:'row',
+                                    borderBottomLeftRadius:3,
+                                    borderColor:'#EBF0F2'
+                                }}
+                                onPress={() =>  this.rejectSolicitudes()}
+                                >
+                                <Text style={{color:'#808080', marginRight:20}}>
+                                <Iconx name="x" size={20} color="rgba(0,0,0,0.6)" />
+                                </Text>
+                                <Text style={{color:'rgba(0,0,0,0.6)', letterSpacing:0.25, fontSize:13.96, fontFamily:'Montserrat-Medium'}}>RECHAZAR</Text>
+                                </TouchableOpacity>
+                                </View>
+                                <View style={{width:'50%', marginRight:0}}>
+                                <TouchableOpacity style={{
+                                    height:50,
+                                    backgroundColor:'#4BBC68',
+                                    borderWidth:1,
+                                    borderRadius:0,
+                                    borderBottomRightRadius:3,
+                                    alignItems:'center',
+                                    justifyContent:'center',
+                                    flexDirection:'row',
+                                    borderColor:'#4BBC68'
+                                }}
+                                onPress={() => Alert.alert(
+                                    'Advertencia:', '¿Estás seguro de querer aprobar esta solicitud?',
+                                    [
+                                    { text: "NO",
+                                    style: "cancel"
+                                    },
+                                    { text: 'SI',onPress: () => this.approveSolicitudes()},
+                                    ],
+                                    { cancelable: false },
+                                )} 
+                                >
+                                <Text style={{color:'#808080', marginRight:20}}>
+                                    <Icon name="check" size={20} color="#FFFFFF" />
+                                </Text>
+                                <Text style={{color:'#FFF', fontSize:13.96, fontFamily:'Montserrat-Medium', letterSpacing:0.25}}>APROBAR</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -355,15 +405,13 @@ export default class InfoSolicitudes extends Component {
                             <View style={{width:'50%', flexDirection:'row'}}>
                             <View style={{width:'40%', justifyContent:'center'}}>
                                     <TouchableOpacity  onPress={() => this.previewsPage()}>
-                                        <Image
-                                            source={require('../../../assets/icons8-chevron-left-48.png')}
-                                            // source={{uri : 'assets/icons8-chevron-left-48.png'}}
-                                            style={{ width: 15, height: 15, marginLeft: 20,color:'#FFFFFF'}}
-                                        />
+                                        <Text style={{marginLeft: 20}}>
+                                            <Icon name="chevron-left" size={24} color="#FFFFFF" />
+                                        </Text>
                                     </TouchableOpacity>
                             </View>
                             <View style={{width:'60%'}}>
-                                <Text style={{fontWeight:'500',color:'#FFFFFF', fontSize:19.94, fontFamily:'Montserrat-Medium'}}># {this.state.folio}</Text>
+                                <Text style={{marginLeft:3,fontWeight:'500',color:'#FFFFFF', fontSize:19.94, fontFamily:'Montserrat-Medium'}}># {this.state.folio}</Text>
                             </View>
                             </View>
                             <View style={{width:'50%'}}></View>
