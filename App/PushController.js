@@ -17,21 +17,47 @@ export default class PushController extends Component{
     const access_token = await AsyncStorage.getItem('ACCESS_TOKEN')
     let token = await AsyncStorage.getItem('fcmToken');
     console.log("TOKEN:", token);
-    await fetch(`https://stage.ws.yay.do/me/app/account`, {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-          "X-Auth-Token": access_token
-      },
-      body: JSON.stringify({
-        token: token,
-        device: Platform.OS
-      }),
-    }).then((response)=>{
-      console.log('from response',response)
-    }).catch((err)=>{
-      console.log('from error',err.message)
-    })
+    if(token !== null){
+      await fetch(`https://stage.ws.yay.do/me/app/account`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            "X-Auth-Token": access_token
+        },
+        body: JSON.stringify({
+          token: token,
+          device: Platform.OS
+        }),
+      }).then((response)=>{
+        console.log('from response',response)
+      }).catch((err)=>{
+        console.log('from error',err.message)
+      })
+    } else {
+      this.sendToken2()
+    }
+  };
+  async sendToken2 () {
+    const access_token = await AsyncStorage.getItem('ACCESS_TOKEN')
+    let token = await AsyncStorage.getItem('fcmToken');
+    console.log("TOKEN2:", token);
+    
+      await fetch(`https://stage.ws.yay.do/me/app/account`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            "X-Auth-Token": access_token
+        },
+        body: JSON.stringify({
+          token: token,
+          device: Platform.OS
+        }),
+      }).then((response)=>{
+        console.log('from response',response)
+      }).catch((err)=>{
+        console.log('from error',err.message)
+      })
+    
   }
   checkPermission = async () => {
     const enabled = await firebase.messaging().hasPermission();
@@ -50,15 +76,15 @@ export default class PushController extends Component{
       console.log('permission rejected');
     }
   };
-  requestPermission = async () => {
-    try {
-      await firebase.messaging().requestPermission();
-      this.getToken();
-    } catch (error) {
-      Alert.alert('Se recomienda tener activadas las notificaciones');
-      console.log('permission rejected');
-    }
-  };
+  // requestPermission = async () => {
+  //   try {
+  //     await firebase.messaging().requestPermission();
+  //     this.getToken();
+  //   } catch (error) {
+  //     Alert.alert('Se recomienda tener activadas las notificaciones');
+  //     console.log('permission rejected');
+  //   }
+  // };
 
   createNotificationListeners = async () => {
     this.onUnsubscribeNotificaitonListener = firebase

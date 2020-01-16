@@ -15,6 +15,7 @@ import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import com.horcrux.svg.SvgPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =

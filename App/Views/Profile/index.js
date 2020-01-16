@@ -19,8 +19,10 @@ import moment from 'moment';
 import 'moment/locale/es';
 import PushController from '../../PushController';
 var numeral = require('numeral');
-import Loading from 'react-native-whc-loading';
-import { List, ListItem, Container, Content, Header, Title, Body } from 'native-base';
+import Loading from 'react-native-whc-loading'; 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Iconuser from 'react-native-vector-icons/FontAwesome';
+import { Header, Title, Body } from 'native-base';
 
 
 export default class Profile extends Component {
@@ -280,7 +282,7 @@ export default class Profile extends Component {
                             <Text style={{ color: '#000000', fontFamily: 'Montserrat-Medium', fontSize: 19.94 }}>{data.tipo} {data.folio} </Text>
                             <Text style={{color:'#000000', fontFamily: 'Montserrat-Regular', fontSize: 14.09}}>{data.account.user.first_name}{'    '}{data.account.user.last_name}</Text>
                         </View>
-                        <Text style={{ color: '#000000', fontFamily: 'Montserrat-Regular',  fontSize: 12.08, marginLeft:'auto', marginRight:10, marginTop:25 }}>{this.howManyDaysAfter(data.created_at.toString())}</Text>
+                        <Text style={{ color: '#000000', fontFamily: 'Montserrat-Regular',  fontSize: 12.08, marginLeft:'auto', marginRight:10, marginTop:25 }}></Text>
                     </View>
                     <View  style={{flexDirection:'row'}}>
                       <TouchableOpacity style={{flexDirection:'row'}}  onPress={() => this.goToInfoOrdenes(data, data.folio)}>
@@ -307,30 +309,31 @@ export default class Profile extends Component {
                       </TouchableOpacity>
                     </View>
                   </TouchableOpacity>
-               <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:20, marginTop:20}}>
-                <View style={{width:148, marginLeft:10}}>
+               <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:0, marginTop:20}}>
+                <View style={{width:'50%', marginLeft:0}}>
                   <TouchableOpacity style={{
-                    height:36,
-                    backgroundColor:'rgba(98,2,238,0)',
+                    height:50,
+                    backgroundColor:'#EBF0F2',
                     borderWidth:1,
                     borderRadius:3,
                     alignItems:'center',
                     justifyContent:'center',
-                    borderColor:'rgba(0,0,0,0.6)'
+                    borderBottomLeftRadius:3,
+                    borderColor:'#EBF0F2'
                   }}
                     onPress={() => this.rejectOrdenes(data, data.folio, tipo)}
                   >
-                  <Text style={{color:'rgba(0,0,0,0.6)', fontSize:13.96, fontFamily: 'Montserrat-Medium',}}>RECHAZAR</Text>
+                  <Text style={{color:'rgba(0,0,0,0.6)', letterSpacing:0.25, fontSize:13.96, fontFamily: 'Montserrat-Medium',}}>RECHAZAR</Text>
                   </TouchableOpacity>
                 </View>
-                <View style={{width:'10%'}}></View>
-                <View style={{width:148, marginRight:10}}>
+                <View style={{width:'50%', marginRight:0}}>
                   <TouchableOpacity style={{
-                    height:36,
-                    backgroundColor:'rgba(98,2,238,0)',
+                    height:50,
+                    backgroundColor:'#4BBC68',
                     borderWidth:1,
-                    borderRadius:3,
+                    borderRadius:0,
                     alignItems:'center',
+                    borderBottomRightRadius:3,
                     justifyContent:'center',
                     borderColor:'#4BBC68'
                   }}
@@ -345,7 +348,7 @@ export default class Profile extends Component {
                       { cancelable: false },
                     )}  
                   >
-                  <Text style={{color:'#4BBC68', fontSize:13.96, fontFamily: 'Montserrat-Medium',}}>APROBAR</Text>
+                  <Text style={{color:'#FFFFFF', letterSpacing:0.25, fontSize:13.96, fontFamily: 'Montserrat-Medium',}}>APROBAR</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -433,7 +436,7 @@ export default class Profile extends Component {
                             <Text style={{ color: '#000000', fontFamily: 'Montserrat-Medium', fontSize: 19.94 }}>{data.tipo} {data.folio} </Text>
                             <Text style={{color:'#000000', fontFamily: 'Montserrat-Regular', fontSize: 14.09}}>{data.account.user.first_name}{'   '}{data.account.user.last_name}</Text>
                         </View>
-                        <Text style={{ color: '#000000', fontFamily: 'Montserrat-Regular',  fontSize: 12.08, marginLeft:'auto', marginRight:10, marginTop:25 }}>{this.howManyDaysAfter(data.created_at.toString())}</Text>
+                        <Text style={{ color: '#000000', fontFamily: 'Montserrat-Regular',  fontSize: 12.08, marginLeft:'auto', marginRight:10, marginTop:25 }}></Text>
                     </View>
                     <View style={{flexDirection:'row', marginTop:10}}>
                       <TouchableOpacity style={{flexDirection:'row'}} onPress={() => goToInfoSolicitudes(data, data.folio)}>
@@ -454,29 +457,30 @@ export default class Profile extends Component {
                       </TouchableOpacity>  
                     </View>
                   </TouchableOpacity>
-                  <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:20, marginTop:20}}>
-                    <View style={{width:148, marginLeft:10}}>
+                  <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:0, marginTop:20}}>
+                    <View style={{width:'50%', marginLeft:0}}>
                       <TouchableOpacity style={{
-                        height:36,
-                        backgroundColor:'rgba(98,2,238,0)',
+                        height:50,
+                        backgroundColor:'#EBF0F2',
                         borderWidth:1,
-                        borderRadius:3,
+                        borderRadius:0,
                         alignItems:'center',
                         justifyContent:'center',
-                        borderColor:'rgba(0,0,0,0.6)'
+                        borderBottomLeftRadius:3,
+                        borderColor:'#EBF0F2'
                       }}
                         onPress={() => rejectSolicitudes(data, data.uuid)}
                       >
-                      <Text style={{color:'rgba(0,0,0,0.6)', fontSize:13.96, fontFamily:'Montserrat-Medium'}}>RECHAZAR</Text>
+                      <Text style={{color:'rgba(0,0,0,0.6)', letterSpacing:0.25, fontSize:13.96, fontFamily:'Montserrat-Medium'}}>RECHAZAR</Text>
                       </TouchableOpacity>
                     </View>
-                    <View style={{width:'10%'}}></View>
-                    <View style={{width:148, marginRight:10}}>
+                    <View style={{width:'50%', marginRight:0}}>
                       <TouchableOpacity style={{
-                        height:36,
-                        backgroundColor:'rgba(98,2,238,0)',
+                        height:50,
+                        backgroundColor:'#4BBC68',
                         borderWidth:1,
-                        borderRadius:3,
+                        borderRadius:0,
+                        borderBottomRightRadius:3,
                         alignItems:'center',
                         justifyContent:'center',
                         borderColor:'#4BBC68'
@@ -492,7 +496,7 @@ export default class Profile extends Component {
                         { cancelable: false },
                       )} 
                       >
-                      <Text style={{color:'#4BBC68', fontSize:13.96, fontFamily:'Montserrat-Medium'}}>APROBAR</Text>
+                      <Text style={{color:'#FFF', fontSize:13.96, fontFamily:'Montserrat-Medium', letterSpacing:0.25}}>APROBAR</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -527,7 +531,7 @@ export default class Profile extends Component {
                 }
               } return  <View key={key} style={{flexDirection:'row'}}>
                             <View style={{ alignItems: 'flex-start',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 13.96, marginBottom:10, marginLeft:10 }}>{moment(data.created_at).locale('es').format('D MMM YY')}</Text></View>
-                            <View style={{ alignItems: 'flex-end',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 12.08, marginBottom:10, marginRight:10 }}>{count} por resolver</Text></View>
+                            <View style={{ alignItems: 'flex-end',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 12.08, marginBottom:10, marginRight:10 }}>Pendientes {count}</Text></View>
                         </View>    
             }  else {
               return false
@@ -545,7 +549,7 @@ export default class Profile extends Component {
               }
               return  <View key={key} style={{flexDirection:'row'}}>
                           <View style={{ alignItems: 'flex-start',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 13.96, marginBottom:10, marginLeft:10 }}>{moment(data.created_at).locale('es').format('D MMM YY')}</Text></View>
-                          <View style={{ alignItems: 'flex-end',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 12.08, marginBottom:10, marginRight:10 }}>{count} por resolver</Text></View>
+                          <View style={{ alignItems: 'flex-end',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 12.08, marginBottom:10, marginRight:10 }}>Pendientes {count}</Text></View>
                       </View>
             } else {
               return false
@@ -635,7 +639,7 @@ export default class Profile extends Component {
                   <Header style={{backgroundColor:'#00A0F8'}}>
                     <Body style={{flexDirection:'row', justifyContent:'space-between'}}>
                       <Title style={{fontSize:19.94, letterSpacing:0.25, marginLeft:16}}>Aprobaciones</Title>
-                      <Title style={{marginRight:13, fontSize:13.96, letterSpacing:0.25, marginTop:5}}>FILTRAR</Title>
+                      <Title style={{marginRight:13, fontSize:13.96, letterSpacing:0.25, marginTop:5}}></Title>
                     </Body>
                   </Header>
                   <Loading 
@@ -653,8 +657,9 @@ export default class Profile extends Component {
                         </TouchableOpacity>
                     </View> */}
                     {this.ifNoSolicitudesPending()}
-                    <View>
-                      <TouchableOpacity style={{backgroundColor:'#00A0F8', height:40, justifyContent:'center', textAlign:'center'}}
+                    <View style={{flexDirection:'row', backgroundColor:'#FFFFFF'}}>
+                      <View style={{width:'33%'}}>
+                      <TouchableOpacity style={{justifyContent:'center', alignItems:'center', alignContent:'center', height:56}}
                         onPress={() => Alert.alert(
                           '¿Estás seguro de que deseas cerrar sesión?', '',
                           [
@@ -666,8 +671,27 @@ export default class Profile extends Component {
                           { cancelable: false },
                         )}
                        >
-                        <Text style={{ color: '#FFF', textAlign:'center', marginBottom: 10, fontFamily: 'Montserrat-Regular' }}> CERRAR SESIÓN  </Text>
+                        <Icon name="logout" size={20} color="#848F9D" />
                       </TouchableOpacity>
+                      </View>
+                      <View style={{width:'33%'}}>
+                      <TouchableOpacity style={{justifyContent:'center', alignItems:'center', alignContent:'center', height:56}}
+                        onPress={() => Alert.alert('Solicitudes')}>
+                        {/* <Image
+                        style={{ width:20, height:20, marginTop:0}}
+                        resizeMode={'contain'}
+                        source={require('../../../assets/solicitudes.png')}
+                        /> */}
+                        <Icon name="format-float-left" size={20} color="#848F9D" />
+                        
+                      </TouchableOpacity>
+                      </View>
+                      <View style={{width:'33%'}}>
+                        <TouchableOpacity style={{justifyContent:'center', alignItems:'center', alignContent:'center', height:56}}
+                          onPress={() => Alert.alert( 'Profile')}>
+                          <Iconuser name="user" size={20} color="#848F9D" />
+                        </TouchableOpacity>
+                      </View>
                     </View>
                 </View>
                 <PushController />

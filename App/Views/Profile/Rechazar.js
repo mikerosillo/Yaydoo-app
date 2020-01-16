@@ -98,7 +98,7 @@ export default class Rechazar extends Component{
     styleSelected1(){
         if(this.state.selected1 == true){
         return {
-            borderColor:' #c2dcff',
+            borderColor:' #00A0F8',
             color:'#bcd0f7',
             backgroundColor:'#e1ebfc',
             height:32, 
@@ -252,7 +252,21 @@ export default class Rechazar extends Component{
                   backgroundColor={'transparent'}
                   indicatorColor={'#00A0F8'}/>
                 <ScrollView>
-                    <View style={{backgroundColor:'#00A0F8', height:56,justifyContent:'center'}}>
+                    <View style={{ flexDirection:'row',backgroundColor:'#00A0F8', height:56,justifyContent:'center', alignItems:'center'}}>
+                        <View style={{width:'10%'}}>
+                            <TouchableOpacity  onPress={() => Actions.profile()} >
+                                <Image
+                                style={{width: 20, height: 20}}
+                                source={require('../../../assets/icons8-chevron-left-48.png')}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{width:'60%'}}>
+                            <TouchableOpacity  onPress={() => Actions.profile()} >
+    <Text style={{textAlign:'center', color:'#FFFFFF', marginLeft:0, fontSize:19.94, fontWeight:'500', fontFamily:'Montserrat-Medium', letterSpacing:0.25}}>Rechazar {this.selectType()}</Text>
+                            </TouchableOpacity>   
+                        </View>
+                        <View style={{width:'10%'}}></View>
                         {/* <View style={{ flexDirection:'row', marginTop:20, marginBottom:20, alignItems:'flex-end',
                                         justifyContent:'center',}}> */}
                             {/* <View style={{width:'50%', alignItems:'center',
@@ -264,7 +278,7 @@ export default class Rechazar extends Component{
                                         source={require('../../../assets/close.png')}
                                         />
                                     </Text> */}
-                                    <Text style={{color:'#F5F5F5', marginLeft:10, fontSize:19.94, fontWeight:'500', fontFamily:'Montserrat-Medium', letterSpacing:0.25}}>Explica el motivo</Text>
+                                    {/* <Text style={{color:'#F5F5F5', marginLeft:10, fontSize:19.94, fontWeight:'500', fontFamily:'Montserrat-Medium', letterSpacing:0.25}}>Rechazar orden</Text> */}
                                 {/* </TouchableOpacity> */}
                             {/* </View> */}
                             {/* <View style={{width:'50%'}}>
@@ -280,8 +294,8 @@ export default class Rechazar extends Component{
                     <View style={{}}>
                         <Text style={{color:'rgba(0,0,0,0.87)',marginLeft:20, marginTop:20, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>Solicitante{'        '} <Text style={{color:'rgba(0,0,0,0.6)'}}>{this.state.data.account.user.first_name}{' '}{this.state.data.account.user.last_name}</Text></Text>
                         <Text style={{color:'rgba(0,0,0,0.87)',marginLeft:20, marginTop:20, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{this.selectTypeInHeader()}{'           '}{'     '}<Text style={{color:'rgba(0,0,0,0.6)'}}>#{this.state.data.folio}</Text></Text>
-                        <View style={{alignItems:'center', textAlign:'center', marginTop:20}}>
-                            <Text style={{color:'rgba(0,0,0,0.6)', fontSize:16.1, fontFamily:'Montserrat-Regular'}}></Text>
+                        <View style={{alignItems:'center', textAlign:'center', marginTop:30, marginBottom:40}}>
+                            <Text style={{color:'rgba(0,0,0,0.6)', fontSize:16.1, fontFamily:'Montserrat-Regular'}}>¿Cuál es el motivo del rechazo?</Text>
                             {/* {this.selectType()} */}
                         </View>
                         <View style={{alignItems:'center', textAlign:'center', marginTop:20}}>
@@ -317,7 +331,7 @@ export default class Rechazar extends Component{
                     </View>
                 </ScrollView>
                 <View style={{flexDirection:'row', justifyContent:'space-around', marginBottom:0, marginTop:20}}>
-                    <View style={{width:'50%', marginLeft:0}}>
+                    {/* <View style={{width:'50%', marginLeft:0}}>
                         <TouchableOpacity style={{
                         height:56,
                         backgroundColor:'transparent',
@@ -329,29 +343,23 @@ export default class Rechazar extends Component{
                         flexDirection:'row',
                         borderRigthWidth:0
                         }}
-                        //   onPress={() => Actions.infoOrdenes({data: this.state.data, folio: this.state.data.folio, tipo:this.state.tipo})}
                         
                         onPress={() =>  this.goToPreviewsPage()}
                         >
-                        {/* <Text style={{color:'#808080', marginRight:20}}>
-                            <Image
-                                style={{width: 15, height: 15}}
-                                source={require('../../../assets/close.png')}
-                            />
-                        </Text> */}
+                       
                         <Text style={{color:'rgba(0,0,0,0.6)',fontFamily:'Montserrat-Medium', fontWeight:'500', letterSpacing:0.25, fontSize:13.96}}>CANCELAR</Text>
                         </TouchableOpacity>
 
-                    </View>
-                    <View style={{width:'50%', marginRight:0}}>
+                    </View> */}
+                    <View style={{width:'100%', marginRight:0}}>
                     <TouchableOpacity style={{
                         height:56,
-                        backgroundColor:'transparent',
+                        backgroundColor:'#4BBC68',
                         borderWidth:1,
                         borderRadius:0,
                         alignItems:'center',
                         justifyContent:'center',
-                        borderColor:'rgba(0,0,0,0.6)',
+                        borderColor:'#4BBC68',
                         flexDirection:'row',
                         borderLeftWidth:0
                         }}
@@ -373,7 +381,7 @@ export default class Rechazar extends Component{
                                 source={require('../../../assets/ok.png')}
                             />
                         </Text> */}
-                        <Text style={{color:'rgba(0,0,0,0.6)',fontFamily:'Montserrat-Medium', fontWeight:'500', letterSpacing:0.25, fontSize:13.96}}>RECHAZAR</Text>
+                        <Text style={{color:'#FFFFFF',fontFamily:'Montserrat-Medium', fontWeight:'500', letterSpacing:0.25, fontSize:13.96}}>CONFIRMAR</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
