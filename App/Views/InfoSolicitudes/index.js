@@ -31,7 +31,20 @@ export default class InfoSolicitudes extends Component {
     previewsPage(){
       Actions.profile()
     };
-   
+//    componentDidMount(){
+//        console.log('from didmount',this.state.data.quotation_items)
+//    }
+   getImage(data, key){
+       if(data.item.image == null){
+        console.log('fromgetimage',data.item.image)
+           return false
+       } else {
+        return   <Image
+                    source={{uri :`${data.item.image.full}`}}
+                    style={{ width: 150, height: 150, marginTop:20, marginLeft:0}}
+                />
+       }
+   }
     logout() {
         async function removeItemValue() {
           try {
@@ -143,10 +156,7 @@ export default class InfoSolicitudes extends Component {
 
                             <View style={{flexDirection:'row', maxWidth:'95%', borderTopLeftRadius:4}}>
                                 <View style={{width:'50%', backgroundColor:'#FFF'}}>
-                                    <Image
-                                        source={{uri :`${data.item.image.full}`}}
-                                        style={{ width: 150, height: 150, marginTop:20, marginLeft:0}}
-                                    />
+                                    {this.getImage(data, key)}
                                 </View>
                                 <View style={{width:'50%', marginTop:20}}>
                                     <Text style={{fontFamily:'Montserrat-Medium', color:'rgba(0,0,0,0.87)', marginBottom:10, fontSize:13.96, fontWeight:'500'}}>{data.item.description}</Text>

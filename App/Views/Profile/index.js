@@ -676,19 +676,15 @@ export default class Profile extends Component {
                       </View>
                       <View style={{width:'33%'}}>
                       <TouchableOpacity style={{justifyContent:'center', alignItems:'center', alignContent:'center', height:56}}
-                        onPress={() => Alert.alert('Solicitudes')}>
-                        {/* <Image
-                        style={{ width:20, height:20, marginTop:0}}
-                        resizeMode={'contain'}
-                        source={require('../../../assets/solicitudes.png')}
-                        /> */}
+                       >
+                       
                         <Icon name="format-float-left" size={20} color="#848F9D" />
                         
                       </TouchableOpacity>
                       </View>
                       <View style={{width:'33%'}}>
                         <TouchableOpacity style={{justifyContent:'center', alignItems:'center', alignContent:'center', height:56}}
-                          onPress={() => Alert.alert( 'Profile')}>
+                         >
                           <Iconuser name="user" size={20} color="#848F9D" />
                         </TouchableOpacity>
                       </View>
