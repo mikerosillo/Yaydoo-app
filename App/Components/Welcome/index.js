@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     View,
-    Image,
+    Image
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 export default class Welcome extends Component {
@@ -23,8 +23,8 @@ export default class Welcome extends Component {
         return (
             <View style={styles.container}> 
             <Image 
-            style={{ width: 350, height: 300}}
-            source={require('../../../assets/appstore.png')} />   
+                style={{ width: 350, height: 300}}
+                source={require('../../../assets/appstore.png')} /> 
             </View>
         );
     }
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
         height:'100%',
         backgroundColor: '#2a2a33',
         justifyContent:'center',
-        alignContent:'center'
+        alignContent:'center',
+        alignItems:'center' 
     }
 });

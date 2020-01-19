@@ -31,18 +31,43 @@ export default class InfoSolicitudes extends Component {
     previewsPage(){
       Actions.profile()
     };
-//    componentDidMount(){
+//    componentDidMount(){.unit
 //        console.log('from didmount',this.state.data.quotation_items)
 //    }
    getImage(data, key){
+    // console.log('from get image',data.item.unit_id)
        if(data.item.image == null){
-        console.log('fromgetimage',data.item.image)
            return false
        } else {
         return   <Image
                     source={{uri :`${data.item.image.full}`}}
-                    style={{ width: 150, height: 150, marginTop:20, marginLeft:0}}
+                    resizeMode='contain'
+                    style={{ flex:1 , width: 150, height: 150}}
                 />
+       }
+   };
+   unitType(units, unitId){
+    //    console.log(units)
+       if(units > 1 && unitId == 1){
+           return <Text>piezas =</Text>
+       } else if(units <= 1 && unitId == 1){
+           return <Text>Pieza =</Text>
+       } else if(units > 1 && unitId == 3){
+           return <Text>cajas =</Text>
+       } else if(units <= 1 && unitId == 3){
+           return <Text>caja =</Text>
+       } else {
+           return <Text>unit id not identified</Text>
+       }
+   };
+   unitTypeAtBottom(units, unitId){
+    //    console.log(unitId)
+       if(unitId == 1){
+           return <Text>Pieza =</Text>
+       } else if( unitId == 3){
+           return <Text>Caja =</Text>
+       }  else {
+           return <Text>unit id not identified</Text>
        }
    }
     logout() {
@@ -130,44 +155,46 @@ export default class InfoSolicitudes extends Component {
     whichToRender(){
         let arr = [this.state.data]
         let name = arr.map((el)=>{
-            return el.account.user.first_name
+            return el.account.user.first_name + ' '+ el.account.user.last_name
         });
-
+        
         let priority = arr.map((el)=>{
             var res=''
+            console.log(el.priority)
             if(el.priority == '1'){
-                 res = 'Muy alta'
+                 res = 'Baja'
             } else if(el.priority == '2'){
-                res = 'Alta'
-            } else if(el.priority == '3'){
                 res = 'Media'
-            } else if(el.priority == '4'){
-                res = 'Baja'
+            } else if(el.priority == '3'){
+                res = 'Alta'
             } else {
-                res = 'Muy baja'
+                res = false
             }
             return res
         });
         let address = arr.map((el)=>{
-            return el.shipping.address.entity.name
+            console.log('jhfgk',el.shipping.address)
+            return el.shipping.address.state.country.name +' '+ el.shipping.address.city + ' '+ el.shipping.address.street
         })
         var items = this.state.data.quotation_items.map((data, key)=>{
             return     <View style={styles.solicitudes}>
 
                             <View style={{flexDirection:'row', maxWidth:'95%', borderTopLeftRadius:4}}>
                                 <View style={{width:'50%', backgroundColor:'#FFF'}}>
-                                    {this.getImage(data, key)}
+                                    
+                                       {this.getImage(data, key)}
+                                    
                                 </View>
                                 <View style={{width:'50%', marginTop:20}}>
                                     <Text style={{fontFamily:'Montserrat-Medium', color:'rgba(0,0,0,0.87)', marginBottom:10, fontSize:13.96, fontWeight:'500'}}>{data.item.description}</Text>
-                                    <Text style={{color:'rgba(0,0,0,0.6)', marginBottom:0, fontSize:12.09, fontFamily:'Montserrat-Regular'}}>{data.units}{' '}pieza ={' '}{numeral(data.item.price * data.units).format('$0,0.00')}{' '}{data.item.vendor.vendor.currency}</Text>
+        <Text style={{color:'rgba(0,0,0,0.6)', marginBottom:0, fontSize:12.09, fontFamily:'Montserrat-Regular'}}>{data.item.unit}{' '}{this.unitType(data.item.unit, data.item.unit_id)}{' '}{numeral(data.item.price * data.units).format('$0,0.00')}{' '}{data.item.vendor.vendor.currency}</Text>
                                     {/* <Text style={{color:'#808080', marginBottom:20}}></Text> */}
                                     <Text style={{color:'rgba(0,0,0,0.6)', fontSize:12.09, fontFamily:'Montserrat-Regular'}}>Entrega{' '}{moment(this.state.deliveryDate).locale('es').format('D MMM YY')}</Text>
                                 </View>
                             </View>
                             <View style={{maxWidth:'95%', flexDirection:'row'}}>
                                 <Text style={{color:'rgba(0,0,0,0.87)', marginBottom:20, marginLeft:30, marginTop:20, fontSize:12.08}}>
-                                Pieza
+                                {this.unitTypeAtBottom(data.item.unit, data.item.unit_id)}
                                 </Text>
                                 <Text style={{color:'rgba(0,0,0,0.6)', marginBottom:20, marginLeft:5, marginTop:20, fontSize:12.09}}>
                                 {numeral(data.item.price).format('$0,0.00')}{' '}{data.item.vendor.vendor.currency}
@@ -179,23 +206,30 @@ export default class InfoSolicitudes extends Component {
             return items
         } else {
            return   <View>
-                        <View style={{flexDirection:'row'}}>
-                            <View style={{width:'50%'}}>
-                                <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, fontSize:13.96, fontFamily:'Montserrat-Medium', marginTop:20, marginBottom:10, fontWeight:'500'}}>Detalle</Text>
-                                <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>Solicitante</Text>
-                                <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>Prioridad</Text>
-                                <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontSize:13.96, fontWeight:'500', fontFamily:'Montserrat-Medium',}}>Entrega</Text>
-                                <Text style={{color:'rgba(0,0,0,0.87)', fontSize:14.09, fontFamily:'Montserrat-Regular', marginLeft:20, marginTop:0, marginBottom:10}}>Dirección</Text>
-                                <Text style={{color:'rgba(0,0,0,0.87)', fontSize:14.09, fontFamily:'Montserrat-Regular', marginLeft:20, marginTop:0, marginBottom:10}}>Fecha requerida</Text>
-                            </View>
-                            <View style={{width:'50%'}}>
-                                <Text style={{color:'#000000', fontSize:15, fontWeight:'bold', marginTop:20, marginBottom:10}}></Text>
-                                <Text style={{color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{name}</Text>
-                                <Text style={{color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{priority}</Text>
-                                <Text style={{color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontWeight:'bold'}}></Text>
-                                <Text style={{color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{address}</Text>
-                                <Text style={{color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{moment(this.state.data.delivery_date).locale('es').format('D MMM YY')}</Text>
-                            </View>
+                        <View style={{}}>
+                        <View style={{width:'100%', flexDirection:'row'}}>
+                            <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:10, fontSize:13.96, fontFamily:'Montserrat-Medium', marginTop:20, marginBottom:10, fontWeight:'500'}}>Detalle</Text>
+                        </View>
+                        <View style={{width:'100%', flexDirection:'row'}}>
+                            <Text style={{minWidth:'45%',maxWidth:'45%', color:'rgba(0,0,0,0.87)', marginLeft:10, marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>Solicitante</Text>
+                            <Text style={{minWidth:'50%',maxWidth:'50%',color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{name}</Text>
+                        </View>
+                        <View style={{width:'100%', flexDirection:'row'}}>
+                            <Text style={{minWidth:'45%',maxWidth:'45%', color:'rgba(0,0,0,0.87)', marginLeft:10, marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>Prioridad</Text>
+                            <Text style={{minWidth:'50%',maxWidth:'50%',color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{priority}</Text>
+                        </View>
+                      
+                        <View style={{width:'100%', flexDirection:'row'}}>
+                            <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:10, fontSize:13.96, fontFamily:'Montserrat-Medium', marginTop:20, marginBottom:10, fontWeight:'500'}}>Entrega</Text>
+                        </View>
+                        <View style={{width:'100%', flexDirection:'row'}}>
+                            <Text style={{minWidth:'45%',maxWidth:'45%', color:'rgba(0,0,0,0.87)', marginLeft:10, marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>Dirección</Text>
+                            <Text style={{minWidth:'50%',maxWidth:'50%',color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{address}</Text>
+                        </View>
+                        <View style={{width:'100%', flexDirection:'row'}}>
+                            <Text style={{minWidth:'45%',maxWidth:'45%', color:'rgba(0,0,0,0.87)', marginLeft:10, marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>Fecha requerida</Text>
+                            <Text style={{minWidth:'50%',maxWidth:'50%',color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{moment(this.state.data.delivery_date).locale('es').format('D MMM YY')}</Text>
+                        </View>
                         </View>
                     </View>
 
@@ -306,7 +340,7 @@ export default class InfoSolicitudes extends Component {
                                     borderColor:'#4BBC68'
                                 }}
                                 onPress={() => Alert.alert(
-                                    'Advertencia:', '¿Estás seguro de querer aprobar esta solicitud?',
+                                    '¿Estás seguro de querer aprobar esta solicitud?','',
                                     [
                                     { text: "NO",
                                     style: "cancel"
@@ -352,13 +386,13 @@ export default class InfoSolicitudes extends Component {
             return false
         }
       };
-      ifProductosTrue(){
-          if(this.state.productos == true){
-              return <Text>Item - Productos solicitud</Text>
-          } else {
-              return false
-          }
-      };
+    //   ifProductosTrue(){
+    //       if(this.state.productos == true){
+    //           return <Text>Item - Productos solicitud</Text>
+    //       } else {
+    //           return false
+    //       }
+    //   };
       hightLigth(){
         if(this.state.informacion == true){
             return  <View style={{flexDirection:'row', marginTop:-2.5}}>
@@ -445,10 +479,10 @@ export default class InfoSolicitudes extends Component {
                     <View style={styles.solicitudesMain}>
                     {this.whichToRender()}
                     
-                    <View style={{ alignItems:'center'}}>
+                    {/* <View style={{ alignItems:'center'}}>
                         <Text style={{fontSize:20}}>{this.ifProductosTrue()}</Text>
                         <Text style={{fontSize:20}}>{this.howManyDaysAfter()}</Text>
-                    </View>
+                    </View> */}
                     </View>
                 </ScrollView>
                 {this.ifInfoTrue()}
@@ -469,9 +503,9 @@ const styles = StyleSheet.create({
     },
     solicitudesMain: {
         flex:1,
-        justifyContent:'center',
-        alignContent:'center',
-        alignItems:'center'
+        // justifyContent:'center',
+        // alignContent:'center',
+        // alignItems:'center'
     },
     solicitudes:{
         borderTopLeftRadius:4,

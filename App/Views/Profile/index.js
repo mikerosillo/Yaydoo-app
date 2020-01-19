@@ -237,6 +237,8 @@ export default class Profile extends Component {
 
 
     goToInfoOrdenes(data, folio, tipo){
+      console.log('fecha requerida',data.delivery_date)
+      console.log('fecha de entrega',data.proposal.delivery_at)
       Actions.infoOrdenes({data: data, folio: folio, tipo:tipo})
     };
 
@@ -278,11 +280,14 @@ export default class Profile extends Component {
                               source={{uri : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZMD1evACIwv083oh-CbaavyrN-0pXUGdKHMM-Ny_oZMh7lQ928Q&s'}}
                               style={{ width: 52, height: 52, marginLeft: 10,marginRight:10, marginTop:20, borderRadius:24}}
                           />
-                        <View style={{color:'#000000', flexDirection:'column', marginTop:20}}>
+                        <View style={{color:'#000000', flexDirection:'column', marginTop:20, maxWidth:250}}>
                             <Text style={{ color: '#000000', fontFamily: 'Montserrat-Medium', fontSize: 19.94 }}>{data.tipo} {data.folio} </Text>
                             <Text style={{color:'#000000', fontFamily: 'Montserrat-Regular', fontSize: 14.09}}>{data.account.user.first_name}{'    '}{data.account.user.last_name}</Text>
                         </View>
-                        <Text style={{ color: '#000000', fontFamily: 'Montserrat-Regular',  fontSize: 12.08, marginLeft:'auto', marginRight:10, marginTop:25 }}></Text>
+                        {/* <Text style={{ color: '#000000', fontFamily: 'Montserrat-Regular',  fontSize: 12.08, marginLeft:'auto', marginRight:10, marginTop:25}}></Text> */}
+                        <Text style={{marginLeft:'auto', marginRight:10, marginTop:20 }}>
+                            <Icon name="chevron-right" size={24} color="#000000" />
+                        </Text>
                     </View>
                     <View  style={{flexDirection:'row'}}>
                       <TouchableOpacity style={{flexDirection:'row'}}  onPress={() => this.goToInfoOrdenes(data, data.folio)}>
@@ -300,10 +305,10 @@ export default class Profile extends Component {
                         </View>
                         <View style={{flexDirection:'column', width:'20%', justifyContent:'flex-end'}}>
                           <TouchableOpacity  onPress={() => this.goToInfoOrdenes(data, data.folio)}>
-                            <Image
+                            {/* <Image
                                 source={{uri : 'https://img.icons8.com/material-rounded/2x/chevron-right.png'}}
                                 style={{ width: 24, height: 24, marginLeft: 'auto',marginRight:5, marginTop:20}}
-                            />
+                            /> */}
                           </TouchableOpacity>
                         </View>
                       </TouchableOpacity>
@@ -338,7 +343,7 @@ export default class Profile extends Component {
                     borderColor:'#4BBC68'
                   }}
                     onPress={() => Alert.alert(
-                      'Advertencia:', '¿Estás seguro de querer aprobar esta orden de compra?',
+                      '¿Estás seguro de querer aprobar esta orden de compra?','',
                       [
                         { text: "NO",
                         style: "cancel"
@@ -432,11 +437,14 @@ export default class Profile extends Component {
                               source={{uri : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZMD1evACIwv083oh-CbaavyrN-0pXUGdKHMM-Ny_oZMh7lQ928Q&s'}}
                               style={{ width: 52, height: 52, marginLeft: 10,marginRight:10, marginTop:20, borderRadius:24}}
                           />
-                        <View style={{color:'#000000', flexDirection:'column', marginTop:20}}>
+                        <View style={{color:'#000000', flexDirection:'column', marginTop:20, maxWidth:250}}>
                             <Text style={{ color: '#000000', fontFamily: 'Montserrat-Medium', fontSize: 19.94 }}>{data.tipo} {data.folio} </Text>
                             <Text style={{color:'#000000', fontFamily: 'Montserrat-Regular', fontSize: 14.09}}>{data.account.user.first_name}{'   '}{data.account.user.last_name}</Text>
                         </View>
-                        <Text style={{ color: '#000000', fontFamily: 'Montserrat-Regular',  fontSize: 12.08, marginLeft:'auto', marginRight:10, marginTop:25 }}></Text>
+                        {/* <Text style={{ color: '#000000', fontFamily: 'Montserrat-Regular',  fontSize: 12.08, marginLeft:'auto', marginRight:10, marginTop:25 }}>aqi</Text> */}
+                        <Text style={{marginLeft:'auto', marginRight:10, marginTop:20 }}>
+                            <Icon name="chevron-right" size={24} color="#000000" />
+                        </Text>
                     </View>
                     <View style={{flexDirection:'row', marginTop:10}}>
                       <TouchableOpacity style={{flexDirection:'row'}} onPress={() => goToInfoSolicitudes(data, data.folio)}>
@@ -448,10 +456,9 @@ export default class Profile extends Component {
                           </View>
                           <View style={{width:'20%'}}>
                           <TouchableOpacity  onPress={() => goToInfoSolicitudes(data, data.folio)}>
-                              <Image
-                                  source={{uri : 'https://img.icons8.com/material-rounded/2x/chevron-right.png'}}
-                                  style={{ width: 24, height: 24, marginLeft: 'auto',marginRight:5}}
-                              />
+                              <Text style={{marginLeft: 0}}>
+                                  {/* <Icon name="chevron-right" size={24} color="#000000" /> */}
+                              </Text>
                             </TouchableOpacity>
                           </View>
                       </TouchableOpacity>  
@@ -486,7 +493,7 @@ export default class Profile extends Component {
                         borderColor:'#4BBC68'
                       }}
                       onPress={() => Alert.alert(
-                        'Advertencia:', '¿Estás seguro de querer aprobar esta solicitud?',
+                        '¿Estás seguro de querer aprobar esta solicitud?','',
                         [
                           { text: "NO",
                           style: "cancel"
@@ -520,7 +527,21 @@ export default class Profile extends Component {
       let both = arr1
       let sort1 = both.sort(function (a, b) { return new Date(b.created_at) - new Date(a.created_at) });
       var map = sort1.map((data, key) => {
-        
+        function getTime(date){
+            let dayCreated = moment(date).format('D') // = 9
+            let todaysDate = moment(new Date()).format('D')
+            console.log('day created',dayCreated)
+            console.log('todays date',todaysDate)
+            var afterCreated = todaysDate - dayCreated
+            console.log('after created',afterCreated)
+            if(afterCreated == 0){
+              return <Text>Hoy</Text>
+            }else if(afterCreated == 1) {
+              return <Text>Ayer</Text>
+            } else {
+              return <Text>{moment(date).locale('es').format('D MMM YY')}</Text>
+            }
+        }
         function solicitudesLength(date, tipo, solicitudesDate, poDate, key){
               if(tipo == 4 && key == poDate.length ){
               let arr = solicitudesDate
@@ -530,7 +551,7 @@ export default class Profile extends Component {
                   count ++
                 }
               } return  <View key={key} style={{flexDirection:'row'}}>
-                            <View style={{ alignItems: 'flex-start',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 13.96, marginBottom:10, marginLeft:10 }}>{moment(data.created_at).locale('es').format('D MMM YY')}</Text></View>
+                            <View style={{ alignItems: 'flex-start',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 13.96, marginBottom:10, marginLeft:10 }}>{getTime(data.created_at)}</Text></View>
                             <View style={{ alignItems: 'flex-end',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 12.08, marginBottom:10, marginRight:10 }}>Pendientes {count}</Text></View>
                         </View>    
             }  else {
@@ -538,17 +559,31 @@ export default class Profile extends Component {
             }
         };
         function poLength(date, tipo, solicitudesDate, poDate, key){
-          
-             if(tipo == 3 && key == 0) {
+          function getTime(date){
+            let dayCreated = moment(date).format('D') // = 9
+            let todaysDate = moment(new Date()).format('D')
+            console.log(dayCreated, todaysDate)
+              var afterCreated = todaysDate - dayCreated
+              if(afterCreated == 0){
+                return <Text>Hoy</Text>
+              }else if(afterCreated == 1) {
+                return <Text>Ayer</Text>
+              } else {
+                return <Text>{moment(date).locale('es').format('D MMM YY')}</Text>
+              }
+          }
+             var count = 0
+             if(tipo == 3 ) {
                   let arr = poDate
-              var count = 0
+                  
+              
               for(let i = 0; i < arr.length; i++){
                 if(moment(arr[i]).format('D MMM YY') == moment(date).format('D MMM YY') ){
                   count ++
                 }
               }
               return  <View key={key} style={{flexDirection:'row'}}>
-                          <View style={{ alignItems: 'flex-start',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 13.96, marginBottom:10, marginLeft:10 }}>{moment(data.created_at).locale('es').format('D MMM YY')}</Text></View>
+                          <View style={{ alignItems: 'flex-start',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 13.96, marginBottom:10, marginLeft:10 }}>{getTime(data.created_at)}</Text></View>
                           <View style={{ alignItems: 'flex-end',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 12.08, marginBottom:10, marginRight:10 }}>Pendientes {count}</Text></View>
                       </View>
             } else {
@@ -557,7 +592,7 @@ export default class Profile extends Component {
           
         };
         
-          return <View style={{alignItems:'center', display:'flex'}}>
+          return  <View style={{alignItems:'center', display:'flex'}}>
                     <View style={styles.solicitudesMain}>
                         {/* <View style={{flexDirection:'row'}}>
                            <View style={{ alignItems: 'flex-start',width:'50%' }}><Text style={{fontFamily: 'Montserrat-Medium', color: '#000000', fontSize: 13.96, marginBottom:10, marginLeft:10 }}>{Moment(data.created_at).locale('es',momentES ).format('D MMM YY')}</Text></View>
@@ -571,8 +606,8 @@ export default class Profile extends Component {
                             {this.ifOrdenType(data, data.type, key)}
                           </View>
                         </View>
+                    </View>
                   </View>
-                </View>
       });
       if (this.state.solicitudes.length >= 1 || this.state.pendingPo.length >= 1) {
           return map
@@ -637,7 +672,7 @@ export default class Profile extends Component {
                     style={styles.container}
                 >
                   <Header style={{backgroundColor:'#00A0F8'}}>
-                    <Body style={{flexDirection:'row', justifyContent:'space-between'}}>
+                    <Body style={{flexDirection:'row', justifyContent:'center'}}>
                       <Title style={{fontSize:19.94, letterSpacing:0.25, marginLeft:16}}>Aprobaciones</Title>
                       <Title style={{marginRight:13, fontSize:13.96, letterSpacing:0.25, marginTop:5}}></Title>
                     </Body>

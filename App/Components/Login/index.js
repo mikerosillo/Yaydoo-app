@@ -135,6 +135,7 @@ class Login extends Component {
             lineWidth={1}
             returnKeyType="next"
             autoCapitalize = 'none'
+            autoComplete='none'
             onSubmitEditing={() => {
               this.Password.focus();
             }}

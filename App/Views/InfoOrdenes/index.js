@@ -35,6 +35,7 @@ export default class InfoOrdenes extends Component {
             no:'',
             street:'',
             deliveryDate:'',
+            deliveryAt:'',
             factura:'',
             proveedor:'',
             payment_terms:'',
@@ -113,12 +114,14 @@ export default class InfoOrdenes extends Component {
                     if (response.ok) {
                         response.json().then((datos) => {
                             let poInfo = datos
-                            let city = poInfo.account.billing[0].city
-                            let state = poInfo.account.billing[0].state
-                            let street = poInfo.account.billing[0].street
-                            let no = poInfo.account.billing[0].num_ext
+
+                            var city;
+                            var state;
+                            var street;
+                            var no;
+                            var factura;
+                            let deliveryAt = poInfo.delivery_at
                             let deliveryDate = poInfo.delivery_date
-                            let factura = poInfo.account.billing[0].name
                             let proveedor = poInfo.proposal.provider.name
                             let payment_terms = poInfo.proposal.payment_terms
                             let asignado = poInfo.budget.name
@@ -130,8 +133,20 @@ export default class InfoOrdenes extends Component {
                             let decimalGraph = 0+'.'+barGraph
                             let currency = poInfo.proposal.provider.currency
                             let items = poInfo.quotation_items
-                           console.log(items[0].item.price)
-                           console.log(poInfo.budget.name)
+                            // console.log('dr',poInfo.account.billing.length)
+                            if(poInfo.account.billing.length > 0){
+                                city = poInfo.account.billing[0].city
+                                state = poInfo.account.billing[0].state
+                                street = poInfo.account.billing[0].street
+                                no = poInfo.account.billing[0].num_ext
+                                factura = poInfo.account.billing[0].name
+                            } else {
+                                city = 'No address'
+                                state = ''
+                                street = ''
+                                no = ''
+                                factura = ''
+                            }
 
                             this.setState({
                                 refreshing: false,
@@ -141,6 +156,7 @@ export default class InfoOrdenes extends Component {
                                 no: no,
                                 state:state,
                                 deliveryDate:deliveryDate,
+                                deliveryAt:deliveryAt,
                                 factura:factura,
                                 proveedor: proveedor,
                                 payment_terms: payment_terms,
@@ -194,14 +210,41 @@ export default class InfoOrdenes extends Component {
             }
         }
     };
+    unitType(units, unitId){
+           console.log(units)
+           if(units > 1 && unitId == 1){
+               return <Text>piezas =</Text>
+           } else if(units <= 1 && unitId == 1){
+               return <Text>Pieza =</Text>
+           } else if(units > 1 && unitId == 3){
+               return <Text>cajas =</Text>
+           } else if(units <= 1 && unitId == 3){
+               return <Text>caja =</Text>
+           } else {
+               return <Text>unit id not identified</Text>
+           }
+       };
+       unitTypeAtBottom(units, unitId){
+        //    console.log(unitId)
+           if(unitId == 1){
+               return <Text>Pieza =</Text>
+           } else if( unitId == 3){
+               return <Text>Caja =</Text>
+           }  else {
+               return <Text>unit id not identified</Text>
+           }
+       }
     whichToRender(){
         var bar = this.state.barGraph
            var items = this.state.items.map((data, key)=>{
-               function ifImageNotNull(){
+               function ifImageNotNull(data){
+                   console.log('from image not null id', data.item.unit_id)
+                   console.log('from image not null how many', data.units)
                    if(data.item.image !== null){
                        return <Image
                                     source={{uri :`${data.item.image.full}`}}
-                                    style={{ width: 150, height: 150, marginTop:20, marginLeft:0}}
+                                    resizeMode='contain'
+                                    style={{ width: 150, height: 150}}
                                 />
                    } else {
                        return false
@@ -210,18 +253,18 @@ export default class InfoOrdenes extends Component {
             return  <View style={styles.solicitudes}>
                         <View style={{flexDirection:'row'}}>
                             <View style={{width:'50%'}}>
-                                {ifImageNotNull()}
+                                {ifImageNotNull(data)}
                             </View>
                             <View style={{width:'50%', marginTop:20}}>
                                 <Text style={{color:'rgba(0,0,0,0.87)', marginBottom:10, fontSize:13.96, fontWeight:'500', fontFamily:'Montserrat-Medium'}}>{data.item.description}</Text>
-                                <Text style={{color:'rgba(0,0,0,0.6)', marginBottom:0, fontSize:12.09, fontFamily:'Montserrat-Regular'}}>{data.units}{' '}pieza ={' '}{numeral(data.item.price * data.units).format('$0,0.00')}{' '}{data.item.vendor.vendor.currency}</Text>
+                                <Text style={{color:'rgba(0,0,0,0.6)', marginBottom:0, fontSize:12.09, fontFamily:'Montserrat-Regular'}}>{data.units}{' '}{this.unitType(data.units, data.item.unit_id)}{' '}{numeral(data.item.price * data.units).format('$0,0.00')}{' '}{data.item.vendor.vendor.currency}</Text>
                                 {/* <Text style={{color:'#808080', marginBottom:20}}></Text> */}
                                 <Text style={{color:'rgba(0,0,0,0.6)', fontSize:12.09, fontFamily:'Montserrat-Regular'}}>Entrega{' '}{moment(this.state.deliveryDate).locale('es').format('D MMM YY')}</Text>
                             </View>
                         </View>
                         <View style={{flexDirection:'row'}}>
                             <Text style={{color:'rgba(0,0,0,0.87)', marginBottom:20, marginLeft:30, marginTop:20, fontSize:12.08, fontFamily:'Montserrat-Regular'}}>
-                               Pieza
+                            {this.unitTypeAtBottom(data.units, data.item.unit_id)}
                             </Text>
                             <Text style={{color:'rgba(0,0,0,0.6)', marginBottom:20, marginLeft:5, marginTop:20, fontSize:12.09, fontFamily:'Montserrat-Regular'}}>
                               {numeral(data.item.price).format('$0,0.00')}{' '}{data.item.vendor.vendor.currency}
@@ -236,7 +279,7 @@ export default class InfoOrdenes extends Component {
                 function ifProgressBarNotANumber(){
                     if( bar >= 0.1){
                         return <Progress.Bar
-                                    style={{marginLeft:20}}
+                                    style={{marginLeft:0}}
                                     fillStyle={{}}
                                     progress={bar}
                                     width={Dimensions.get('window').width - 240}
@@ -247,7 +290,7 @@ export default class InfoOrdenes extends Component {
                                 />
                     } else {
                         return <Progress.Bar
-                                    style={{marginLeft:20}}
+                                    style={{marginLeft:0}}
                                     fillStyle={{}}
                                     progress={0}
                                     width={Dimensions.get('window').width - 240}
@@ -259,45 +302,56 @@ export default class InfoOrdenes extends Component {
                     }
                 }
             return  <View>
-                            <View style={{flexDirection:'row'}}>
-                                <View style={{width:'40%'}}>
-                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, fontSize:13.96, fontWeight:'500', fontFamily:'Montserrat-Medium', marginTop:20, marginBottom:10}}>Entrega</Text>
-                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Dirección</Text>
-                                    <Text style={{color:'#000000', marginLeft:20, marginTop:0, marginBottom:0}}></Text>
-                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Fecha requerida</Text>
-                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Factura</Text>
-                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Proveedor</Text>
-                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Terminos de pago</Text>
-                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, fontSize:13.96, fontWeight:'500', fontFamily:'Montserrat-Medium', marginTop:20, marginBottom:10}}>Presupuesto</Text>
-                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:3, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Asignado</Text>
-                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Disponible</Text>
-                                    <Text style={{color:'rgba(0,0,0,0.87)', marginLeft:20, marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular', fontSize:14.09}}>Gastado</Text>
-                                </View>
-                                <View style={{width:'60%'}}>
-                                    <Text style={{color:'#000000', fontSize:14.09, fontWeight:'bold', marginTop:0, marginBottom:10}}></Text>
-                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:0, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.street}{'  '}No.{this.state.no}</Text>
-                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:0, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.city}{'   '}{this.state.state}</Text>
-                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:30, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{moment(this.state.deliveryDate).locale('es').format('D MMM YY')}</Text>
-                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:10, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.factura}</Text>
-                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:10, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.proveedor}</Text>
-                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:30, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.payment_terms}{' '}dias</Text>
-
-                                    <Text style={{color:'#000000', marginTop:20, marginBottom:20, fontWeight:'bold'}}></Text>
-                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:0, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{this.state.asignado}</Text>
-                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', fontSize:14.09, marginTop:10, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{numeral(this.state.disponible).format('$0,0.00')}</Text>
-                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', marginTop:10, marginBottom:0, fontFamily:'Montserrat-Regular'}}>{numeral(this.state.gastado).format('$0,0.00')}</Text>
-                                    <Text style={{marginLeft:20,color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontFamily:'Montserrat-Regular'}}>de{' '}{numeral(this.state.disponible).format('$0,0.00')}</Text>
+                        <View style={{}}>
+                            <View style={{width:'100%', flexDirection:'row'}}>
+                                <Text style={{minWidth:'45%',maxWidth:'45%', color:'rgba(0,0,0,0.87)', marginLeft:10, marginTop:20, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Medium', fontWeight:'500'}}>Entrega</Text>
+                                <Text style={{minWidth:'50%',maxWidth:'50%',color:'rgba(0,0,0,0.6)', marginTop:20, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{this.state.street}{'  '}No.{this.state.no}</Text>
+                            </View>
+                            <View style={{width:'100%', flexDirection:'row'}}>
+                                <Text style={{minWidth:'45%',maxWidth:'45%', color:'rgba(0,0,0,0.87)', marginLeft:10, marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>Dirección</Text>
+                                <Text style={{minWidth:'50%',maxWidth:'50%',color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{this.state.city}{'   '}{this.state.state}</Text>
+                            </View>
+                            <View style={{width:'100%', flexDirection:'row'}}>
+                                <Text style={{minWidth:'45%',maxWidth:'45%', color:'rgba(0,0,0,0.87)', marginLeft:10, marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>Fecha requerida</Text>
+                                <Text style={{minWidth:'50%',maxWidth:'50%',color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{moment(this.state.deliveryAt).locale('es').format('D MMM YY')}</Text>
+                            </View>
+                            <View style={{width:'100%', flexDirection:'row'}}>
+                                <Text style={{minWidth:'45%',maxWidth:'45%', color:'rgba(0,0,0,0.87)', marginLeft:10, marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>Factura</Text>
+                                <Text style={{minWidth:'50%',maxWidth:'50%',color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{this.state.factura}</Text>
+                            </View>
+                            <View style={{width:'100%', flexDirection:'row'}}>
+                                <Text style={{minWidth:'45%',maxWidth:'45%', color:'rgba(0,0,0,0.87)', marginLeft:10, marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>Proveedor</Text>
+                                <Text style={{minWidth:'50%',maxWidth:'50%',color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{this.state.proveedor}</Text>
+                            </View>
+                            <View style={{width:'100%', flexDirection:'row'}}>
+                                <Text style={{minWidth:'45%',maxWidth:'45%', color:'rgba(0,0,0,0.87)', marginLeft:10, marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>Terminos de pago</Text>
+                                <Text style={{minWidth:'50%',maxWidth:'50%',color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{this.state.payment_terms}{' '}dias</Text>
+                            </View>
+                            <View style={{width:'100%', flexDirection:'row'}}>
+                                <Text style={{minWidth:'45%',maxWidth:'45%', color:'rgba(0,0,0,0.87)', marginLeft:10, marginTop:20, marginBottom:20, fontSize:14.09, fontFamily:'Montserrat-Medium', fontWeight:'500'}}>Presupuesto</Text>
+                            </View>
+                            <View style={{width:'100%', flexDirection:'row'}}>
+                                <Text style={{minWidth:'45%',maxWidth:'45%', color:'rgba(0,0,0,0.87)', marginLeft:10, marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>Asignado</Text>
+                                <Text style={{minWidth:'50%',maxWidth:'50%',color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{this.state.asignado}</Text>
+                            </View>
+                            <View style={{width:'100%', flexDirection:'row'}}>
+                                <Text style={{minWidth:'45%',maxWidth:'45%', color:'rgba(0,0,0,0.87)', marginLeft:10, marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>Disponible</Text>
+                                <Text style={{minWidth:'50%',maxWidth:'50%',color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{numeral(this.state.disponible).format('$0,0.00')}</Text>
+                            </View>
+                            <View style={{width:'100%', flexDirection:'row'}}>
+                                <Text style={{minWidth:'45%',maxWidth:'45%', color:'rgba(0,0,0,0.87)', marginLeft:10, marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>Gastado</Text>
+                                <Text style={{ minWidth:'50%',maxWidth:'50%',color:'rgba(0,0,0,0.6)', marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}>{numeral(this.state.gastado).format('$0,0.00')}
+                                {"\n"}
+                               de{' '}{numeral(this.state.disponible).format('$0,0.00')}
+                                </Text>
+                            </View>
+                            <View style={{width:'100%', flexDirection:'row'}}>
+                                <View style={{minWidth:'45%',maxWidth:'45%', color:'rgba(0,0,0,0.87)', marginLeft:10, marginTop:0, marginBottom:10, fontSize:14.09, fontFamily:'Montserrat-Regular'}}></View>
+                                <View style={{minWidth:'55%',maxWidth:'55%'}}>
                                     {ifProgressBarNotANumber()}
-                                    <Text style={{color:'#000000', marginTop:20, marginBottom:0}}></Text>
                                 </View>
                             </View>
-                            {/* <View
-                                style={{
-                                borderBottomColor: 'black',
-                                borderBottomWidth: 1,
-                                marginBottom:20
-                                }}
-                            /> */}
+                        </View>
                     </View>
 
             }
@@ -306,6 +360,13 @@ export default class InfoOrdenes extends Component {
     ifInfoTrue(){
         if(this.state.productos !== true){
             return  <View>
+                        <View
+                            style={{
+                            borderBottomColor: 'black',
+                            borderBottomWidth: 1,
+                            marginBottom:20
+                            }}
+                        />
                         <View style={{justifyContent:'center', alignItems:'center'}}>
                             <Text style={{fontFamily:'Montserrat-Regular',color:'rgba(0,0,0,0.87)', fontSize:16.1, flexDirection:'row', justifyContent:'center'}}>
                                 Total: <Text style={{color:'rgba(0,0,0,0.87)',fontSize:19.94, fontWeight:'500', fontFamily:'Montserrat-Medium'}}>{numeral(this.state.gastado).format('$0,0.00')}{' '}{this.state.currency}</Text>
@@ -345,7 +406,7 @@ export default class InfoOrdenes extends Component {
                                     borderColor:'#4BBC68'
                                 }}
                                 onPress={() => Alert.alert(
-                                    'Advertencia:', '¿Estás seguro de querer aprobar esta orden?',
+                                    '¿Estás seguro de querer aprobar esta orden?','',
                                     [
                                     { text: "NO",
                                     style: "cancel"
@@ -471,13 +532,6 @@ export default class InfoOrdenes extends Component {
                     {/* {this.ifInfoTrue()} */}
                     </View>
                 </ScrollView>
-                <View
-                    style={{
-                    borderBottomColor: 'black',
-                    borderBottomWidth: 1,
-                    marginBottom:20
-                    }}
-                />
                 {this.ifInfoTrue()}
                 
                 {/* <View style={{justifyContent:'center', alignItems:'center'}}>
